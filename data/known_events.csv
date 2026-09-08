@@ -1,0 +1,10 @@
+event_date,event_type,description,scope
+2020-04-01,business,Lockdown demand surge; drinkware and home goods sell out,platform
+2021-03-15,tech,Servers S07 and S08 launched for VN expansion,"S07,S08"
+2021-02-01,tech,Order database migration on S02 (duplicate writes suspected),S02
+2022-06-20,tech,New checkout flow rolled out to all servers,platform
+2023-11-01,business,Merchant plan pricing revised; SMB tier fee reduced,platform
+2024-03-01,business,"Strategic shift on S07/S08: premium fulfilment partner, free shipping absorbed by platform","S07,S08"
+2024-06-10,business,Merchant success team for VN region reduced,"S07,S08"
+2025-01-01,data,Promotion management module launched; promo table starts here,platform
+2026-07-01,data,Login analytics enabled; login table starts here,platform

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Analyst session 3 of 5. Category, line, SKU and the owner axis; share not absolute, slope charts, the SKU Pareto, platform versus merchant margins; then support, confidence and lift in pandas, attach rates against base rates, and a preference profile per merchant.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Products and baskets - learn ship platform diagnosis with phoebe">
+<meta property="og:description" content="Analyst session 3 of 5. The product hierarchy and the owner axis, share charts, Pareto, pair lift without a library, attach rates and per-merchant preference - in pandas, on five years of platform data.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/courses/a3-products-and-baskets.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Products and baskets - learn ship platform diagnosis with phoebe">
+<meta name="twitter:description" content="The product hierarchy and the owner axis, share charts, Pareto, pair lift without a library, attach rates and per-merchant preference - in pandas, on five years of platform data.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Analyst session 3 · Products and baskets - learn ship platform diagnosis with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ship-platform-diagnosis-with-phoebe</a> / Analyst session 3 of 5</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Analyst track · Session 3 of 5</div>
+    <h1>Products and <span class="accent">baskets</span></h1>
+    <p class="sub">Printwell sells five categories, fifteen product lines and 1,121 SKUs, and every SKU has an owner: a platform standard or a merchant's customised version of the same line. Today you walk that hierarchy top to bottom - which categories shifted share, which lines faded, how few SKUs make most of the profit, and whether customisation pays - then turn to the basket. Support, confidence and lift are three divisions in pandas, no library needed, and the gap between an attach rate and a base rate is a bundle nobody is selling on purpose. You finish with the table a merchant success team hands to every merchant: its top line and how broad its sales really are.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Analyst track</span>
+      <span class="chip audience">Data analysts · pandas</span>
+      <span class="chip audience">Notebook: a3_products_and_baskets.ipynb</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:5">3-18 · Hierarchy and mix</span>
+      <span class="a3" style="flex:7">18-40 · Baskets and preference</span>
+      <span class="a4" style="flex:2">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where a3 sits</h2>
+    </div>
+    <p class="lede">a1 mapped the tables and a2 followed the margin to a cost decision on two servers. a3 changes axis: from when and where to what. The product hierarchy answers the third of the nine angles - which categories, lines and SKUs grew or faded, and whether merchant-customised goods out-earn the platform's standards - and the basket work answers most of the ninth: pair lift, bundle candidates, cross-sell headroom and per-merchant preference. a4 measures merchants and stores; a5 does customers, promotions and the gaps. Same reader, same dedupe, same rule about the partial month. Work along in <code>notebooks/a3_products_and_baskets.ipynb</code>.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill inkpill">Sources covered</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      A share-of-revenue chart that separates "we grew" from "we shifted". A slope chart that names the lines that lost a fifth of their share. A Pareto curve and an owner table showing merchant SKUs at 44.9 percent margin against the platform's 36.6. A lift matrix and a bundle-candidate file made from three pandas divisions. An attach-rate chart whose gaps are the cross-sell offers. And a preference profile per merchant: top line, its share, and an effective number of lines sold.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: HIERARCHY AND MIX ============ -->
+  <section class="section" id="hierarchy">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers share of revenue, slope charts, Pareto, the owner axis, the price ladder</span>
+      <h2>Category, line, SKU - and the owner axis <span class="tag concept">15 min live</span></h2>
+    </div>
+    <p class="lede">Three levels down and then a fork. Category holds five values, product line fifteen, SKU 1,121 sold. At the leaf, <code>owner</code> says whether a SKU is one of the 98 platform standards or one of the 1,023 merchant-customised versions sold - same category, same line, different SKU, different price and cost. Analyse the levels in order, because a category total hides a line that is dying and a line total hides which owner is earning.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A three-level tree. Drinkware at the top, two product lines Mug and Bottle below it, and under each line a row of SKU boxes split by owner: one navy platform SKU and amber merchant SKUs. Level labels on the left give the counts: 5 categories, 15 lines, 1,121 SKUs sold. A note explains that owner is a separate column from the base line.">
+        <style>
+          .htT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .htW { font: 700 12px Inter, sans-serif; fill: #FFFFFF; }
+          .htK { font: 700 11px Inter, sans-serif; fill: #4A2E00; }
+          .htL { font: 600 11px Inter, sans-serif; fill: #5B6B7E; }
+          .htN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+          .htE { font: 600 10.5px Inter, sans-serif; fill: #163E6A; }
+        </style>
+        <defs>
+          <marker id="htArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C3CEDB"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="320" fill="#FAFBFD"/>
+        <text class="htT" x="40" y="28">The hierarchy - three levels, then an owner split at the leaf</text>
+        <text class="htL" x="40" y="66">category (5)</text>
+        <text class="htL" x="40" y="146">product line (15)</text>
+        <text class="htL" x="40" y="226">SKU (1,121 sold)</text>
+        <rect x="380" y="44" width="160" height="34" rx="8" fill="#0B2545"/>
+        <text class="htW" x="460" y="66" text-anchor="middle">Drinkware</text>
+        <line x1="440" y1="80" x2="330" y2="122" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <line x1="480" y1="80" x2="590" y2="122" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <rect x="260" y="124" width="120" height="32" rx="8" fill="#163E6A"/>
+        <text class="htW" x="320" y="145" text-anchor="middle">Mug</text>
+        <rect x="540" y="124" width="120" height="32" rx="8" fill="#163E6A"/>
+        <text class="htW" x="600" y="145" text-anchor="middle">Bottle</text>
+        <line x1="300" y1="158" x2="220" y2="202" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <line x1="320" y1="158" x2="330" y2="202" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <line x1="340" y1="158" x2="440" y2="202" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <line x1="590" y1="158" x2="590" y2="202" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <line x1="610" y1="158" x2="700" y2="202" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#htArr)"/>
+        <rect x="160" y="204" width="110" height="32" rx="8" fill="#2A5C94"/>
+        <text class="htW" x="215" y="225" text-anchor="middle">platform SKU</text>
+        <rect x="280" y="204" width="110" height="32" rx="8" fill="#FDF1DA" stroke="#E39B0E"/>
+        <text class="htK" x="335" y="225" text-anchor="middle">merchant SKU</text>
+        <rect x="400" y="204" width="110" height="32" rx="8" fill="#FDF1DA" stroke="#E39B0E"/>
+        <text class="htK" x="455" y="225" text-anchor="middle">merchant SKU</text>
+        <rect x="540" y="204" width="110" height="32" rx="8" fill="#2A5C94"/>
+        <text class="htW" x="595" y="225" text-anchor="middle">platform SKU</text>
+        <rect x="660" y="204" width="110" height="32" rx="8" fill="#FDF1DA" stroke="#E39B0E"/>
+        <text class="htK" x="715" y="225" text-anchor="middle">merchant SKU</text>
+        <text class="htE" x="465" y="264" text-anchor="middle">owner axis: 98 platform SKUs and 1,023 merchant-customised SKUs sold, 2020-2026</text>
+        <text class="htN" x="40" y="298">Same line, different SKU, price and cost. Store base line and owner as two columns; never overwrite one.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the owner axis is the fork that makes the customisation question answerable at all. Lose it in the catalogue and no analyst can recover it.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span> Share, not absolute <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Revenue grew almost every year, so an absolute stacked chart of categories is five bands all getting taller and a reader who learns nothing. Divide each year by its total. Now the chart answers a different question - not "did we grow" but "did we shift" - and the shifts are the finding: drinkware and home spiked in 2020, bags rose steadily, stationery has faded since 2023. Use complete years only; 2026 is eight months and its share would be a blend of the wrong seasons.</p>
+        <div class="prompt-box good"><span class="label">★ Revenue share by category, complete years</span>tx = lib.load_transactions(dedupe=True)
+dims = lib.load_dims()
+txc = tx[tx.month &lt; pd.Period(lib.AS_OF, "M")]
+full_years = txc[txc.year.between(2020, 2025)]
+
+share = full_years.groupby(["year", "category"]).revenue.sum().unstack()
+share = share.div(share.sum(axis=1), axis=0) * 100         # each year sums to 100
+order = share.loc[2025].sort_values(ascending=False).index
+fig, ax = plt.subplots(figsize=(11, 5))
+ax.stackplot(share.index, [share[c] for c in order], labels=order, colors=lib.SEQ[:5], alpha=.95)
+ax.set_xticks(share.index); ax.set_ylim(0, 100)
+lib.save(fig, "a3_category_share")
+share.round(1)</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_category_share.png" alt="Stacked area of revenue share by category, 2020 to 2025, each year summing to 100. Drinkware falls from 25.9 to 16.8 percent and home from 32.1 to 25.0; bags rise from 12.0 to 26.9; apparel holds near 26; stationery slips from 6.3 in 2023 to 4.9.">
+          <figcaption>🔍 Click to zoom - bags 12.0 to 26.9 percent of revenue between 2020 and 2025; drinkware 25.9 to 16.8; stationery 6.3 in 2023 to 4.9 in 2025.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Year</th><th>Apparel</th><th>Bags</th><th>Drinkware</th><th>Home</th><th>Stationery</th></tr></thead>
+          <tbody>
+            <tr><td>2020</td><td>24.5</td><td>12.0</td><td>25.9</td><td>32.1</td><td>5.5</td></tr>
+            <tr><td>2021</td><td>29.2</td><td>14.7</td><td>20.0</td><td>30.2</td><td>5.8</td></tr>
+            <tr><td>2022</td><td>28.3</td><td>19.1</td><td>18.1</td><td>28.1</td><td>6.4</td></tr>
+            <tr><td>2023</td><td>27.3</td><td>21.2</td><td>17.9</td><td>27.3</td><td>6.3</td></tr>
+            <tr><td>2024</td><td>27.1</td><td>24.3</td><td>17.5</td><td>25.9</td><td>5.2</td></tr>
+            <tr><td>2025</td><td>26.4</td><td>26.9</td><td>16.8</td><td>25.0</td><td>4.9</td></tr>
+          </tbody>
+        </table>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A consumer brand celebrated a home-goods category "growing every year" for three years while its share of the business fell by a third. The absolute chart was true and the share chart was the story. Both belong in the deck, in that order: absolute so nobody thinks the category shrank, share so nobody thinks it is still the future.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Lines that fell <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>One level down, fifteen lines are too many for a stacked area and exactly right for a slope chart: each line's share of revenue in 2021 on the left, in 2025 on the right, one segment between. Colour only the lines that lost more than a fifth of their share. The eye reads the amber slopes in a second and ignores the rest, which is what a slope chart is for. Two full years four years apart avoids both the 2020 spike and the partial 2026.</p>
+        <div class="prompt-box good"><span class="label">★ Slope chart per product line, amber where share fell by a fifth</span>ln = full_years[full_years.year.isin([2021, 2025])].groupby(["year", "product_line"]).revenue.sum().unstack(0)
+ln = ln.div(ln.sum()) * 100
+fig, ax = plt.subplots(figsize=(8, 7))
+for line, r in ln.iterrows():
+    c = lib.AMBER if r[2025] &lt; r[2021] * 0.8 else lib.NAVY
+    ax.plot([0, 1], [r[2021], r[2025]], color=c, lw=2, marker="o")
+    ax.text(-0.03, r[2021], f"{line} {r[2021]:.1f}%", ha="right", va="center", fontsize=9)
+    ax.text(1.03, r[2025], f"{r[2025]:.1f}%", ha="left", va="center", fontsize=9)
+ax.set_xticks([0, 1]); ax.set_xticklabels(["2021", "2025"]); ax.set_xlim(-0.6, 1.3)
+ax.grid(False)
+lib.save(fig, "a3_line_slope")</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_line_slope.png" alt="Slope chart of fifteen product lines, share of revenue in 2021 on the left and 2025 on the right. Most segments are navy and near flat. The drinkware and stationery lines slope down in amber, having lost more than a fifth of their share; bag lines slope up.">
+          <figcaption>🔍 Click to zoom - amber lines lost more than a fifth of their share between 2021 and 2025. Every label is on the chart, so there is no legend to decode.</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Where profit concentrates <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Rank every SKU sold by total profit, accumulate, and plot cumulative profit share against cumulative SKU share. The curve bends hard: a small share of SKUs carries 80 percent of profit, and the long tail is hundreds of SKUs that each earn almost nothing. A Pareto curve is a catalogue decision waiting to be made - which SKUs to feature, which to leave to merchants, which to retire - and it is also the reason category totals mislead: a category can look healthy on the strength of three SKUs.</p>
+        <div class="prompt-box good"><span class="label">★ Cumulative profit share by SKU rank, plus the owner split</span>sku = txc.groupby(["sku_id", "owner"]).agg(profit=("profit", "sum"), revenue=("revenue", "sum"), units=("qty", "sum")).reset_index()
+sku = sku.sort_values("profit", ascending=False).reset_index(drop=True)
+sku["cum_profit"] = sku.profit.cumsum() / sku.profit.sum() * 100
+sku["cum_skus"] = (sku.index + 1) / len(sku) * 100
+p80 = sku[sku.cum_profit &gt;= 80].cum_skus.iloc[0]
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.plot(sku.cum_skus, sku.cum_profit, color=lib.NAVY, lw=2.2)
+ax.axhline(80, color=lib.FAINT, ls="--"); ax.axvline(p80, color=lib.AMBER, ls="--")
+lib.save(fig, "a3_pareto")
+sku.groupby("owner").agg(skus=("sku_id", "count"), profit=("profit", "sum"), revenue=("revenue", "sum")) \
+   .assign(margin=lambda d: (d.profit / d.revenue).round(3), profit_share=lambda d: (d.profit / d.profit.sum()).round(3))</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_pareto.png" alt="Pareto curve of cumulative profit share against cumulative share of SKUs ranked by profit, 2020 to 2026. The curve rises steeply then flattens; a dashed amber vertical marks the SKU share at which cumulative profit crosses 80 percent.">
+          <figcaption>🔍 Click to zoom - the amber line is where 80 percent of profit is reached. Everything to its right is the long tail.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Owner</th><th>SKUs sold</th><th>Margin</th><th>Share of profit</th></tr></thead>
+          <tbody>
+            <tr><td>platform</td><td>98</td><td>36.6%</td><td>52.5%</td></tr>
+            <tr><td>merchant</td><td>1,023</td><td>44.9%</td><td>47.5%</td></tr>
+          </tbody>
+        </table>
+        <p>Read the owner table twice. Ninety-eight platform SKUs make just over half the profit: they are the volume. The 1,023 merchant SKUs make just under half at a margin 8.3 points higher: they are the rate. Neither is the "better" half; the platform runs on both.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Platform vs merchant SKUs <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Customisation is Printwell's thesis: merchants make their own versions of the platform's lines and the platform earns more on them. The data is allowed to say whether the thesis pays. Margin by owner per complete year on the left; share of revenue on merchant SKUs per server on the right, key servers amber. The margin gap holds in every year, so it is a property of the goods, not of one good year.</p>
+        <div class="prompt-box good"><span class="label">★ Margin by owner per year, customised share per server</span>own = full_years.groupby(["year", "owner"]).agg(revenue=("revenue", "sum"), profit=("profit", "sum")).reset_index()
+own["margin"] = own.profit / own.revenue * 100
+srv_share = txc.groupby(["server_id", "owner"]).revenue.sum().unstack()
+srv_share = srv_share["merchant"] / srv_share.sum(axis=1) * 100
+fig, axes = plt.subplots(1, 2, figsize=(14, 4.6))
+for o, c in [("platform", lib.NAVY), ("merchant", lib.AMBER)]:
+    d = own[own.owner == o]
+    axes[0].plot(d.year, d.margin, color=c, lw=2.2, marker="o", label=f"{o} SKUs")
+axes[0].set_ylim(25, 55); axes[0].legend()
+axes[1].bar(srv_share.index, srv_share.values, color=[lib.server_color(s) for s in srv_share.index])
+lib.save(fig, "a3_owner_margin")</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_owner_margin.png" alt="Two panels. Left: margin percent by year 2020 to 2025 for platform SKUs in navy and merchant SKUs in amber; the amber line sits 8 to 10 points above the navy line in every year. Right: bars of the share of revenue on merchant-customised SKUs per server, S07 and S08 in amber.">
+          <figcaption>🔍 Click to zoom - merchant SKUs earn 8-10 margin points more than platform SKUs, every year. a5 asks whether their customers also come back more; they do.</figcaption>
+        </figure>
+        <div class="callout tip">
+          <strong>Keep owner out of the line</strong>
+          The whole comparison exists because <code>dim_product</code> stores <code>product_line</code> and <code>owner</code> as two columns. A catalogue that files a merchant's mug as its own line, or overwrites the base SKU with the customised one, destroys both charts on this card and every retention cut in a5. When you design a product table, the base line and who owns the variant are different facts; store both.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> The price ladder is the upsell <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>For the three biggest lines, plot every SKU's list price, platform on the left and merchant on the right. Merchant SKUs sit one rung above platform SKUs on every line: the customised version of a mug costs more than the standard mug, and that rung is the upsell path a store can walk a customer up. Where a line has no merchant SKUs, there is no rung and nothing to upsell to, which is a merchant-success conversation rather than an analytics one. Read the ladder alongside the owner-margin chart: the higher price and the higher margin are the same fact seen from two sides.</p>
+        <figure class="zoomable">
+          <img src="../figures/a3_price_ladder.png" alt="Three panels, one per top product line, each scattering SKU list prices in two columns: platform SKUs in navy on the left and merchant SKUs in amber on the right. In every panel the amber cloud sits above the navy one.">
+          <figcaption>🔍 Click to zoom - merchant SKUs one price rung above platform SKUs on every line. The rung is the upsell.</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: BASKETS ============ -->
+  <section class="section" id="baskets">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers support, confidence, lift, attach rates, basket size</span>
+      <h2>Baskets: support, confidence, lift in pandas <span class="tag concept">14 min live</span></h2>
+    </div>
+    <p class="lede">What sits together in an order? Three measures answer it and all three are ratios of counts. Support: how often the pair appears at all. Confidence: given the first item, how often the second. Lift: confidence against the second item's base rate - how much more often than chance. At the product-line level on 145,640 orders, the strongest pairs top out around 1.5: notebook + sticker pack, sticker pack + pen set, poster + cushion, then mug + t-shirt and t-shirt + tote near 1.1. Modest lifts, real supports. That is what a bundle candidate looks like in commerce data.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three cards side by side for the pair Notebook and Sticker pack. Support: orders with both over all orders, 1,692 over 145,640 equals 1.2 percent. Confidence: support over the probability of Notebook, 14.2 percent of Notebook orders also hold a Sticker pack. Lift: confidence over the base rate of Sticker pack, 14.2 over 9.2 equals 1.54. A note says pairs under a minimum support are dropped as noise.">
+        <style>
+          .tmT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .tmH { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .tmF { font: 600 11.5px Inter, sans-serif; fill: #163E6A; }
+          .tmB { font: 400 11.5px Inter, sans-serif; fill: #14202E; }
+          .tmR { font: 700 12px Inter, sans-serif; fill: #4A2E00; }
+          .tmN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <defs>
+          <marker id="tmArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C3CEDB"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="320" fill="#FAFBFD"/>
+        <text class="tmT" x="40" y="28">Three measures, one pair - Notebook + Sticker pack, all orders 2020-2026</text>
+        <rect x="40" y="50" width="240" height="210" rx="12" fill="#FFFFFF" stroke="#E3E9F1"/>
+        <rect x="40" y="50" width="240" height="34" rx="12" fill="#163E6A"/>
+        <text class="tmH" x="160" y="73" text-anchor="middle">support</text>
+        <text class="tmF" x="60" y="112">orders with A and B</text>
+        <text class="tmF" x="60" y="130">/ all orders</text>
+        <text class="tmB" x="60" y="164">1,692 / 145,640</text>
+        <text class="tmR" x="60" y="186">= 1.2%</text>
+        <text class="tmN" x="60" y="222">how often the pair happens</text>
+        <text class="tmN" x="60" y="238">at all - the volume behind it</text>
+        <line x1="286" y1="155" x2="314" y2="155" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#tmArr)"/>
+        <rect x="320" y="50" width="240" height="210" rx="12" fill="#FFFFFF" stroke="#E3E9F1"/>
+        <rect x="320" y="50" width="240" height="34" rx="12" fill="#2A5C94"/>
+        <text class="tmH" x="440" y="73" text-anchor="middle">confidence</text>
+        <text class="tmF" x="340" y="112">support / p(A)</text>
+        <text class="tmF" x="340" y="130">= orders with both / with A</text>
+        <text class="tmB" x="340" y="164">of Notebook orders,</text>
+        <text class="tmR" x="340" y="186">14.2% hold a Sticker pack</text>
+        <text class="tmN" x="340" y="222">given the first item, how</text>
+        <text class="tmN" x="340" y="238">often the second - the offer</text>
+        <line x1="566" y1="155" x2="594" y2="155" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#tmArr)"/>
+        <rect x="600" y="50" width="240" height="210" rx="12" fill="#FFFFFF" stroke="#E39B0E"/>
+        <rect x="600" y="50" width="240" height="34" rx="12" fill="#E39B0E"/>
+        <text class="tmH" x="720" y="73" text-anchor="middle">lift</text>
+        <text class="tmF" x="620" y="112">confidence / p(B)</text>
+        <text class="tmF" x="620" y="130">= support / (p(A) x p(B))</text>
+        <text class="tmB" x="620" y="164">14.2 / 9.2 (base rate of B)</text>
+        <text class="tmR" x="620" y="186">= 1.54x chance</text>
+        <text class="tmN" x="620" y="222">how much more often than</text>
+        <text class="tmN" x="620" y="238">independence predicts</text>
+        <text class="tmN" x="40" y="296">Lift on a handful of orders is noise: lib.pair_lift drops pairs under min_support = 0.002 before ranking anything.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three ratios of counts. Support is the volume, confidence is the offer, lift is the surprise. Rank by lift, but only among pairs with support.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> pair_lift without a library <span class="mini">6 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Self-join the order-line table on <code>txn_id</code>, keep each unordered pair once with a string comparison, count distinct orders per pair, and divide. That is the whole algorithm at pair level, and doing it by hand once means you will never again read a lift table without knowing exactly what the denominators are. <code>min_support</code> comes first, before ranking: a pair that appears in twelve orders can have a lift of 9 by luck, and it will sit at the top of any table sorted by lift. The 0.002 floor means a pair must appear in at least a fifth of a percent of orders before its lift is allowed to speak.</p>
+        <div class="prompt-box good"><span class="label">★ lib.pair_lift - support, confidence, lift in a dozen lines of pandas</span>def pair_lift(tx, level="product_line", min_support=0.002):
+    b = tx[["txn_id", level]].drop_duplicates()                # one row per order x line
+    n = b.txn_id.nunique()
+    item_p = b[level].value_counts() / n                          # p(A) for every line
+    m = b.merge(b, on="txn_id")
+    m = m[m[f"{level}_x"] &lt; m[f"{level}_y"]]                       # each unordered pair once
+    pairs = m.groupby([f"{level}_x", f"{level}_y"]).txn_id.nunique().rename("n").reset_index()
+    pairs["support"] = pairs.n / n
+    pairs = pairs[pairs.support &gt;= min_support]                    # the floor comes BEFORE the ranking
+    pairs["conf_x_to_y"] = pairs.support / pairs[f"{level}_x"].map(item_p)
+    pairs["lift"] = pairs.support / (pairs[f"{level}_x"].map(item_p) * pairs[f"{level}_y"].map(item_p))
+    return pairs.sort_values("lift", ascending=False).reset_index(drop=True)
+
+pairs = lib.pair_lift(txc, "product_line", min_support=0.002)
+pairs.to_csv(lib.REPORTS / "a3_bundle_candidates.csv", index=False)
+pairs.head(8).round(3)</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_pair_lift.png" alt="A fifteen by fifteen heatmap of co-purchase lift between product lines on all orders, blue scale from 0.5 to 3. Most cells sit near 1. The cells labelled with numbers at or above 1.5 are Notebook with Sticker pack.">
+          <figcaption>🔍 Click to zoom - numbers are printed only where lift reaches 1.5. At line level on five years of orders that is one cell each way; the rest of the signal is in the table.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Pair</th><th>Orders with both</th><th>Support</th><th>Confidence x to y</th><th>Lift</th></tr></thead>
+          <tbody>
+            <tr><td>Notebook + Sticker pack</td><td>1,692</td><td>0.012</td><td>0.142</td><td>1.54</td></tr>
+            <tr><td>Pen set + Sticker pack</td><td>1,841</td><td>0.013</td><td>0.138</td><td>1.49</td></tr>
+            <tr><td>Cushion + Poster</td><td>2,180</td><td>0.015</td><td>0.144</td><td>1.39</td></tr>
+            <tr><td>T-shirt + Tote</td><td>2,687</td><td>0.018</td><td>0.121</td><td>1.12</td></tr>
+            <tr><td>Mug + T-shirt</td><td>2,802</td><td>0.019</td><td>0.170</td><td>1.12</td></tr>
+            <tr><td>Notebook + Pen set</td><td>925</td><td>0.006</td><td>0.078</td><td>0.85</td></tr>
+          </tbody>
+        </table>
+        <p>Read the table with the pair the data planted in mind: the stationery trio co-occurs above chance as two pairs, notebook + sticker pack and sticker pack + pen set, while notebook + pen set sits below 1. Lift is pairwise; a three-item bundle is not the sum of its pairs, and the honest bundle offer here is "sticker pack with either", not a trio.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Attach rate vs base rate <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Lift is the analyst's number. The attach rate is the merchandiser's: given a mug is in the basket, how often is a t-shirt? Draw it next to the base rate of t-shirts in any basket and the gap is the bundle nobody is selling on purpose - customers are already assembling it more often than chance, without a prompt, a discount or a "goes well with" tile. Six pairs, two bars each.</p>
+        <div class="prompt-box good"><span class="label">★ Attach rate given the first item, against the second item's base rate</span>b = txc[["txn_id", "product_line"]].drop_duplicates()
+n = b.txn_id.nunique()
+base_rate = b.product_line.value_counts() / n * 100
+def attach(a, c):
+    with_a = set(b[b.product_line == a].txn_id)
+    return b[b.txn_id.isin(with_a) &amp; (b.product_line == c)].txn_id.nunique() / len(with_a) * 100
+combos = [("Mug", "T-shirt"), ("Poster", "Cushion"), ("Notebook", "Sticker pack"),
+          ("Sticker pack", "Pen set"), ("Tote", "T-shirt"), ("Hoodie", "Cap")]
+att = pd.DataFrame([(f"{a} -&gt; {c}", attach(a, c), base_rate[c]) for a, c in combos],
+                   columns=["pair", "attach %", "base rate %"])
+fig, ax = plt.subplots(figsize=(11, 4.5))
+x = np.arange(len(att))
+ax.bar(x - 0.2, att["attach %"], 0.4, color=lib.AMBER, label="attach rate given the first item")
+ax.bar(x + 0.2, att["base rate %"], 0.4, color=lib.NAVY_SOFT, label="base rate of the second item")
+lib.save(fig, "a3_attach_rates")
+att.round(1)</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_attach_rates.png" alt="Grouped bars for six product-line pairs. Amber bars are the attach rate given the first item, navy bars the base rate of the second item. Poster to Cushion 14.4 against 10.4, Notebook to Sticker pack 14.2 against 9.2, Sticker pack to Pen set 13.7 against 9.2, Mug to T-shirt 17.0 against 15.2, Tote to T-shirt 17.1 against 15.2. Hoodie to Cap is the one pair where the amber bar is below the navy: 7.6 against 10.6.">
+          <figcaption>🔍 Click to zoom - five gaps in the right direction and one control that goes the other way. Hoodie + cap is the pair nobody assembles, and the chart says so.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Given the first item</th><th>Attach rate</th><th>Base rate of the second</th><th>Gap</th></tr></thead>
+          <tbody>
+            <tr><td>Mug -&gt; T-shirt</td><td>17.0%</td><td>15.2%</td><td>+1.8</td></tr>
+            <tr><td>Poster -&gt; Cushion</td><td>14.4%</td><td>10.4%</td><td>+4.0</td></tr>
+            <tr><td>Notebook -&gt; Sticker pack</td><td>14.2%</td><td>9.2%</td><td>+5.0</td></tr>
+            <tr><td>Sticker pack -&gt; Pen set</td><td>13.7%</td><td>9.2%</td><td>+4.5</td></tr>
+            <tr><td>Tote -&gt; T-shirt</td><td>17.1%</td><td>15.2%</td><td>+1.9</td></tr>
+            <tr><td>Hoodie -&gt; Cap</td><td>7.6%</td><td>10.6%</td><td>-3.0</td></tr>
+          </tbody>
+        </table>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          Every "frequently bought together" tile on a large storefront is an attach rate with a base-rate check behind it. The check is what stops the tile recommending the store's best-seller next to everything; the best-seller has a high attach rate to every item because it has a high rate, full stop. Always draw the base-rate bar. Without it the chart flatters whichever product is already popular.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Basket size over time <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Count distinct product lines per order, then the distribution per year. Most Printwell baskets are a single line, every year. That is the plain statement of the cross-sell headroom: the pair lifts above are computed on the minority of orders with two or more lines, and the majority never got the chance to attach anything. A bundle programme's ceiling is the one-line share, and its progress metric is that share going down. Draw the chart before promising anything about baskets.</p>
+        <figure class="zoomable">
+          <img src="../figures/a3_basket_size.png" alt="Stacked bars per year 2020 to 2026 of the share of orders with one, two, three and four product lines. The one-line segment is the largest in every year; the two-line segment is a minority; three and four lines are thin.">
+          <figcaption>🔍 Click to zoom - most baskets are one line in every year. The headroom for cross-sell is the height of the bottom segment.</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: PREFERENCE PER MERCHANT ============ -->
+  <section class="section" id="preference">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers top line, breadth, sizing a bundle offer</span>
+      <h2>Customer preference per merchant <span class="tag concept">8 min live</span></h2>
+    </div>
+    <p class="lede">The platform view says what sells; the merchant view says what sells for whom. Every merchant has a top line, the share of its revenue that line takes, and a breadth score: how many lines it effectively sells, not how many it has listed. Two merchants with fifteen lines each can have breadth 2 and breadth 11. This is the table a merchant success team hands to each merchant, and it is the first place a "your customers like X, try Y" conversation gets its X.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Top line and breadth <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Breadth is the exponential of the Shannon entropy of a merchant's revenue shares across lines: the effective number of lines. A merchant selling fifteen lines equally scores 15; one selling almost only mugs scores just above 1. Counting lines with any sale would give both a 15 and tell the success team nothing. The <code>where(shares &gt; 0, 1)</code> guard keeps <code>log(0)</code> out of the sum without dropping rows.</p>
+        <div class="prompt-box good"><span class="label">★ Top line, its share, and the effective number of lines sold</span>mp = txc.groupby(["merchant_id", "product_line"]).revenue.sum().unstack(fill_value=0)
+shares = mp.div(mp.sum(axis=1), axis=0)
+pref = pd.DataFrame({
+    "top_line": shares.idxmax(axis=1),
+    "top_line_share": shares.max(axis=1).round(3),
+    "breadth (effective lines)": np.exp(-(shares * np.log(shares.where(shares &gt; 0, 1))).sum(axis=1)).round(2),
+    "revenue": mp.sum(axis=1).round(0),
+})
+pref = pref.join(dims["merchant"].set_index("merchant_id")[["server_id", "segment", "vertical", "custom_share"]])
+pref.sort_values("revenue", ascending=False).to_csv(lib.REPORTS / "a3_merchant_preference.csv")
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.scatter(pref.custom_share, pref["breadth (effective lines)"], s=np.sqrt(pref.revenue) / 6 + 8,
+           c=[lib.server_color(s) for s in pref.server_id], alpha=.75, edgecolor="white")
+lib.save(fig, "a3_merchant_preference")
+pref.sort_values("revenue", ascending=False).head(10)</div>
+        <figure class="zoomable">
+          <img src="../figures/a3_merchant_preference.png" alt="Scatter of 140 merchants: customisation share on the x axis, effective number of lines sold on the y axis, bubble size revenue, key-server merchants in amber and the rest in soft navy. Large enterprise merchants cluster at breadth 9 to 12; smaller bubbles spread lower.">
+          <figcaption>🔍 Click to zoom - bubble = revenue, amber = merchants on S07 and S08. The biggest merchants sell broadly; the narrow ones are the cross-sell conversations.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Merchant</th><th>Top line</th><th>Top line share</th><th>Breadth</th><th>Server</th><th>Vertical</th></tr></thead>
+          <tbody>
+            <tr><td>M020</td><td>Blanket</td><td>29.4%</td><td>9.24</td><td>S01</td><td>nonprofit</td></tr>
+            <tr><td>M017</td><td>Backpack</td><td>22.5%</td><td>11.51</td><td>S04</td><td>sports club</td></tr>
+            <tr><td>M014</td><td>Blanket</td><td>25.6%</td><td>10.46</td><td>S06</td><td>creator</td></tr>
+            <tr><td>M030</td><td>Backpack</td><td>23.3%</td><td>10.39</td><td>S03</td><td>corporate gifting</td></tr>
+            <tr><td>M041</td><td>Backpack</td><td>24.5%</td><td>10.03</td><td>S07</td><td>sports club</td></tr>
+          </tbody>
+        </table>
+        <p>The top five by revenue are all enterprise merchants with breadth between 9 and 12: they already sell across the catalogue and the conversation with them is about depth, not breadth. The file <code>reports/a3_merchant_preference.csv</code> carries all 140, and the ones that matter to a success team are further down: high revenue on one line, breadth under 3, and a pair-lift table that says what their customers buy elsewhere.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> From lift to a bundle offer <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A lift of 1.5 is not a business case. Sizing one honestly takes three numbers you already have and one you must decide. The attach gap - attach rate minus base rate - is the share of first-item orders that already carry the second above chance, and the most a prompt can plausibly move is some fraction of the orders that do not. Multiply the orders with the first item by the gap you expect to close, then by the margin of the second item, and you have an annual profit figure for the bundle before any discount. Then subtract the discount on every order that would have bought both anyway; that is the cost of bundling, and it is usually most of the benefit if the discount is generous.</p>
+        <ul>
+          <li>Size it on the notebook + sticker pack gap of 5.0 points and the 1,692 orders that already hold both, not on the lift, which has no units.</li>
+          <li>Decide the target before launch: attach rate on the first item, measured monthly, against a control group of stores that did not get the bundle tile.</li>
+          <li>Watch two things after launch: does the attach rate rise, and does the one-line share of baskets in Part 2 fall? If the first moves and the second does not, the bundle is cannibalising two-line baskets rather than creating them.</li>
+          <li>Re-run <code>lib.pair_lift</code> on post-launch orders only. A bundle that works shows up as a higher lift on the pair; one that only discounts shows the same lift at a lower margin.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Rebuild the products notebook <span class="tag demo">★ 18 min · everyone builds</span></h2>
+    </div>
+    <p class="lede">Open <code>notebooks/a3_products_and_baskets.ipynb</code>, run it once, then rebuild each section against the shared reader. Same seed, same 1,121 SKUs, same lift table.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Load and restrict.</strong> <code>dedupe=True</code>, drop the partial month, and make a <code>full_years</code> frame for 2020-2025. Print the counts of categories, lines and SKUs sold.</p></div>
+      <div class="step"><p><strong>Share by category.</strong> Groupby year and category, divide each year by its total, stackplot ordered by the 2025 share. Check that every row of the table sums to 100.</p></div>
+      <div class="step"><p><strong>Slope chart.</strong> Share per line in 2021 and 2025; amber where 2025 is under 80 percent of 2021. Label every line on the chart itself.</p></div>
+      <div class="step"><p><strong>Pareto and owner.</strong> Rank SKUs by profit, cumulate, find where 80 percent is crossed. Then the owner table: SKUs, margin, profit share. It should read 36.6 against 44.9 percent.</p></div>
+      <div class="step"><p><strong>Owner over time.</strong> Margin by owner per year and merchant-SKU share per server. Confirm the margin gap holds in every year, not just on average.</p></div>
+      <div class="step"><p><strong>Pairs.</strong> <code>lib.pair_lift</code> with <code>min_support=0.002</code>, write the bundle-candidate file, draw the lift matrix. Try <code>min_support=0</code> once and watch what climbs to the top.</p></div>
+      <div class="step"><p><strong>Attach rates and basket size.</strong> The six-pair attach chart with base rates, then lines per order per year. Say the one-line share out loud; that is the headroom.</p></div>
+      <div class="step"><p><strong>Preference per merchant.</strong> Top line, top-line share, breadth as effective lines, joined to the merchant dimension. Write the CSV a success team can open.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The check that keeps you honest</strong>
+      Rerun <code>python3 analysis/nbgen.py notebooks/src/a3_products_and_baskets.py</code>. A failed run leaves no notebook and no figures. Then open <code>reports/a3_bundle_candidates.csv</code> and read the bottom rows too: pairs below lift 1 are as real as the ones above it, and a bundle table that only shows winners has been filtered by someone.
+    </div>
+  </section>
+
+  <!-- ============ EXERCISE ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 45 min</span></h2>
+    </div>
+    <ul>
+      <li>Take any catalogue you work with and draw share by top-level category per year next to absolute revenue per year. Write one sentence per category that is true of the share chart and false of the absolute one.</li>
+      <li>Run <code>pair_lift</code> on your own orders at whatever level you have. Once with <code>min_support=0</code>, once with a floor. Note which pairs vanished from the top ten and how many orders each of them had.</li>
+      <li>Compute breadth as effective lines for your merchants, stores or accounts. Find the three with the highest revenue and breadth under 3, and write down what a cross-sell conversation with each would open with.</li>
+    </ul>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session draws on</h2>
+    </div>
+    <p class="lede">Product-mix and basket analysis are standard retail-analytics craft rather than a certified course. The working core drawn on here:</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Agrawal, Imielinski and Swami - association rules: support, confidence, lift and the minimum-support floor</span><span class="note">Part 2 · lib.pair_lift by hand</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">mlxtend - apriori and association_rules, the library route to the same measures</span><span class="note">Named as the alternative; not used, so the denominators stay visible</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">The Pareto principle applied to SKUs - cumulative profit share by rank, the long tail as a catalogue decision</span><span class="note">Part 1 · the Pareto curve and the owner table</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Cole Nussbaumer Knaflic, Storytelling with Data - slope charts, direct labelling, one colour for the lines that matter</span><span class="note">Part 1 · lines that fell</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · With no support floor, the top of your lift table is a pair with lift 9 that appears in eleven orders. What do you do with it?</p>
+      <button class="qopt" type="button">A · Lead the bundle recommendation with it - lift 9 is the strongest signal in the data</button>
+      <button class="qopt" type="button">B · Drop it - set min_support first, then rank; a lift on eleven orders is chance with a decimal point</button>
+      <button class="qopt" type="button">C · Average it with the next pair to smooth the noise</button>
+      <p class="qwhy">Lift divides by two small probabilities, so a pair that co-occurs a handful of times by luck gets an enormous number. The floor comes before the ranking. At line level on 145,640 orders the honest maximum is around 1.5, on pairs with over a thousand orders each.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Drinkware revenue rose every year from 2020 to 2025. Its share of revenue fell from 25.9 to 16.8 percent. Which chart goes in front of the chairman, and why?</p>
+      <button class="qopt" type="button">A · The absolute chart - it is the one that is true</button>
+      <button class="qopt" type="button">B · Neither - the two disagree, so the data is unreliable</button>
+      <button class="qopt" type="button">C · Both, absolute first then share - they answer different questions, "did we grow" and "did we shift", and both are true</button>
+      <p class="qwhy">Absolute and share never disagree; they measure different things. Absolute stops anyone thinking the category shrank. Share stops anyone thinking it is still the future. A page that shows only one is choosing the reader's conclusion for them.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · A merchant creates a customised mug. The catalogue team proposes filing it as a new product line called "M041 Mug". Why is that a mistake?</p>
+      <button class="qopt" type="button">A · It destroys the owner axis - the base line and who owns the variant are two facts, and every platform-vs-merchant comparison needs both columns intact</button>
+      <button class="qopt" type="button">B · Product lines are limited to fifteen in the warehouse</button>
+      <button class="qopt" type="button">C · It is fine as long as the SKU id is unique</button>
+      <p class="qwhy">The margin-by-owner chart, the price ladder, the customised share per server and the retention-by-customisation cut in a5 all join on product_line and owner as separate columns. Fold the owner into the line name and the base line disappears from the merchant's SKUs; the comparison can never be recomputed.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Analyst session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Walk the levels in order</b><span>Category (5), line (15), SKU (1,121 sold), then the owner fork. A category total hides a dying line; a line total hides which owner earns.</span></div>
+      <div class="cheat-item"><b>Share, not absolute</b><span>Divide each year by its total. Absolute says "did we grow", share says "did we shift". Show both, in that order.</span></div>
+      <div class="cheat-item"><b>The Printwell mix</b><span>2020 to 2025: bags 12.0 to 26.9 percent, drinkware 25.9 to 16.8, home 32.1 to 25.0, stationery fading since 2023.</span></div>
+      <div class="cheat-item"><b>Owner is a column</b><span>98 platform SKUs at 36.6 percent margin make 52.5 percent of profit; 1,023 merchant SKUs at 44.9 percent make 47.5. Keep base line and owner separate.</span></div>
+      <div class="cheat-item"><b>Three ratios of counts</b><span>Support = both / all orders. Confidence = both / with A. Lift = confidence / p(B). No library needed; the denominators stay visible.</span></div>
+      <div class="cheat-item"><b>Floor before rank</b><span>min_support first, lift second. A lift of 9 on eleven orders is chance. At line level the honest ceiling is about 1.5 on pairs with over a thousand orders.</span></div>
+      <div class="cheat-item"><b>Attach rate vs base rate</b><span>Always draw the base-rate bar. The gap is the bundle nobody sells on purpose; a control pair that goes the other way proves the chart can say no.</span></div>
+      <div class="cheat-item"><b>Breadth is effective lines</b><span>exp of the entropy of revenue shares, not a count of lines with any sale. Top line + share + breadth is the table a merchant success team hands over.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Analyst session 3 of 5 · learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a2-follow-the-margin.html">← Prev: Follow the margin</a> &nbsp;·&nbsp; <a href="../index.html">All sessions</a> &nbsp;·&nbsp; <a href="a4-merchants-and-stores.html">Next: Merchants and stores →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

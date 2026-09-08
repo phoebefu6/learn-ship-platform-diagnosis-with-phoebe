@@ -1,0 +1,138 @@
+merchant_id,top_line,top_line_share,breadth (effective lines),revenue,server_id,segment,vertical,custom_share
+M020,Blanket,0.294,9.24,904163.0,S01,Enterprise,nonprofit,0.22
+M017,Backpack,0.225,11.51,812287.0,S04,Enterprise,sports club,0.333
+M014,Blanket,0.256,10.46,749094.0,S06,Enterprise,creator,0.291
+M030,Backpack,0.233,10.39,563949.0,S03,Enterprise,corporate gifting,0.495
+M074,Backpack,0.276,10.66,445829.0,S06,Enterprise,creator,0.144
+M081,Hoodie,0.197,10.78,436785.0,S01,Enterprise,corporate gifting,0.501
+M041,Backpack,0.245,10.03,376367.0,S07,Enterprise,sports club,0.501
+M062,Backpack,0.277,10.07,372290.0,S08,Enterprise,nonprofit,0.437
+M086,Hoodie,0.253,9.7,357426.0,S03,Enterprise,cafe,0.486
+M102,Backpack,0.306,9.87,349788.0,S02,Enterprise,corporate gifting,0.375
+M056,Bottle,0.157,11.3,342859.0,S07,Enterprise,creator,0.357
+M018,Hoodie,0.221,10.63,314113.0,S04,Mid,creator,0.438
+M026,Hoodie,0.228,12.17,298984.0,S07,Enterprise,corporate gifting,0.515
+M097,Blanket,0.363,4.76,266983.0,S08,Enterprise,sports club,0.848
+M015,Backpack,0.161,12.12,261266.0,S03,Mid,creator,0.021
+M101,T-shirt,0.202,10.01,259472.0,S09,Enterprise,creator,0.637
+M055,Blanket,0.216,11.12,254324.0,S06,Mid,cafe,0.721
+M022,Hoodie,0.326,6.45,252676.0,S04,Mid,creator,0.724
+M034,Backpack,0.266,9.7,220482.0,S01,Mid,creator,0.783
+M094,Cushion,0.185,10.54,213739.0,S09,Enterprise,school,0.326
+M043,Hoodie,0.336,9.11,183679.0,S03,Mid,creator,0.587
+M008,Backpack,0.173,12.01,183659.0,S03,Mid,cafe,0.033
+M059,Tumbler,0.206,10.4,182900.0,S04,Mid,school,0.49
+M003,Backpack,0.222,9.97,178359.0,S03,Mid,nonprofit,0.537
+M054,Hoodie,0.269,9.71,178002.0,S08,Mid,cafe,0.312
+M116,Backpack,0.291,9.09,170321.0,S09,Enterprise,cafe,0.391
+M060,Backpack,0.165,11.63,140555.0,S09,Mid,creator,0.094
+M005,Hoodie,0.218,11.55,138052.0,S01,Mid,corporate gifting,0.169
+M113,Backpack,0.251,11.0,129672.0,S07,Enterprise,nonprofit,0.05
+M053,Hoodie,0.206,11.56,128513.0,S01,Mid,cafe,0.259
+M057,Blanket,0.397,5.79,127245.0,S07,Enterprise,creator,0.792
+M088,Backpack,0.177,11.5,126441.0,S09,Mid,creator,0.117
+M006,Backpack,0.185,11.81,121683.0,S06,Mid,sports club,0.111
+M028,Backpack,0.308,9.73,114748.0,S08,Mid,nonprofit,0.332
+M091,Backpack,0.144,11.97,90991.0,S03,Mid,creator,0.212
+M040,Backpack,0.184,10.91,89760.0,S04,Mid,corporate gifting,0.563
+M119,Blanket,0.374,8.51,84763.0,S10,Mid,creator,0.423
+M107,Backpack,0.199,11.71,82306.0,S07,Enterprise,creator,0.083
+M071,Backpack,0.206,11.26,77889.0,S07,Mid,creator,0.243
+M105,Blanket,0.177,10.54,71912.0,S07,Enterprise,creator,0.233
+M090,Backpack,0.252,10.83,70531.0,S07,Mid,school,0.218
+M016,Blanket,0.338,8.39,63204.0,S03,SMB,school,0.537
+M127,T-shirt,0.221,10.77,62456.0,S02,Mid,cafe,0.194
+M078,Hoodie,0.214,9.63,62258.0,S08,Mid,creator,0.487
+M118,Hoodie,0.235,9.91,59800.0,S03,Mid,cafe,0.583
+M058,Backpack,0.214,9.45,58462.0,S08,Mid,creator,0.683
+M114,Cushion,0.153,11.68,56883.0,S05,Mid,school,0.471
+M108,Hoodie,0.278,10.11,56878.0,S06,Mid,school,0.231
+M103,Backpack,0.249,11.07,55509.0,S03,Mid,school,0.662
+M010,Hoodie,0.307,9.55,46694.0,S06,SMB,creator,0.553
+M004,Hoodie,0.246,10.47,45487.0,S02,SMB,nonprofit,0.377
+M120,Backpack,0.187,10.78,44093.0,S05,Mid,cafe,0.248
+M012,Backpack,0.177,11.36,41946.0,S05,SMB,creator,0.201
+M009,Backpack,0.221,10.89,40231.0,S05,SMB,creator,0.158
+M037,Backpack,0.404,8.36,38352.0,S06,SMB,corporate gifting,0.266
+M036,Backpack,0.256,11.0,37617.0,S04,SMB,corporate gifting,0.412
+M045,Hoodie,0.229,9.52,37090.0,S05,SMB,sports club,0.426
+M124,Backpack,0.239,9.46,36621.0,S10,Mid,corporate gifting,0.402
+M035,Hoodie,0.237,9.96,35190.0,S03,SMB,nonprofit,0.413
+M023,Hoodie,0.208,11.14,34609.0,S02,SMB,cafe,0.176
+M125,Hoodie,0.249,9.16,34169.0,S10,Mid,creator,0.523
+M029,Blanket,0.183,10.81,34119.0,S07,SMB,cafe,0.542
+M089,Hoodie,0.227,11.31,32212.0,S09,Mid,corporate gifting,0.319
+M031,Backpack,0.156,12.84,31543.0,S08,Mid,cafe,0.296
+M092,Hoodie,0.278,9.41,31029.0,S04,SMB,corporate gifting,0.316
+M121,Backpack,0.215,11.15,30390.0,S03,Mid,corporate gifting,0.101
+M104,Backpack,0.218,11.79,30271.0,S08,Mid,school,0.21
+M085,Blanket,0.231,10.12,29555.0,S01,SMB,cafe,0.255
+M087,Backpack,0.231,10.61,28689.0,S09,SMB,creator,0.529
+M132,T-shirt,0.278,8.94,27651.0,S10,Mid,creator,0.499
+M025,Backpack,0.256,10.91,26508.0,S05,SMB,nonprofit,0.159
+M112,Blanket,0.219,11.07,26225.0,S02,SMB,creator,0.28
+M067,Hoodie,0.187,10.95,26223.0,S09,SMB,nonprofit,0.344
+M052,Cushion,0.179,11.0,25518.0,S05,SMB,corporate gifting,0.286
+M110,Backpack,0.287,10.3,25403.0,S05,SMB,cafe,0.446
+M049,Poster,0.139,12.63,24910.0,S08,Mid,corporate gifting,0.311
+M115,Backpack,0.253,8.98,24633.0,S09,SMB,creator,0.535
+M082,Cushion,0.17,11.55,24491.0,S08,SMB,sports club,0.196
+M032,Hoodie,0.312,9.37,24365.0,S08,SMB,corporate gifting,0.255
+M001,Hoodie,0.162,11.6,23611.0,S03,SMB,creator,0.268
+M099,Backpack,0.18,10.89,22511.0,S05,SMB,cafe,0.132
+M068,Blanket,0.182,11.26,21530.0,S08,Mid,creator,0.36
+M044,Blanket,0.254,8.72,20448.0,S07,SMB,cafe,0.794
+M095,Tumbler,0.181,10.44,20304.0,S07,Mid,creator,0.282
+M042,Backpack,0.271,8.85,20212.0,S07,SMB,school,0.448
+M050,T-shirt,0.131,12.39,19873.0,S05,Mid,nonprofit,0.248
+M072,Blanket,0.193,10.53,19853.0,S02,Mid,school,0.593
+M027,Blanket,0.217,10.22,19553.0,S07,SMB,school,0.292
+M073,Backpack,0.262,9.12,18916.0,S08,SMB,creator,0.801
+M051,Backpack,0.371,7.67,17890.0,S07,SMB,creator,0.19
+M070,Backpack,0.191,11.52,17357.0,S05,SMB,creator,0.131
+M123,Cushion,0.203,10.63,17027.0,S10,SMB,cafe,0.418
+M024,Hoodie,0.411,8.36,16629.0,S04,SMB,school,0.307
+M065,Backpack,0.322,7.84,16487.0,S08,SMB,corporate gifting,0.661
+M077,Backpack,0.138,12.46,16432.0,S08,SMB,school,0.208
+M075,Backpack,0.248,9.67,16104.0,S03,SMB,creator,0.783
+M061,Cushion,0.169,11.66,15856.0,S07,SMB,cafe,0.278
+M133,Backpack,0.215,11.84,15538.0,S05,Mid,school,0.207
+M039,Backpack,0.137,11.89,14876.0,S06,SMB,cafe,0.256
+M098,Backpack,0.197,11.54,14760.0,S03,SMB,sports club,0.35
+M066,Backpack,0.47,6.87,14742.0,S08,SMB,creator,0.662
+M111,Backpack,0.215,8.92,13692.0,S08,SMB,cafe,0.848
+M048,Blanket,0.241,9.24,13263.0,S03,SMB,creator,0.749
+M080,Cushion,0.17,11.46,13204.0,S07,SMB,nonprofit,0.366
+M109,Hoodie,0.204,10.18,13014.0,S08,SMB,corporate gifting,0.498
+M129,Blanket,0.212,10.73,12918.0,S03,SMB,school,0.334
+M106,Backpack,0.33,7.77,12635.0,S07,SMB,cafe,0.666
+M093,Backpack,0.248,11.04,12517.0,S09,SMB,sports club,0.08
+M021,Hoodie,0.146,11.61,12466.0,S02,SMB,corporate gifting,0.357
+M019,Hoodie,0.218,10.52,12362.0,S04,SMB,nonprofit,0.349
+M100,Blanket,0.402,7.14,11285.0,S07,SMB,creator,0.387
+M096,Hoodie,0.246,10.87,10682.0,S09,SMB,cafe,0.476
+M047,Blanket,0.255,8.53,9367.0,S02,SMB,creator,0.766
+M130,Backpack,0.317,8.97,8514.0,S10,SMB,nonprofit,0.268
+M064,Hoodie,0.381,8.26,7958.0,S04,SMB,nonprofit,0.131
+M063,Hoodie,0.213,10.19,6293.0,S08,SMB,creator,0.336
+M136,Hoodie,0.207,10.18,6246.0,S02,Mid,creator,0.81
+M134,Cushion,0.323,8.13,6041.0,S06,Mid,corporate gifting,0.726
+M138,Cushion,0.19,9.85,4244.0,S03,Mid,corporate gifting,0.478
+M135,Hoodie,0.261,7.76,4058.0,S02,SMB,corporate gifting,0.449
+M137,Hoodie,0.315,8.35,3939.0,S02,SMB,corporate gifting,0.097
+M131,Tumbler,0.226,9.94,3266.0,S10,SMB,corporate gifting,0.584
+M069,Bottle,0.168,11.07,2903.0,S08,SMB,creator,0.765
+M117,Backpack,0.316,7.76,2571.0,S07,SMB,school,0.395
+M011,Backpack,0.36,7.23,2429.0,S01,SMB,sports club,0.505
+M007,Blanket,0.428,7.31,2380.0,S04,SMB,school,0.072
+M046,Blanket,0.221,10.48,2231.0,S08,SMB,school,0.244
+M139,Hoodie,0.3,7.13,2158.0,S02,Mid,school,0.487
+M126,Backpack,0.296,8.59,1992.0,S01,SMB,creator,0.38
+M002,Hoodie,0.234,8.21,1728.0,S01,SMB,cafe,0.773
+M033,Backpack,0.213,9.26,1624.0,S08,Mid,corporate gifting,0.154
+M084,Poster,0.317,6.9,1405.0,S08,Mid,corporate gifting,0.761
+M038,Backpack,0.322,6.98,1165.0,S07,SMB,creator,0.611
+M013,Tumbler,0.266,7.86,848.0,S02,SMB,sports club,0.513
+M083,Blanket,0.472,3.86,634.0,S01,SMB,school,0.691
+M128,Cushion,0.351,5.68,364.0,S03,Mid,creator,0.191
+M076,Cap,0.661,2.95,182.0,S07,SMB,creator,0.05

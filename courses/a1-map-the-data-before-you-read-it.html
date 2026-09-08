@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Analyst session 1 of 5. Grain and hierarchy, the data-availability heatmap, key integrity and the defect scan - the data map every five-year diagnosis stands on, built in pandas on the course dataset.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Map the data before you read it - learn ship platform diagnosis with phoebe">
+<meta property="og:description" content="Analyst session 1 of 5. Grain, coverage heatmap, key integrity, duplicate and guest-id defects - in pandas, on five years of platform data.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/courses/a1-map-the-data-before-you-read-it.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Map the data before you read it - learn ship platform diagnosis with phoebe">
+<meta name="twitter:description" content="Grain, coverage heatmap, key integrity, duplicate and guest-id defects - in pandas, on five years of platform data.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Analyst session 1 · Map the data before you read it - learn ship platform diagnosis with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ship-platform-diagnosis-with-phoebe</a> / Analyst session 1 of 5</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Analyst track · Session 1 of 5</div>
+    <h1>Map the data <span class="accent">before</span> you read it</h1>
+    <p class="sub">Five analyst sessions, one running artifact: a five-year diagnosis of the Printwell platform that ends in a chairman deck. Before a single trend chart, today builds the map: what tables exist, at what grain, for which months, joined how, and where they lie. You will produce the data-availability heatmap, the key-integrity report and the defect scan that every later chart stands on - and discover that two of the nine questions the chairman asked cannot be answered by any table the company has.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Analyst track</span>
+      <span class="chip audience">Data analysts · pandas</span>
+      <span class="chip audience">Notebook: a1_data_map.ipynb</span>
+      <span class="chip time">Start here</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-16 · Grain + coverage</span>
+      <span class="a3" style="flex:8">16-40 · Build the map</span>
+      <span class="a4" style="flex:2">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where this track goes</h2>
+    </div>
+    <p class="lede">Today (a1) maps the data. a2 follows the margin through five years of transactions and names the mechanism behind the 2024 break. a3 walks the product hierarchy and the baskets. a4 measures merchants and stores - acquisition, survival, dormancy. a5 does customer retention with frozen history, the promotion double edge, the two-month login funnel, and assembles the canon numbers the chairman pages quote. Everything runs on the repo's seeded synthetic dataset (<code>data/generate_data.py</code>, planted truths documented at the top of the file) through one shared reader, <code>analysis/lib.py</code>, so a schema change lands in exactly one place. Work along in <code>notebooks/a1_data_map.ipynb</code>.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill inkpill">Sources covered</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      A coverage heatmap that says which table can answer which question and until when. A key-integrity table by year that shows two identity gaps growing. A defect scan that names a bad load by server and half-year. And the question-availability table that turns "we cannot answer that" from a shrug into a data-collection recommendation with a date on it.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: GRAIN AND HIERARCHY ============ -->
+  <section class="section" id="grain">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers grain, hierarchy and the join map</span>
+      <h2>Say the grain, draw the joins <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">One row of <code>fact_transaction</code> is an order LINE: one SKU inside one order. Revenue, cost and profit are additive at the line. Orders are distinct <code>txn_id</code>. Customers are distinct <code>customer_id</code> with blanks excluded, because guest checkout leaves the field empty. Every chart states its grain in the title, because most dashboard disagreements are two people counting different things and calling them the same name.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An entity join map. In the centre, fact_transaction at order-line grain. Arrows out to dim_server, dim_merchant, dim_store, dim_customer, dim_product and dim_promotion, each labelled with its key. fact_login sits apart, joined to dim_customer. known_events sits apart with no join at all, labelled dates only.">
+        <style>
+          .jmT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .jmW { font: 700 12px Inter, sans-serif; fill: #FFFFFF; }
+          .jmK { font: 700 11.5px Inter, sans-serif; fill: #14202E; }
+          .jmN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+          .jmE { font: 600 10px Inter, sans-serif; fill: #163E6A; }
+        </style>
+        <defs>
+          <marker id="jmArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A9C1DE"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="320" fill="#FAFBFD"/>
+        <text class="jmT" x="40" y="28">The join map - one fact, six dimensions, two loners</text>
+        <rect x="340" y="120" width="200" height="60" rx="10" fill="#0B2545"/>
+        <text class="jmW" x="440" y="145" text-anchor="middle">fact_transaction</text>
+        <text class="jmW" x="440" y="165" text-anchor="middle" style="font-weight:400;font-size:11px">grain: order line · 2020-2026</text>
+        <rect x="40" y="60" width="150" height="34" rx="8" fill="#163E6A"/><text class="jmW" x="115" y="82" text-anchor="middle">dim_server</text>
+        <rect x="40" y="134" width="150" height="34" rx="8" fill="#163E6A"/><text class="jmW" x="115" y="156" text-anchor="middle">dim_merchant</text>
+        <rect x="40" y="208" width="150" height="34" rx="8" fill="#163E6A"/><text class="jmW" x="115" y="230" text-anchor="middle">dim_store</text>
+        <rect x="690" y="60" width="150" height="34" rx="8" fill="#163E6A"/><text class="jmW" x="765" y="82" text-anchor="middle">dim_product</text>
+        <rect x="690" y="134" width="150" height="34" rx="8" fill="#2A5C94"/><text class="jmW" x="765" y="156" text-anchor="middle">dim_customer</text>
+        <rect x="690" y="208" width="150" height="34" rx="8" fill="#A9C1DE"/><text class="jmK" x="765" y="230" text-anchor="middle">dim_promotion</text>
+        <line x1="338" y1="140" x2="192" y2="80" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <line x1="338" y1="150" x2="192" y2="151" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <line x1="338" y1="160" x2="192" y2="222" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <line x1="542" y1="140" x2="688" y2="80" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <line x1="542" y1="150" x2="688" y2="151" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <line x1="542" y1="160" x2="688" y2="222" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <text class="jmE" x="262" y="102" text-anchor="middle">server_id</text>
+        <text class="jmE" x="262" y="144" text-anchor="middle">merchant_id</text>
+        <text class="jmE" x="262" y="204" text-anchor="middle">store_id</text>
+        <text class="jmE" x="618" y="102" text-anchor="middle">sku_id</text>
+        <text class="jmE" x="618" y="144" text-anchor="middle">customer_id (blank = guest)</text>
+        <text class="jmE" x="618" y="204" text-anchor="middle">promo_id (orphans pre-2025)</text>
+        <rect x="690" y="262" width="150" height="34" rx="8" fill="#E9F0F8" stroke="#A9C1DE"/><text class="jmK" x="765" y="284" text-anchor="middle">fact_login</text>
+        <line x1="765" y1="260" x2="765" y2="170" stroke="#A9C1DE" stroke-width="1.5" marker-end="url(#jmArr)"/>
+        <text class="jmN" x="682" y="286" text-anchor="end">2026-07 onward, on customer_id</text>
+        <rect x="40" y="262" width="150" height="34" rx="8" fill="#FDF1DA" stroke="#E39B0E"/><text class="jmK" x="115" y="284" text-anchor="middle">known_events</text>
+        <text class="jmN" x="200" y="286">9 remembered rows, no key - dates only</text>
+        <text class="jmN" x="440" y="210" text-anchor="middle">revenue, cost, profit, qty, unit_price, unit_cost, channel, ts</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the join map. Two tables stand apart: one starts too late, one has no key at all.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span> One reader, one truth <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Every notebook in the track imports the same module. Nothing in <code>notebooks/</code> parses a CSV on its own. This is not tidiness; it is how five notebooks stay consistent when a column is renamed or a dedupe rule changes - two scripts parsing the same file with their own logic are two sources of truth wearing a costume.</p>
+        <div class="prompt-box good"><span class="label">★ Load everything through the shared reader</span>import sys
+sys.path.insert(0, "../analysis")
+import lib
+lib.style()                              # the course palette for every chart
+tx = lib.load_transactions()             # raw today: we want to SEE the defect first
+lg = lib.load_logins()
+dims = lib.load_dims()                   # server, merchant, store, customer, product, promotion
+events = lib.load_known_events()
+print(f"{len(tx):,} lines | {tx.txn_id.nunique():,} orders | {tx.ts.min().date()} .. {tx.ts.max().date()}")</div>
+        <p>Later sessions load with <code>dedupe=True</code>. Today you load raw on purpose, so the duplicate defect shows up in your own scan instead of being silently removed by a flag you did not know existed.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The grain table <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Write the grain table before the first chart. It is the single page a new analyst reads to avoid every classic mistake on this dataset.</p>
+        <table class="clean">
+          <thead><tr><th>Table</th><th>Grain</th><th>Date column</th><th>Keys out</th></tr></thead>
+          <tbody>
+            <tr><td>fact_transaction</td><td>order line</td><td>ts</td><td>server, merchant, store, customer, sku, promo</td></tr>
+            <tr><td>fact_login</td><td>login session</td><td>login_ts</td><td>customer, server, merchant</td></tr>
+            <tr><td>dim_promotion</td><td>campaign</td><td>start_date</td><td>merchant (optional)</td></tr>
+            <tr><td>dim_customer</td><td>customer</td><td>signup_month</td><td>store, merchant, server</td></tr>
+            <tr><td>dim_store</td><td>store</td><td>open_month</td><td>merchant, server</td></tr>
+            <tr><td>dim_merchant</td><td>merchant</td><td>onboard_month</td><td>server</td></tr>
+            <tr><td>dim_product</td><td>SKU</td><td>-</td><td>merchant (when owner = merchant)</td></tr>
+            <tr><td>known_events</td><td>remembered event</td><td>event_date</td><td>scope text, no key</td></tr>
+          </tbody>
+        </table>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A retailer's finance and marketing teams reported repeat-purchase rates of 31 percent and 44 percent for the same quarter. Both were right: finance counted orders per customer id, marketing counted sessions per device. Neither had written the grain down. The reconciliation took three weeks; the grain table takes twenty minutes.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> The owner axis on products <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><code>dim_product</code> carries an <code>owner</code> column: <code>platform</code> for the 98 standard SKUs and <code>merchant</code> for the 1,075 customised SKUs each merchant created from the platform's lines. Same category, same product line, different SKU, different price and cost. This axis is what makes the customisation question in a3 and a5 answerable at all - if the platform had stored customised orders under the base SKU, the finding that customised goods retain customers better could never have been computed. When you design a catalogue, keep the base line and the owner separate, and never overwrite one with the other.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: COVERAGE ============ -->
+  <section class="section" id="coverage">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the availability heatmap</span>
+      <h2>Coverage before analysis <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">The single most important chart before any analysis: rows per table per month, as a presence heatmap. A five-year question can only be answered by a table with five years. Two of Printwell's tables cannot carry the chairman's questions, and it is far better to know that in the first hour than in the last slide.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Build the coverage heatmap <span class="mini">6 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <div class="prompt-box good"><span class="label">★ Rows per table per month - the shared helper does the reindexing</span>frames = {
+    "fact_transaction": tx.assign(d=tx.ts),
+    "fact_login": lg.assign(d=lg.login_ts),
+    "dim_promotion": dims["promotion"].assign(d=pd.to_datetime(dims["promotion"].start_date)),
+    "dim_customer (signups)": dims["customer"].assign(d=pd.to_datetime(dims["customer"].signup_month)),
+    "dim_merchant (onboardings)": dims["merchant"].assign(d=pd.to_datetime(dims["merchant"].onboard_month)),
+    "dim_store (openings)": dims["store"].assign(d=pd.to_datetime(dims["store"].open_month)),
+    "known_events": events.assign(d=events.event_date),
+}
+cov = lib.coverage(frames, {k: "d" for k in frames})   # months x tables, zero-filled to 2020-01 .. today
+present = (cov &gt; 0).T.astype(int)</div>
+        <figure class="zoomable">
+          <img src="../figures/a1_coverage_heatmap.png" alt="Heatmap of data availability by month for seven tables from 2020 to 2026. fact_transaction and dim_customer cover 79 of 81 months; fact_login covers 3 of 81; dim_promotion covers 21 of 81 starting January 2025; known_events has 9 scattered months.">
+          <figcaption>🔍 Click to zoom - navy means the table has rows that month. Two rows are mostly grey.</figcaption>
+        </figure>
+        <p><strong>fact_login</strong> has about two months: login analytics was switched on 2026-07-01. <strong>dim_promotion</strong> starts 2025-01 even though order lines have carried a <code>promo_id</code> since 2020 - the promotion module launched late, and every earlier id points at nothing. Neither gap is dropped; both are filed as data-collection recommendations with a date, in c3.</p>
+        <div class="callout tip">
+          <strong>Read the sparse rows honestly</strong>
+          Merchant onboardings and store openings are sparse in 2024-2026 not because the tables are broken but because acquisition slowed. A coverage heatmap shows presence, not health; distinguishing the two is the first judgement call of the analysis, and a4 makes it with the acquisition chart.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Presence is not completeness <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A month can have rows and still be incomplete: a table that was backfilled for the last 18 months only, a column added in 2023 and null before, a server whose feed dropped for a week. Three cheap follow-ups after the heatmap:</p>
+        <ul>
+          <li>Rows per month per server (or whatever your unit is): a unit that vanishes for a month is a feed outage, and it will look like a demand collapse in every later chart.</li>
+          <li>Null share per column per year: a column that is 100 percent null before a date has a start date, and every analysis using it inherits that date.</li>
+          <li>Row count against a trusted external total (finance's booked revenue per quarter): the reconciliation catches both duplicates and missing loads in one pass.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: JOINS AND DEFECTS ============ -->
+  <section class="section" id="defects">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers key integrity + the defect scan</span>
+      <h2>Do the joins hold, and where does the data lie? <span class="tag concept">9 min live</span></h2>
+    </div>
+    <p class="lede">Integrity by year, not overall. A join that resolves 95 percent of rows overall can resolve 100 percent in 2020 and 80 percent in 2026, and the trend is the finding. Then an exact-duplicate scan by unit and period: a duplicated order line is a load defect, not two sales, and it names itself when you cut the right way.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Key integrity by year <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <div class="prompt-box good"><span class="label">★ Share of lines whose key resolves, per year</span>def resolvable(col, dim, key):
+    ok = tx[col].isin(set(dim[key]))
+    return tx.assign(ok=ok).groupby("year").ok.mean()
+
+integrity = pd.DataFrame({
+    "merchant_id -&gt; dim_merchant": resolvable("merchant_id", dims["merchant"], "merchant_id"),
+    "store_id -&gt; dim_store": resolvable("store_id", dims["store"], "store_id"),
+    "sku_id -&gt; dim_product": resolvable("sku_id", dims["product"], "sku_id"),
+    "customer_id present (not guest)": tx.assign(ok=tx.customer_id != "").groupby("year").ok.mean(),
+    "promo_id resolvable (of lines with a promo)": tx[tx.promo_id != ""].assign(
+        ok=lambda d: d.promo_id.isin(set(dims["promotion"].promo_id))).groupby("year").ok.mean(),
+}).round(3)</div>
+        <figure class="zoomable">
+          <img src="../figures/a1_identity_gaps.png" alt="Bar chart per year 2020 to 2026. Guest checkout share of order lines rises from about 6 percent to about 12 percent. Share of promo-tagged lines whose promo id has no promotion row is 100 percent through 2024 and near zero from 2025.">
+          <figcaption>🔍 Click to zoom - two identity gaps: one growing every year, one that ends abruptly when a module launched.</figcaption>
+        </figure>
+        <p>Guest checkout rises from 6 percent of lines in 2020 to 12 percent in 2026. Those orders have revenue but no customer, so every retention number in a5 silently excludes a growing slice - and the chart says so in its title. Promotion ids before 2025 are orphans: the effect of a 2022 campaign on retention is unknowable from this data, however good the analyst.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The duplicate scan names the defect <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <div class="prompt-box good"><span class="label">★ Exact duplicates by server and half-year</span>key = ["txn_id", "sku_id", "qty", "unit_price", "unit_cost"]
+tx["dup"] = tx.duplicated(subset=key, keep="first")
+tx["half"] = tx.ts.dt.year.astype(str) + "-H" + ((tx.ts.dt.month &gt; 6) + 1).astype(str)
+dup = tx.groupby(["server_id", "half"]).dup.mean().unstack(fill_value=0) * 100
+hot = [(s, h, round(v, 2)) for (s, h), v in dup.stack().items() if v &gt; 0.5]</div>
+        <figure class="zoomable">
+          <img src="../figures/a1_duplicates_heatmap.png" alt="Heatmap of exact duplicate order line percentage by server and half-year. Every cell is near zero except S02 in 2021 H1 at about 3.4 percent.">
+          <figcaption>🔍 Click to zoom - one hot cell. It matches the order-database migration in known_events to the half-year.</figcaption>
+        </figure>
+        <p>S02 in 2021-H1 carries about 3.4 percent duplicated lines - exactly the window of the order-database migration the team remembers. Raw revenue for that server and half-year is overstated by the same amount. From a2 onward every notebook loads with <code>dedupe=True</code>; the rule lives once, in the shared reader.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          Duplicate writes during a migration are the most common load defect in commerce data and the least often caught, because totals still look plausible. A 3 percent inflation on one region for six months is invisible in a company total and glaring in a server-by-half-year grid. The cut is the detector.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Which questions this data can answer, and until when <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The last output of a1 is a table the chairman can read: question, tables needed, answerable span, verdict. It converts "we cannot answer that" from a shrug into a recommendation with a shape.</p>
+        <table class="clean">
+          <thead><tr><th>Question</th><th>Needs</th><th>Answerable span</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue, cost, margin trend by server, merchant, product</td><td>fact_transaction</td><td>2020-01 to 2026-09</td><td>yes, full history</td></tr>
+            <tr><td>Customer cohort retention</td><td>fact_transaction, customer_id</td><td>full, minus guests</td><td>yes, with a growing blind spot</td></tr>
+            <tr><td>Login-to-purchase funnel</td><td>fact_login</td><td>2026-07 to 2026-09</td><td>two months - no trend, no season</td></tr>
+            <tr><td>Did a promotion type lift baskets or retention?</td><td>fact_transaction x dim_promotion</td><td>2025-01 onward</td><td>20 months; earlier ids orphaned</td></tr>
+            <tr><td>Merchant and store acquisition and survival</td><td>dims + fact_transaction</td><td>full</td><td>yes</td></tr>
+            <tr><td>What changed on product or infra when numbers moved?</td><td>known_events, 9 rows</td><td>sparse</td><td>no - there is no event log</td></tr>
+            <tr><td>Fulfilment cost per order</td><td>-</td><td>-</td><td>no - cost is a unit constant per SKU</td></tr>
+          </tbody>
+        </table>
+        <p>The last two rows are the two most valuable recommendations in c3, and they were found in the first hour of the analysis, not the last.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Build the data map in the notebook <span class="tag demo">★ 22 min · everyone builds</span></h2>
+    </div>
+    <p class="lede">Open <code>notebooks/a1_data_map.ipynb</code> and run it top to bottom once, then rebuild each section yourself against the shared reader. The repo data is seeded, so your numbers match the page's.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Load through <code>lib</code>, raw.</strong> Print shapes and spans for every table. Write the grain table as a DataFrame before touching a chart.</p></div>
+      <div class="step"><p><strong>Coverage.</strong> Assemble the frames dict with one date column per table, call <code>lib.coverage</code>, draw the presence heatmap. Annotate the sparse rows with "N of 81 months".</p></div>
+      <div class="step"><p><strong>Integrity by year.</strong> Resolve every foreign key against its dimension per year. Chart the two that move: guest share and orphan promo share.</p></div>
+      <div class="step"><p><strong>Duplicate scan.</strong> Exact duplicates on the natural line key, cut by server and half-year. Print the hot cells above 0.5 percent and match them to <code>known_events</code>.</p></div>
+      <div class="step"><p><strong>The question table.</strong> For each of the chairman's nine questions, name the tables, the answerable span and the verdict. Save it to <code>reports/</code>: c3 reads it.</p></div>
+      <div class="step"><p><strong>Hand-off note.</strong> Four lines at the end of the notebook: dedupe on, guests excluded and stated, short windows caveated, events overlaid. a2 starts from this note.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The check that keeps you honest</strong>
+      Rerun <code>python3 analysis/nbgen.py notebooks/src/a1_data_map.py</code>. A failed run leaves no notebook behind, so a stale passing notebook can never masquerade as a fresh one. Verifiers must be able to fail visibly or they are decoration.
+    </div>
+  </section>
+
+  <!-- ============ EXERCISE ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 45 min</span></h2>
+    </div>
+    <ul>
+      <li>Run the coverage heatmap on one warehouse you actually work with. Count the tables whose first month is later than the business's first month.</li>
+      <li>Pick the fact table you use most and write its grain table: grain, date column, keys out. Send it to one colleague and ask them to find one row they disagree with.</li>
+      <li>Run the exact-duplicate scan cut by your operating unit and half-year. Any cell above half a percent gets a name and a date next to it.</li>
+    </ul>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session draws on</h2>
+    </div>
+    <p class="lede">Data mapping is standard warehouse craft rather than a certified course. This page teaches the working core of:</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Kimball Group - dimensional modelling: declare the grain, conformed dimensions</span><span class="note">Part 1 · grain table and join map</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">pandas user guide - groupby, duplicated, isin, reindex on PeriodIndex</span><span class="note">Parts 2-3 · every snippet on the page</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Great Expectations / dbt tests - the vocabulary of not-null, unique and relationship checks</span><span class="note">Part 3 · integrity by year as a trend, not a gate</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">ydata-profiling - automated column profiles</span><span class="note">Named in self-study; the hand-built heatmap is the teaching</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · The chairman asks how the 2022 Q4 promotion affected repeat purchases. The promo table starts 2025-01. What do you say?</p>
+      <button class="qopt" type="button">A · Estimate it from the 2025 promotions and extrapolate backwards</button>
+      <button class="qopt" type="button">B · It cannot be answered - the 2022 promo ids resolve to nothing - and that is filed as a collection recommendation with a date</button>
+      <button class="qopt" type="button">C · Use the discount on the order lines as a proxy for the promotion</button>
+      <p class="qwhy">A question a table cannot answer is filed, not fudged. The orphaned ids are a finding about the company's data ownership, and c3 turns it into a recommendation. Extrapolating or proxying would produce a number that looks like an answer and is not.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Overall, 92 percent of order lines carry a customer id. Why cut it by year before moving on?</p>
+      <button class="qopt" type="button">A · To make the table longer for the appendix</button>
+      <button class="qopt" type="button">B · Because pandas groupby is faster on smaller groups</button>
+      <button class="qopt" type="button">C · Because 94 percent in 2020 and 88 percent in 2026 means the retention blind spot is growing - the trend is the finding</button>
+      <p class="qwhy">An overall integrity number hides a trend. A blind spot that grows every year means every later retention chart is a little more wrong than the one before, and the chart title has to say so.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Your duplicate scan shows 3.4 percent exact-duplicate lines on S02 in 2021-H1 and near zero everywhere else. What is the right next step?</p>
+      <button class="qopt" type="button">A · Match it to known events, put the dedupe rule in the shared reader once, and load deduplicated from a2 onward</button>
+      <button class="qopt" type="button">B · Delete the duplicates from the CSV file</button>
+      <button class="qopt" type="button">C · Ignore it - 3.4 percent on one server is immaterial to the company total</button>
+      <p class="qwhy">The defect gets a cause (the migration in known_events), a single rule in one reader, and a note in the hand-off. Editing the raw file destroys the evidence; ignoring it overstates one server's revenue for a half-year in every later chart.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Analyst session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Say the grain</b><span>Order line: revenue sums. Orders: distinct txn_id. Customers: distinct customer_id, blanks excluded. Title every chart with it.</span></div>
+      <div class="cheat-item"><b>One reader</b><span>Every notebook imports analysis/lib.py. No notebook parses a CSV. A schema change lands in one file.</span></div>
+      <div class="cheat-item"><b>Coverage first</b><span>Rows per table per month as a presence heatmap. A five-year question needs a five-year table.</span></div>
+      <div class="cheat-item"><b>Presence is not completeness</b><span>Follow up with rows per unit per month, null share per column per year, and a reconciliation to finance.</span></div>
+      <div class="cheat-item"><b>Integrity by year</b><span>Resolve every key per year. The trend is the finding: guest share 6 to 12 percent; promo ids orphaned before 2025.</span></div>
+      <div class="cheat-item"><b>The duplicate scan</b><span>Exact duplicates on the natural key, cut by unit and half-year. Hot cells get a cause from known events and one dedupe rule in lib.</span></div>
+      <div class="cheat-item"><b>File, never fudge</b><span>A question no table can answer becomes a collection recommendation with a date, not a proxy that looks like an answer.</span></div>
+      <div class="cheat-item"><b>Verifiers must fail visibly</b><span>A failed notebook run leaves nothing behind. A stale passing file that survives a failure is worse than no check.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Analyst session 1 of 5 · learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="a2-follow-the-margin.html">Next: Follow the margin →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

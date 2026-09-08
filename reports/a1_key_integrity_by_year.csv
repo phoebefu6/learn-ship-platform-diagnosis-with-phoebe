@@ -1,0 +1,8 @@
+year,merchant_id -> dim_merchant,store_id -> dim_store,sku_id -> dim_product,customer_id present (not guest),promo_id resolvable (of lines with a promo)
+2020,1.0,1.0,1.0,0.937,0.0
+2021,1.0,1.0,1.0,0.931,0.0
+2022,1.0,1.0,1.0,0.921,0.0
+2023,1.0,1.0,1.0,0.91,0.0
+2024,1.0,1.0,1.0,0.904,0.0
+2025,1.0,1.0,1.0,0.893,1.0
+2026,1.0,1.0,1.0,0.88,1.0

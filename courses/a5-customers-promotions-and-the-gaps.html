@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Analyst session 5 of 5. Quarterly cohort retention with frozen history, the two-quarter lag behind the 2024 cost decision, the two-event confound, customisation and promotions, a 69-day login funnel with a date on it, and the canon.json the chairman pages quote - in pandas on five years of platform data.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Customers, promotions and the gaps - learn ship platform diagnosis with phoebe">
+<meta property="og:description" content="Analyst session 5 of 5. Frozen-history cohorts, the retention lag, the two-event confound, customisation, the promotion double edge, a dated funnel and canon.json - in pandas, on five years of platform data.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/courses/a5-customers-promotions-and-the-gaps.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Customers, promotions and the gaps - learn ship platform diagnosis with phoebe">
+<meta name="twitter:description" content="Frozen-history cohorts, the retention lag, the two-event confound, customisation, the promotion double edge, a dated funnel and canon.json - in pandas, on five years of platform data.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Analyst session 5 · Customers, promotions and the gaps - learn ship platform diagnosis with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ship-platform-diagnosis-with-phoebe</a> / Analyst session 5 of 5</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Analyst track · Session 5 of 5</div>
+    <h1>Customers, promotions and <span class="accent">the gaps</span></h1>
+    <p class="sub">The last analyst session goes down to the bottom of the hierarchy: 56,908 identified customers across 145,640 orders. Quarterly cohort retention with frozen history shows the 2024 cost decision arriving in customer behaviour two quarters late, and only on S07 and S08. Splitting those customers by their merchant's fate tells the March decision apart from the June one. Then customisation, which retains; promotions, which buy a basket and lose a customer; a login funnel that is 69 days old and says so in its title; and the file every chairman page quotes from - <code>reports/canon.json</code>, written by this notebook and nothing else.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Analyst track</span>
+      <span class="chip audience">Data analysts · pandas</span>
+      <span class="chip audience">Notebook: a5_customers_promotions_gaps.ipynb</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:6">3-20 · Frozen cohorts and the lag</span>
+      <span class="a3" style="flex:7">20-40 · Customisation, promos, funnel, canon</span>
+      <span class="a4" style="flex:2">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where everything converges</h2>
+    </div>
+    <p class="lede">a1 mapped the data and found two tables that start too late. a2 followed the margin to the March 2024 fulfilment decision on S07 and S08. a3 found that customised SKUs earn more and that bundles exist unsold. a4 found the merchant churn hazard nearly doubling after the June 2024 merchant-success cut. Today is where those threads meet the customer: did the people buying from those merchants change their behaviour, when, and because of which decision. It ends by writing <code>reports/canon.json</code>, so that every number on the three chairman pages traces to one executed run. Work along in <code>notebooks/a5_customers_promotions_gaps.ipynb</code>, loading through <code>lib</code> with <code>dedupe=True</code>; 9.9 percent of order lines are guest checkouts with no customer id and are excluded from every retention figure, and each chart title says so.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill inkpill">Sources covered</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Two cohort triangles whose completed cells will read the same next year. A repeat-rate line where the key servers fall from 28.8 percent for 2023 cohorts to 17.2 for 2025 cohorts while the rest of the platform moves from 27.4 to 26.8. A split by merchant fate that shows the drop in both groups, so the experience itself changed. The customisation number that points at growth. The promotion trade-off with the join window stated. A funnel with a date in the title. And one JSON file that the chairman deck quotes and never retypes.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: FROZEN COHORTS ============ -->
+  <section class="section" id="cohorts">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers cohort retention, the lag and the confound</span>
+      <h2>Cohort retention with frozen history <span class="tag concept">17 min live</span></h2>
+    </div>
+    <p class="lede">A customer belongs to the quarter of their first order, for ever. Cell (cohort, k) is the share of that cohort with any order in quarter cohort + k. Once quarter cohort + k has fully elapsed, the cell is a fact about the past and it never changes. The quarter still running is shown blank, not as a low number that will climb as the weeks pass. This is what forward-looking cohort retention with frozen history means, and it is the professional norm for one reason: a number that restates cannot be managed to, because last quarter's 28 becomes this quarter's 31 and nobody can say whether retention moved or the calendar did.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A cohort triangle. Rows are acquisition quarters from 2024Q3 to 2026Q2, columns are plus one to plus six quarters. Completed cells are solid navy. Cells that fall in the current quarter, 2026Q3, form a dashed amber diagonal and are blank. The bottom-right corner is empty: those quarters have not happened.">
+        <style>
+          .ctT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .ctH { font: 700 11px Inter, sans-serif; fill: #14202E; }
+          .ctR { font: 600 11px Inter, sans-serif; fill: #5B6B7E; }
+          .ctL { font: 600 11px Inter, sans-serif; fill: #14202E; }
+          .ctN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <rect x="0" y="0" width="880" height="320" fill="#FAFBFD"/>
+        <text class="ctT" x="40" y="28">The cohort triangle - solid cells are history, the dashed diagonal is today</text>
+        <text class="ctH" x="140" y="62" text-anchor="end">cohort</text>
+        <text class="ctH" x="181" y="62" text-anchor="middle">+1Q</text>
+        <text class="ctH" x="247" y="62" text-anchor="middle">+2Q</text>
+        <text class="ctH" x="313" y="62" text-anchor="middle">+3Q</text>
+        <text class="ctH" x="379" y="62" text-anchor="middle">+4Q</text>
+        <text class="ctH" x="445" y="62" text-anchor="middle">+5Q</text>
+        <text class="ctH" x="511" y="62" text-anchor="middle">+6Q</text>
+        <text class="ctR" x="140" y="87" text-anchor="end">2024Q3</text>
+        <rect x="150" y="70" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="70" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="282" y="70" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="348" y="70" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="414" y="70" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="480" y="70" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <text class="ctR" x="140" y="113" text-anchor="end">2024Q4</text>
+        <rect x="150" y="96" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="96" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="282" y="96" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="348" y="96" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="414" y="96" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="480" y="96" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <text class="ctR" x="140" y="139" text-anchor="end">2025Q1</text>
+        <rect x="150" y="122" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="122" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="282" y="122" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="348" y="122" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="414" y="122" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="480" y="122" width="62" height="24" rx="3" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text class="ctR" x="140" y="165" text-anchor="end">2025Q2</text>
+        <rect x="150" y="148" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="148" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="282" y="148" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="348" y="148" width="62" height="24" rx="3" fill="#A9C1DE"/>
+        <rect x="414" y="148" width="62" height="24" rx="3" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <rect x="480" y="148" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <text class="ctR" x="140" y="191" text-anchor="end">2025Q3</text>
+        <rect x="150" y="174" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="174" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="282" y="174" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="348" y="174" width="62" height="24" rx="3" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <rect x="414" y="174" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="480" y="174" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <text class="ctR" x="140" y="217" text-anchor="end">2025Q4</text>
+        <rect x="150" y="200" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="200" width="62" height="24" rx="3" fill="#2A5C94"/>
+        <rect x="282" y="200" width="62" height="24" rx="3" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <rect x="348" y="200" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="414" y="200" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="480" y="200" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <text class="ctR" x="140" y="243" text-anchor="end">2026Q1</text>
+        <rect x="150" y="226" width="62" height="24" rx="3" fill="#163E6A"/>
+        <rect x="216" y="226" width="62" height="24" rx="3" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <rect x="282" y="226" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="348" y="226" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="414" y="226" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="480" y="226" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <text class="ctR" x="140" y="269" text-anchor="end">2026Q2</text>
+        <rect x="150" y="252" width="62" height="24" rx="3" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <rect x="216" y="252" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="282" y="252" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="348" y="252" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="414" y="252" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="480" y="252" width="62" height="24" rx="3" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <rect x="600" y="80" width="14" height="14" rx="2" fill="#2A5C94"/>
+        <text class="ctL" x="622" y="91">completed cell - frozen,</text>
+        <text class="ctL" x="622" y="105">never restates</text>
+        <rect x="600" y="122" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <text class="ctL" x="622" y="133">current partial quarter -</text>
+        <text class="ctL" x="622" y="147">blank, never a low number</text>
+        <rect x="600" y="164" width="14" height="14" rx="2" fill="#FAFBFD" stroke="#E3E9F1"/>
+        <text class="ctL" x="622" y="175">future - not yet observable</text>
+        <text class="ctN" x="600" y="204">today = 2026Q3 (partial)</text>
+        <text class="ctN" x="600" y="218">last complete quarter = 2026Q2</text>
+        <text class="ctN" x="600" y="240">Shade deepens with k only to show</text>
+        <text class="ctN" x="600" y="254">age; real values are in the PNG.</text>
+        <text class="ctN" x="40" y="306">A completed cell is a fact about the past; a trailing window recomputes it daily and history moves.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the shape of a frozen-history triangle. Everything solid is immutable; the dashed diagonal is the one quarter that is still being written.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span> The rule and the function <span class="mini">6 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The whole rule is one function in the shared reader, and every retention number in the course comes from it. Three lines carry the norm: the cohort is the first-order period, k counts forward from it, and any cell whose period ends after the last complete period is set to NaN rather than left as a partial count.</p>
+        <div class="prompt-box good"><span class="label">★ lib.cohort_retention - forward-looking, frozen history, partial cells blank</span>def cohort_retention(tx, freq="Q", horizon=8):
+    t = tx[tx.customer_id != ""][["customer_id", "ts"]].copy()      # guests have no id: excluded, and the title says so
+    t["p"] = t.ts.dt.to_period(freq)
+    first = t.groupby("customer_id").p.min().rename("cohort")        # a customer's cohort never changes
+    t = t.join(first, on="customer_id")
+    t["k"] = (t.p - t.cohort).apply(lambda x: x.n)                   # quarters since acquisition
+    t = t[t.k &lt;= horizon]
+    size = first.value_counts().sort_index()
+    mat = (t.drop_duplicates(["customer_id", "k"])
+             .groupby(["cohort", "k"]).customer_id.nunique().unstack(fill_value=0)
+             .reindex(columns=range(horizon + 1), fill_value=0))
+    ret = mat.div(size, axis=0)
+    last_complete = pd.Period(AS_OF, freq=freq) - 1                  # the current period is partial
+    for coh in ret.index:
+        for k in ret.columns:
+            if coh + k &gt; last_complete:
+                ret.loc[coh, k] = np.nan                             # blank, never a low number
+    return ret
+
+ret_key = lib.cohort_retention(ident[ident.is_key], "Q", 6)
+ret_oth = lib.cohort_retention(ident[~ident.is_key], "Q", 6)</div>
+        <p>Two other shapes get called retention and are not this. A trailing look-back window ("customers active in the last 90 days who were also active in the 90 before") recomputes every cell every day, so history moves under you. A rolling "day N or later" measure counts anyone who came back at any point after day N, so every past cell climbs each morning as late returners arrive. Both are useful for operations and neither is used for reporting, because a reported number has to mean the same thing next quarter as it did when it was signed off. A frozen cell can be put on a wall and it stays true.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_cohort_triangles.png" alt="Two heatmaps of quarterly cohort repeat rate, S07 plus S08 and other servers, cohorts 2021Q3 onward by plus one to plus six quarters. On the key servers the rows from 2024Q3 onward are visibly paler than the rows above them. On the other servers the shading is even down the whole triangle. The bottom-right of each triangle is blank.">
+          <figcaption>🔍 Click to zoom - two triangles, same function, same colour scale. The key-server rows go pale from 2024Q3; the other servers do not.</figcaption>
+        </figure>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A marketplace reported "90-day retention" from a trailing window. The same quarter was 34 percent in the board pack of April, 37 in July and 41 in October, because every refresh included late returners. The board saw retention improving for three meetings; the analyst had not changed a single customer's behaviour, only the day the query ran. Frozen cohort cells ended the argument, because a cell for 2023Q2 at +1Q could only ever be one number.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The lag <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Average the +1Q and +2Q cells of each cohort: the share who ordered again in the two quarters after acquisition. Plot it by acquisition quarter, key servers against the rest, completed cohorts only.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_repeat_rate_lag.png" alt="Line chart of average repeat rate in the two quarters after acquisition, by acquisition quarter, 2021Q3 to 2025Q4. The other-server line stays near 27 percent throughout. The S07 plus S08 line runs level with it until the 2024Q2 cohort, then falls from the 2024Q3 cohort onward to around 17 percent. A dashed vertical marks the March 2024 cost decision.">
+          <figcaption>🔍 Click to zoom - the drop begins with the 2024Q3 cohort, two quarters after the March 2024 decision, and only on the key servers.</figcaption>
+        </figure>
+        <p>Key-server cohorts acquired in 2023 repeated at 28.8 percent on average; cohorts acquired in 2025 at 17.2. Other servers: 27.4 to 26.8, effectively flat. The customers who joined S07 and S08 in the two quarters after the cost decision still repeated at the old rate; the ones who joined from 2024Q3 did not. Whatever changed in the customer's experience took about two quarters to reach the acquisition cohorts, which is why a three-month window in mid-2024 would have shown nothing wrong with retention at all. a2 priced the margin loss; this is the retention loss that sits on top of it.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Two decisions, one drop <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>March 2024 changed fulfilment cost on S07 and S08. June 2024 cut the merchant-success team on the same servers, and a4 showed the merchant hazard nearly doubling. Both could explain customers repeating less. A customer whose merchant closed cannot reorder from it, so if the repeat-rate drop lives only among customers of merchants who later churned, the June cut is the lever. If the drop appears among customers of merchants who are still trading today, the experience itself changed - and that points at March.</p>
+        <div class="prompt-box good"><span class="label">★ Split key-server customers by their merchant's fate, same frozen function</span>mch = dims["merchant"].set_index("merchant_id")
+surv = ident[ident.is_key].assign(merchant_alive=ident[ident.is_key].merchant_id.map(mch.churn_month == ""))
+rows = []
+for alive, lab in [(True, "merchant still active"), (False, "merchant later churned")]:
+    r = lib.cohort_retention(surv[surv.merchant_alive == alive], "Q", 2)
+    rr = r[[1, 2]].mean(axis=1) * 100
+    rows.append((lab, float(rr.loc["2023Q1":"2023Q4"].mean()), float(rr.loc["2024Q4":"2025Q4"].mean())))
+conf = pd.DataFrame(rows, columns=["group", "cohorts 2023", "cohorts 2024Q4-2025Q4"]).set_index("group")
+conf["drop (points)"] = conf["cohorts 2023"] - conf["cohorts 2024Q4-2025Q4"]</div>
+        <figure class="zoomable">
+          <img src="../figures/a5_two_event_confound.png" alt="Grouped bars of repeat rate in the next two quarters for S07 plus S08 customers, split by whether their merchant is still active or later churned. Still active: 29.2 percent for 2023 cohorts, 17.7 for 2024Q4 to 2025Q4 cohorts. Later churned: 27.4 to 15.5. The drop is about 12 points in both groups.">
+          <figcaption>🔍 Click to zoom - customers of merchants that never left dropped 11.6 points; customers of merchants that did leave dropped 11.9. The drop is not merchant loss.</figcaption>
+        </figure>
+        <p>29.2 to 17.7 for customers of surviving merchants; 27.4 to 15.5 for customers of merchants that later churned. The drop is in both, and almost identical in size. Merchant loss cannot be the main mechanism, because the customers whose merchants stayed open stopped coming back just as much. Something in the buying experience on S07 and S08 changed for everyone, and the timing fits the fulfilment shift. The June cut then compounded it by letting merchants leave faster. Two decisions, one drop, and the data can say which one is primary. What it cannot say is exactly what the customers experienced - delivery time, quality, price - because none of that is collected, which is a c3 row.</p>
+        <div class="callout tip">
+          <strong>Separate before you price</strong>
+          The margin gap a2 computed assumes the March decision caused the drop rather than coincided with it. This split is what earns that assumption: if the drop had lived only among churned merchants, the priced retention loss would belong to June, not March. The order of work is separate the confound, then price what survives. A number computed before the split looks the same and means something else.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Time to second order <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Among customers with a second order, the median gap from first to second is 118 days, and 65.2 percent of second orders arrive within 180 days. Two operational consequences follow. A quarterly cohort grain is the right granularity for this business: a monthly triangle would mostly show zeros at +1M and noise, because the typical customer does not return inside a month. And a store or customer "active in the last 90 days" definition sits just inside the median gap, so a quiet quarter is a real signal rather than a customer between orders.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_time_to_second.png" alt="Histogram of days between first and second order for customers with a second order, up to 540 days, with dashed markers at 90, 180 and 365 days. The distribution peaks early and has a long right tail; the median is 118 days.">
+          <figcaption>🔍 Click to zoom - median 118 days, 65 percent within 180. The cohort grain and the churn window both follow from this shape.</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: CUSTOMISATION, PROMOS, FUNNEL ============ -->
+  <section class="section" id="levers">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers customisation, promotions and the login funnel</span>
+      <h2>Customisation, promotions, and a funnel with a date on it <span class="tag concept">12 min live</span></h2>
+    </div>
+    <p class="lede">Three levers a merchant or the platform can pull, each measured with the same frozen definition where the data allows and each with its coverage stated. One points at growth, one cuts both ways, and one is a photograph rather than a film.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two pairs of bars. Left, average first basket: organic 84.7, promo 91.8, the promo bar taller. Right, share who ever ordered a second time: organic 71.5 percent, promo 63.4 percent, the promo bar shorter. Promotions buy a bigger first basket and a smaller future.">
+        <style>
+          .peT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .peH { font: 700 12px Inter, sans-serif; fill: #14202E; }
+          .peV { font: 700 12px Inter, sans-serif; fill: #14202E; }
+          .peX { font: 600 11px Inter, sans-serif; fill: #5B6B7E; }
+          .peN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <rect x="0" y="0" width="880" height="300" fill="#FAFBFD"/>
+        <text class="peT" x="40" y="28">The promotion double edge - customers acquired 2020-2024, identified only</text>
+        <text class="peH" x="240" y="62" text-anchor="middle">Average first basket</text>
+        <rect x="140" y="71" width="90" height="169" rx="3" fill="#163E6A"/>
+        <rect x="270" y="56" width="90" height="184" rx="3" fill="#E39B0E"/>
+        <text class="peV" x="185" y="90" text-anchor="middle" fill="#FFFFFF">84.7</text>
+        <text class="peV" x="315" y="90" text-anchor="middle" fill="#4A2E00">91.8</text>
+        <line x1="120" y1="240" x2="390" y2="240" stroke="#C3CEDB" stroke-width="1.5"/>
+        <text class="peX" x="185" y="260" text-anchor="middle">organic</text>
+        <text class="peX" x="315" y="260" text-anchor="middle">promo</text>
+        <text class="peH" x="640" y="62" text-anchor="middle">Ever ordered a second time, %</text>
+        <rect x="540" y="97" width="90" height="143" rx="3" fill="#163E6A"/>
+        <rect x="670" y="113" width="90" height="127" rx="3" fill="#E39B0E"/>
+        <text class="peV" x="585" y="116" text-anchor="middle" fill="#FFFFFF">71.5</text>
+        <text class="peV" x="715" y="132" text-anchor="middle" fill="#4A2E00">63.4</text>
+        <line x1="520" y1="240" x2="790" y2="240" stroke="#C3CEDB" stroke-width="1.5"/>
+        <text class="peX" x="585" y="260" text-anchor="middle">organic</text>
+        <text class="peX" x="715" y="260" text-anchor="middle">promo</text>
+        <line x1="440" y1="60" x2="440" y2="250" stroke="#E3E9F1" stroke-width="1.5"/>
+        <text class="peN" x="40" y="290">Promotions buy about 7 more in the first basket and about 8 points fewer customers who ever come back.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the same customers, two questions. Judge a promotion on the second basket, not the first.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Customisation retains <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>a3 found customised merchant SKUs earn 8 to 10 margin points more than platform standard goods. The customer-side question is whether the people who buy from high-customisation merchants come back more. Group customers by their merchant's <code>custom_share</code>, apply the same frozen cohort function, and read the peak quarterly repeat rate within the first year for cohorts complete by 2025Q2.</p>
+        <div class="prompt-box good"><span class="label">★ Repeat within four quarters, by the merchant's customisation band</span>mc = dims["merchant"].set_index("merchant_id").custom_share
+ident2 = ident.assign(cs=ident.merchant_id.map(mc))
+ident2["cs_band"] = pd.cut(ident2.cs, [0, 0.25, 0.5, 1.0], labels=["low (&lt;25%)", "mid (25-50%)", "high (&gt;50%)"])
+def repeat12(d):
+    r = lib.cohort_retention(d, "Q", 4).loc[:"2025Q2"]              # cohorts with four complete quarters
+    return float(np.nanmean(r[[1, 2, 3, 4]].max(axis=1)) * 100)
+band = pd.Series({b: repeat12(ident2[ident2.cs_band == b]) for b in ident2.cs_band.cat.categories})</div>
+        <figure class="zoomable">
+          <img src="../figures/a5_custom_share_retention.png" alt="Three bars of peak quarterly repeat rate within a year by the merchant's customisation share: low under 25 percent at 28.1, mid 25 to 50 percent at 30.8, high over 50 percent at 33.9.">
+          <figcaption>🔍 Click to zoom - 28.1, 30.8, 33.9. The more of a merchant's catalogue is its own, the more its customers come back.</figcaption>
+        </figure>
+        <p>Customers of low-customisation merchants peak at 28.1 percent; of high-customisation merchants at 33.9. Nearly six points, and monotonic through the middle band. Put next to a3's margin finding this is the one result on the platform that points at growth rather than repair: pushing merchants toward their own SKUs earns more per unit and keeps the customer longer. The chairman deck carries it with the same weight as the breaks, because a room that hears only what went wrong walks out defensive.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The promotion double edge <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The customer dimension carries <code>acq_channel</code> for all five years, so promo-acquired customers can be compared with organic, referral and paid-social ones for the whole history. Two questions per channel: how big was the first basket, and did the customer ever order again. Customers acquired 2020-2024 only, so every one has had at least a year and a half to come back.</p>
+        <div class="prompt-box good"><span class="label">★ First basket and ever-repeat by acquisition channel</span>cust = dims["customer"].set_index("customer_id")
+fo = ident.merge(ident.groupby("customer_id").ts.min().rename("first_ts"), on="customer_id")
+fb = fo[fo.ts == fo.first_ts].groupby("customer_id").revenue.sum().rename("first_basket").to_frame()
+fb["channel"] = cust.acq_channel.reindex(fb.index)
+fb["repeat"] = ident.groupby("customer_id").txn_id.nunique().reindex(fb.index) &gt;= 2
+fb["first_year"] = fo.groupby("customer_id").first_ts.min().dt.year.reindex(fb.index)
+mature = fb[fb.first_year &lt;= 2024]
+ch = mature.groupby("channel").agg(customers=("repeat", "size"),
+                                   first_basket=("first_basket", "mean"),
+                                   repeat_rate=("repeat", "mean"))
+ch["repeat_rate"] *= 100</div>
+        <figure class="zoomable">
+          <img src="../figures/a5_promo_double_edge.png" alt="Two bar charts by acquisition channel. Average first basket: promo 91.8, the others between 84.3 and 85.4. Share who ever ordered a second time: promo 63.4 percent, the others between 71.4 and 73.4 percent.">
+          <figcaption>🔍 Click to zoom - the promo bar is the tallest on the left and the shortest on the right. 6,170 customers; the bigger basket and the smaller future.</figcaption>
+        </figure>
+        <p>Promo-acquired customers: first basket 91.8 against 84.7 organic, ever-repeat 63.4 percent against 71.5. Referral and paid-social sit with organic on both. A promotion that buys a seven-unit larger first basket and loses eight points of repeat is buying baskets, not customers, and the c3 promo policy follows: judge acquisition promotions on the second order.</p>
+        <p>The finer question, which promotion type, can only be asked from 2025. <code>promo_id</code> has been stamped on order lines since 2020 but <code>dim_promotion</code> starts in January 2025, so every earlier id is an orphan. The comparison by type is run on the joinable window only, and the left panel shows the join coverage by year so nobody reads the right panel as five years of evidence.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_promo_types.png" alt="Left: share of promo-tagged order lines whose promo id resolves to a promotion row, by year - zero through 2024 and near 100 percent from 2025. Right: average order value by promotion type for 2025 onward, joinable window only, with no-promo orders as the baseline.">
+          <figcaption>🔍 Click to zoom - the left panel is the permission slip for the right one. Before 2025 the ids point at nothing.</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The login funnel, 69 days <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><code>fact_login</code> runs from 2026-07-01 to 2026-09-07: 69 days. It can show a funnel. It cannot show a trend, a season, or anything about 2024, and the chart title says exactly that, in the chart, so the caveat travels with the picture when it is pasted into a deck without its paragraph.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_login_funnel.png" alt="Grouped bars of the login-to-purchase funnel for other servers and S07 plus S08, 2026-07-01 to 2026-09-07 only. Both groups view products on 99 percent of logins and add to cart on 45 percent. Purchase: 26.9 percent of logins on other servers, 16.8 percent on S07 plus S08.">
+          <figcaption>🔍 Click to zoom - same view rate, same cart rate, ten points less purchase on the key servers. A snapshot with a date, not a trend.</figcaption>
+        </figure>
+        <p>Both server groups view on 99 percent of logins and add to cart on 45 percent. Then S07 and S08 convert 16.8 percent of logins to purchase against 26.9 elsewhere. The gap opens after the cart, which is where price, shipping cost and delivery promise appear - consistent with the cost story, and not proof of it, because 69 days of one summer cannot say what the funnel looked like before March 2024. The recommendation is not "fix the cart on S07"; it is "keep login history, so that in a year this chart has a before".</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Growth accounting, the monthly opener <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Monthly active identified customers decompose exactly: actives this month = new (first order ever) + retained (active last month too) + resurrected (active before, not last month). Churned, drawn below the axis, is everyone active last month who is not active now. The identity is arithmetic, so the four bars always sum to the active line, and a monthly review that opens with it cannot mistake a resurrection wave for growth or a churn wave for seasonality.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_customer_growth_accounting.png" alt="Stacked monthly bars 2020 to 2026 of active identified customers: retained, resurrected and new above the axis, churned below. The stack grows through 2023 and the churned bars deepen from late 2024 while new shrinks.">
+          <figcaption>🔍 Click to zoom - new + retained + resurrected above, churned below. The identity every monthly review should open with.</figcaption>
+        </figure>
+        <p>Guest lines are not in this chart, and the share of them has grown from 6.3 percent in 2020 to 11.9 in 2026. That is a growing slice of real orders with no customer behind them in any retention figure. Every customer chart in the course says "identified customers" in its title for that reason, and the guest identity gap is a c3 row with an owner.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: CANON AND HAND-OFF ============ -->
+  <section class="section" id="canon">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the canon export and the gaps table</span>
+      <h2>Canon numbers and the hand-off to the chairman deck <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">The chairman pages quote about forty numbers. If any one of them is typed by hand, it will drift from the notebook the first time the data is regenerated, and the deck will contradict its own appendix. So every number lives in one file, <code>reports/canon.json</code>, written at the end of this notebook from the values computed above plus the a2 and a4 report files, and the pages read from it.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> One JSON, every page <span class="mini">6 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The export is a dict built up cell by cell as each result is computed, then serialised once with <code>json.dumps</code>. Never build the file as a string: a stray comma or an unescaped quote produces a file that parses on Tuesday and not on Wednesday, and the page that reads it fails silently. Cast to plain <code>float</code> and <code>int</code> first, because numpy scalars do not serialise.</p>
+        <div class="prompt-box good"><span class="label">★ The canon export - computed values in, one serialisation out</span>canon["repeat_key_2023"] = round(float(rk.loc["2023Q1":"2023Q4"].mean()), 1)
+canon["repeat_key_2025"] = round(float(rk.loc["2025Q1":"2025Q4"].mean()), 1)
+canon["median_days_to_second_order"] = int(gap.median())
+canon["confound_alive_2023"] = round(float(conf.iloc[0, 0]), 1)
+canon["login_window_days"] = int((lg.login_ts.max() - lg.login_ts.min()).days + 1)
+
+# numbers owned by earlier notebooks are READ from their report files, never retyped
+srv_year = pd.read_csv(lib.REPORTS / "a2_server_year_summary.csv")
+bridge   = pd.read_csv(lib.REPORTS / "a2_margin_bridge.csv", index_col=0)
+lead     = pd.read_csv(lib.REPORTS / "a4_leading_indicators.csv", index_col=0)
+canon["bridge_key_cost_k"] = round(float(bridge.loc["cost", "S07 + S08"] / 1e3))
+canon["lead_months_churned"] = round(float(lead.loc["churned", "months_to_first_sale"]), 1)
+canon["identified_customers"] = int(ident.customer_id.nunique())
+canon["orders"] = int(txc.txn_id.nunique())
+
+(lib.REPORTS / "canon.json").write_text(json.dumps(canon, indent=1))   # json.dumps, never a string built by hand</div>
+        <p>The fields, grouped by which page quotes them:</p>
+        <table class="clean">
+          <thead><tr><th>Group</th><th>Fields</th><th>Values this run</th></tr></thead>
+          <tbody>
+            <tr><td>Retention lag</td><td>repeat_key_2023, repeat_key_2025, repeat_other_2023, repeat_other_2025</td><td>28.8, 17.2, 27.4, 26.8</td></tr>
+            <tr><td>Two-event confound</td><td>confound_alive_2023, confound_alive_late, confound_churned_2023, confound_churned_late</td><td>29.2, 17.7, 27.4, 15.5</td></tr>
+            <tr><td>Second order</td><td>median_days_to_second_order, share_second_within_180d</td><td>118, 65.2</td></tr>
+            <tr><td>Customisation</td><td>repeat_low_custom, repeat_high_custom</td><td>28.1, 33.9</td></tr>
+            <tr><td>Promotions</td><td>promo_first_basket, organic_first_basket, promo_repeat, organic_repeat</td><td>91.8, 84.7, 63.4, 71.5</td></tr>
+            <tr><td>Funnel</td><td>login_conv_key, login_conv_other, login_window_days</td><td>16.8, 26.9, 69</td></tr>
+            <tr><td>Margin (from a2 reports)</td><td>key_margin_2023, key_margin_2025, key_revenue_2023_k .. 2025_k, key_profit_2023_k, key_profit_2025_k, bridge_key_cost_k, price_k, volume_k, mix_k</td><td>42.3, 29.3, 686 / 884 / 765, 290, 224, -54, 6, -18, 5</td></tr>
+            <tr><td>Price of the decision (a2)</td><td>price_old_margin_pct, price_cum_gap_k, price_months, price_avg_gap_per_month_k</td><td>42.4, 251, 30, 8.4</td></tr>
+            <tr><td>Leading indicators (a4)</td><td>lead_months_churned, lead_months_active, lead_rev90_churned, lead_rev90_active</td><td>3.8, 1.3, 0, 399</td></tr>
+            <tr><td>Scale and gaps</td><td>identified_customers, orders, merchants, stores, guest_share_2020, guest_share_2026</td><td>56,908, 145,640, 140, 342, 6.3, 11.9</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>The file is the appendix</strong>
+          When a chairman page says "17.2 percent", the analyst who wrote it did not type 17.2; the page carries the key <code>repeat_key_2025</code> and the number came from the run. Regenerate the data, rerun a2 through a5 in order, and every page updates or every page fails loudly. Either outcome is fine. A page that keeps saying 17.2 after the number became 18.0 is the outcome that is not.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> What this data cannot say <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Five things the chairman would reasonably ask that no table in the company can answer, each already met somewhere in a1 to a5. None is dropped. Each becomes a recommendation in c3 with an owner, a first review date and the question it would unlock.</p>
+        <table class="clean">
+          <thead><tr><th>Gap</th><th>Where it bit</th><th>What could not be said</th><th>c3 recommendation</th></tr></thead>
+          <tbody>
+            <tr><td>No event log - 9 remembered rows</td><td>Every long series in a2 and a5</td><td>What changed on product or infrastructure when a metric moved; whether March 2024 was the only change</td><td>Release, incident and decision log with timestamp, scope and owner, joined to the metric layer; writing to it is a release-gate field</td></tr>
+            <tr><td>Cost is a unit constant per SKU</td><td>a2 margin bridge</td><td>Fulfilment cost actually paid per order - shipping, supplier, returns - so the March shift is inferred, not observed</td><td>Fulfilment cost per order from the fulfilment system, monthly, owned by platform commerce</td></tr>
+            <tr><td>dim_promotion starts 2025-01</td><td>a5 promotion types</td><td>Which promotion types worked in 2020-2024; the effect of any pre-2025 campaign on retention</td><td>promo_id resolvable for its whole life; promotion table owned as a product by marketing</td></tr>
+            <tr><td>fact_login starts 2026-07-01</td><td>a5 funnel</td><td>Whether the S07 and S08 conversion gap is new or old; any funnel trend or season</td><td>Login and session events retained five years, not 60 days; product views and cart events added</td></tr>
+            <tr><td>Guest checkout, 6.3 to 11.9 percent of lines</td><td>Every retention figure</td><td>Repeat behaviour of a growing slice of buyers; whether guests are new customers or returning ones without an id</td><td>Guest identity from a hash of email or phone so retention includes them; owned by each merchant's customer domain</td></tr>
+          </tbody>
+        </table>
+        <p>Read the table as ownership gaps before technology gaps. The promotion table started when a module launched because nobody owned it as a product; the event log does not exist because writing down what changed is nobody's job. c3 assigns the job.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Rebuild the customer notebook <span class="tag demo">★ 20 min · everyone builds</span></h2>
+    </div>
+    <p class="lede">Open <code>notebooks/a5_customers_promotions_gaps.ipynb</code>, run it once, then rebuild each section against <code>lib.cohort_retention</code>. Run a2 and a4 first: the canon cell reads their report files and fails without them, which is the point.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Identified customers.</strong> Load with <code>dedupe=True</code>, cut to complete months, drop blank customer ids into their own count. Print lines, identified customers and the guest share.</p></div>
+      <div class="step"><p><strong>Triangles.</strong> <code>cohort_retention(..., "Q", 6)</code> for key servers and the rest. Draw both on one colour scale. Confirm the bottom-right cells are NaN, not zero.</p></div>
+      <div class="step"><p><strong>The lag.</strong> Mean of +1Q and +2Q by cohort. Mark March 2024 and September 2024. Read off where the amber line leaves the navy one.</p></div>
+      <div class="step"><p><strong>The confound.</strong> Map each key-server customer's merchant to alive or churned. Run the same function on each half. Compare 2023 cohorts with 2024Q4-2025Q4 cohorts.</p></div>
+      <div class="step"><p><strong>Customisation and promotions.</strong> Band by <code>custom_share</code>, repeat within four quarters. Channel comparison on customers acquired by 2024. Promotion types on 2025 onward only, with the join-coverage panel beside it.</p></div>
+      <div class="step"><p><strong>Funnel and growth accounting.</strong> Four stages by server group, window dates in the title. Monthly new + retained + resurrected with churned below the axis.</p></div>
+      <div class="step"><p><strong>Canon.</strong> Fill the dict as you go, read the a2 and a4 report files, <code>json.dumps</code> once. Open <code>reports/canon.json</code> and check it against the table on this page.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The check that keeps you honest</strong>
+      Rerun <code>python3 analysis/nbgen.py notebooks/src/a5_customers_promotions_gaps.py</code>. A failed run leaves no notebook behind. Then the frozen-history test: change <code>lib.AS_OF</code> back by one quarter, rerun the triangle, and confirm that every cell that was complete under both dates has the same value. If a completed cell moved, the function is restating history and the reporting number is not a reporting number.
+    </div>
+  </section>
+
+  <!-- ============ EXERCISE ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 45 min</span></h2>
+    </div>
+    <ul>
+      <li>Take one retention number your team reports and find out how it is computed. If it is a trailing window or a "day N or later" measure, recompute last quarter's value as it was reported then and as it is today. The difference is how much your history has moved.</li>
+      <li>Build a quarterly frozen-history triangle for one product or region with <code>lib.cohort_retention</code> or your own version of it. Blank the partial cells. Show it next to the existing dashboard number and explain the gap in two sentences.</li>
+      <li>List the three numbers your leadership deck quotes most often. For each, name the file or query it comes from. If the answer is "someone typed it", make a canon file and point the deck at it.</li>
+    </ul>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session draws on</h2>
+    </div>
+    <p class="lede">Cohort retention and growth accounting are standard product-analytics craft rather than a certified syllabus. The working core drawn on here:</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Amplitude retention documentation - N-day (bounded) versus unbounded retention, and why they differ</span><span class="note">Part 1 · the three shapes called retention</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Lenny's Newsletter, Olga Berezovsky - how to measure cohort retention</span><span class="note">Part 1 · cohort by first-order period, forward-looking cells</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Andrew Chen - growth accounting: actives = new + retained + resurrected, churned below</span><span class="note">Part 2 · the monthly opener</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name"><a href="https://phoebefu6.github.io/learn-customer-retention-with-phoebe/">learn-customer-retention-with-phoebe ↗</a> - the frozen-history practice in full, with churn prediction</span><span class="note">Part 1 · the deeper course on this method</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Uplift and holdout design for promotions</span><span class="note">Named only; the channel comparison here has no holdout</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · The 2025Q1 cohort's +2Q cell read 19 percent in the July report. In the October report it reads 19 percent again, while the +6Q cell has gone from blank to a number. Is this the expected behaviour?</p>
+      <button class="qopt" type="button">A · No - the +2Q cell should have risen as late returners were counted</button>
+      <button class="qopt" type="button">B · Yes - +2Q was complete in July and a completed cell never restates; +6Q fell in the partial quarter and was blank until 2026Q3 finished</button>
+      <button class="qopt" type="button">C · No - the whole row should be recomputed each quarter from the latest data</button>
+      <p class="qwhy">A completed cell is a fact about the past. The only thing that changes between reports is that the dashed diagonal moves one step and a new column of cells becomes complete. Late returners belong in later cells, not in earlier ones; a measure where past cells climb is a rolling look-back, which is fine for operations and never used for reporting.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Repeat rate for customers of surviving key-server merchants fell 29.2 to 17.7; for customers of merchants that later churned, 27.4 to 15.5. What does this say about the two 2024 decisions?</p>
+      <button class="qopt" type="button">A · The June merchant-success cut caused the drop, because churned merchants are in the data</button>
+      <button class="qopt" type="button">B · Nothing - the two groups are too similar to separate</button>
+      <button class="qopt" type="button">C · Merchant loss is not the main mechanism: customers whose merchants never left dropped just as much, so the buying experience itself changed, which fits the March cost decision, with June compounding it</button>
+      <p class="qwhy">If the drop had lived only among customers of churned merchants, the June cut would be the lever. It appears equally in customers of merchants still trading, so something changed for everyone buying on S07 and S08. Similar drops in both groups is the answer, not a failure to separate: it separates the mechanism from the confound.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · The login funnel shows 16.8 percent conversion on S07 and S08 against 26.9 elsewhere. A colleague wants to headline the deck with "conversion on the key servers has collapsed". What do you say?</p>
+      <button class="qopt" type="button">A · The data is 69 days from one summer with no before; it is a snapshot with a date, and the headline it earns is the gap today plus a recommendation to keep login history</button>
+      <button class="qopt" type="button">B · Agree - a ten-point gap is large enough to call a collapse</button>
+      <button class="qopt" type="button">C · Compare it with the 2023 funnel first</button>
+      <p class="qwhy">"Collapsed" is a statement about change, and change needs a before. fact_login starts 2026-07-01, so there is no 2023 funnel to compare with. The gap is real and worth stating; the trend is unknowable from this table, and the chart title carries the window so the caveat survives being pasted into a slide.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Analyst session 5 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Frozen history</b><span>Cohort = period of first order. Cell (cohort, k) never restates once complete. The partial period is NaN, never a low number.</span></div>
+      <div class="cheat-item"><b>Not for reporting</b><span>Trailing windows and "day N or later" measures recompute history daily. Useful in operations; a reported number has to mean the same thing next quarter.</span></div>
+      <div class="cheat-item"><b>The lag</b><span>Key servers 28.8 to 17.2 percent, other servers 27.4 to 26.8. The drop starts with 2024Q3 cohorts, two quarters after the March decision.</span></div>
+      <div class="cheat-item"><b>Separate, then price</b><span>Surviving merchants' customers 29.2 to 17.7; churned merchants' customers 27.4 to 15.5. The drop is in both, so the experience changed.</span></div>
+      <div class="cheat-item"><b>Customisation retains</b><span>Peak repeat 28.1 percent for low-customisation merchants, 33.9 for high. The one finding that points at growth.</span></div>
+      <div class="cheat-item"><b>Promos buy baskets</b><span>First basket 91.8 vs 84.7; ever-repeat 63.4 vs 71.5 percent. Judge a promotion on the second order. Types only from 2025.</span></div>
+      <div class="cheat-item"><b>Date the snapshot</b><span>Funnel: 69 days, 16.8 vs 26.9 percent conversion. The window goes in the chart title so the caveat travels with the picture.</span></div>
+      <div class="cheat-item"><b>One canon file</b><span>reports/canon.json, json.dumps, computed values only, earlier notebooks read from their report files. Pages quote keys, never typed numbers.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Analyst session 5 of 5 · learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a4-merchants-and-stores.html">← Prev: Merchants and stores</a> &nbsp;·&nbsp; <a href="../index.html">Back to all sessions →</a> &nbsp;·&nbsp; <a href="c1-five-years-in-one-picture.html">Chairman track →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

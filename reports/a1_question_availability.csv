@@ -1,0 +1,11 @@
+question,needs,answerable span,verdict
+"Revenue, cost, profit, margin trend by server / merchant / product",fact_transaction,2020-01 .. 2026-09,"yes, full history"
+"Order count, AOV, units trend",fact_transaction,2020-01 .. 2026-09,"yes, full history"
+Customer cohort retention (repeat purchase),fact_transaction (customer_id),2020-01 .. 2026-09 minus guests,"yes, with a growing guest blind spot"
+"Login-to-purchase funnel, device, session depth",fact_login,2026-07 .. 2026-09,"two months only - no trend, no seasonality"
+Did a promotion type lift baskets or retention?,fact_transaction x dim_promotion,2025-01 .. 2026-09,20 months; earlier promo ids unresolvable
+Merchant / store acquisition and survival,"dim_merchant, dim_store, fact_transaction",2020-01 .. 2026-09,"yes, full history"
+"Basket co-purchase, bundles, cross-sell",fact_transaction,2020-01 .. 2026-09,"yes, full history"
+What changed on the product / infra when the numbers moved?,known_events (9 rows from memory),sparse,NO - there is no event log; this is the gap
+"Fulfilment cost per order (shipping, supplier, returns)",-,-,NO - cost is a unit constant per SKU
+"Product views, cart adds before 2026-07",-,-,NO

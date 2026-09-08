@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Analyst session 2 of 5. Five years of margin, whole platform then one panel per server; the per-SKU margin bridge that names cost as the mechanism behind the 2024 break on S07 and S08; a change-point scan validated on its nulls; and the running price of the decision - in pandas.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Follow the margin - learn ship platform diagnosis with phoebe">
+<meta property="og:description" content="Analyst session 2 of 5. Small multiples by server, the lookback trap, a per-SKU margin bridge, a change-point scan and the price of a decision - in pandas, on five years of platform data.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/courses/a2-follow-the-margin.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Follow the margin - learn ship platform diagnosis with phoebe">
+<meta name="twitter:description" content="Small multiples by server, the lookback trap, a per-SKU margin bridge, a change-point scan and the price of a decision - in pandas, on five years of platform data.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Analyst session 2 · Follow the margin - learn ship platform diagnosis with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ship-platform-diagnosis-with-phoebe</a> / Analyst session 2 of 5</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Analyst track · Session 2 of 5</div>
+    <h1>Follow the <span class="accent">margin</span></h1>
+    <p class="sub">Revenue on the key servers grew every year through 2024 and the platform's blended margin barely flinched, so nobody looked. Today you take five years of order lines, draw the whole platform and then the same series one panel per server, and watch the break appear on S07 and S08 in March 2024 and nowhere else. Then you name the mechanism with a per-SKU margin bridge, let a change-point scan date it without being told, and put a running price on the decision: 251k of profit over 30 months. Every chart is full history first, because a window cannot tell a step from a wobble.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Analyst track</span>
+      <span class="chip audience">Data analysts · pandas + matplotlib</span>
+      <span class="chip audience">Notebook: a2_follow_the_margin.ipynb</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-16 · Whole, then per server</span>
+      <span class="a3" style="flex:8">16-40 · Bridge, change-point, price</span>
+      <span class="a4" style="flex:2">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where a2 sits</h2>
+    </div>
+    <p class="lede">a1 left a map and a four-line hand-off note: dedupe on, guests excluded and stated, short windows caveated, events overlaid. a2 starts from that note and answers the first of the nine angles - the transaction trend and the 2024 break - then prices the break so the chairman pages have a number to quote. a3 walks the product hierarchy and the baskets, a4 measures merchants and stores, a5 does customers, promotions and the data gaps. Everything loads through <code>analysis/lib.py</code> with <code>dedupe=True</code>; work along in <code>notebooks/a2_follow_the_margin.ipynb</code>.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill inkpill">Sources covered</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      A monthly series helper you will reuse in every later session. A 2x5 server grid that shows the break living on two servers only. A margin bridge that says cost, not volume, and says it per SKU so the mix term is real. A change-point scan that dates the break to March 2024 on its own and stays quiet on eight servers that had no decision. And a price: 251k over 30 months, 8.4k a month, stated with its assumption.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: WHOLE THEN PER SERVER ============ -->
+  <section class="section" id="whole">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the monthly helper, small multiples, the event overlay</span>
+      <h2>Whole platform first, then one panel per server <span class="tag concept">13 min live</span></h2>
+    </div>
+    <p class="lede">Blends hide. Ten servers averaged into one line lose a few margin points and the line still looks like a healthy business drifting. The same series drawn as ten small panels shows two of them stepping down twelve points in one month. The order matters: the whole first, so the reader knows the company is not on fire, then the un-blend, so they see exactly where it is smouldering.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ten pairs of bars, one per server, each showing margin before and after March 2024. Eight pairs barely change. S07 and S08 drop from about 42 to about 30 percent, drawn in amber. An arrow labelled weighted by revenue leads to a single blended pair on the right that moves only a few points.">
+        <style>
+          .bhT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .bhL { font: 600 10.5px Inter, sans-serif; fill: #5B6B7E; }
+          .bhK { font: 700 11px Inter, sans-serif; fill: #4A2E00; }
+          .bhN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+          .bhE { font: 600 10px Inter, sans-serif; fill: #163E6A; }
+        </style>
+        <defs>
+          <marker id="bhArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C3CEDB"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="300" fill="#FAFBFD"/>
+        <text class="bhT" x="40" y="28">Blends hide - ten servers, one average</text>
+        <rect x="40" y="42" width="12" height="12" fill="#A9C1DE"/><text class="bhN" x="58" y="52">margin, Sep23-Feb24</text>
+        <rect x="220" y="42" width="12" height="12" fill="#163E6A"/><text class="bhN" x="238" y="52">margin, Apr24-Sep24</text>
+        <rect x="400" y="42" width="12" height="12" fill="#E39B0E"/><text class="bhN" x="418" y="52">key servers after the decision</text>
+        <line x1="50" y1="230" x2="540" y2="230" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="56" y="110" width="16" height="120" fill="#A9C1DE"/><rect x="76" y="108" width="16" height="122" fill="#163E6A"/><text class="bhL" x="74" y="250" text-anchor="middle">S01</text>
+        <rect x="104" y="110" width="16" height="120" fill="#A9C1DE"/><rect x="124" y="112" width="16" height="118" fill="#163E6A"/><text class="bhL" x="122" y="250" text-anchor="middle">S02</text>
+        <rect x="152" y="110" width="16" height="120" fill="#A9C1DE"/><rect x="172" y="109" width="16" height="121" fill="#163E6A"/><text class="bhL" x="170" y="250" text-anchor="middle">S03</text>
+        <rect x="200" y="108" width="16" height="122" fill="#A9C1DE"/><rect x="220" y="107" width="16" height="123" fill="#163E6A"/><text class="bhL" x="218" y="250" text-anchor="middle">S04</text>
+        <rect x="248" y="114" width="16" height="116" fill="#A9C1DE"/><rect x="268" y="113" width="16" height="117" fill="#163E6A"/><text class="bhL" x="266" y="250" text-anchor="middle">S05</text>
+        <rect x="296" y="111" width="16" height="119" fill="#A9C1DE"/><rect x="316" y="112" width="16" height="118" fill="#163E6A"/><text class="bhL" x="314" y="250" text-anchor="middle">S06</text>
+        <rect x="344" y="110" width="16" height="120" fill="#A9C1DE"/><rect x="364" y="144" width="16" height="86" fill="#E39B0E"/><text class="bhL" x="362" y="250" text-anchor="middle">S07</text>
+        <rect x="392" y="110" width="16" height="120" fill="#A9C1DE"/><rect x="412" y="141" width="16" height="89" fill="#E39B0E"/><text class="bhL" x="410" y="250" text-anchor="middle">S08</text>
+        <rect x="440" y="114" width="16" height="116" fill="#A9C1DE"/><rect x="460" y="112" width="16" height="118" fill="#163E6A"/><text class="bhL" x="458" y="250" text-anchor="middle">S09</text>
+        <rect x="488" y="116" width="16" height="114" fill="#A9C1DE"/><rect x="508" y="114" width="16" height="116" fill="#163E6A"/><text class="bhL" x="506" y="250" text-anchor="middle">S10</text>
+        <text class="bhK" x="388" y="96" text-anchor="middle">S07 + S08 fall 12 points</text>
+        <line x1="556" y1="170" x2="644" y2="170" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#bhArr)"/>
+        <text class="bhE" x="600" y="160" text-anchor="middle">weighted by revenue</text>
+        <rect x="670" y="70" width="170" height="195" rx="10" fill="#E9F0F8"/>
+        <line x1="690" y1="230" x2="820" y2="230" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="710" y="110" width="40" height="120" fill="#A9C1DE"/>
+        <rect x="760" y="120" width="40" height="110" fill="#163E6A"/>
+        <text class="bhL" x="755" y="250" text-anchor="middle">platform, blended</text>
+        <text class="bhE" x="755" y="96" text-anchor="middle">drifts a few points</text>
+        <text class="bhN" x="40" y="286">Ten servers, two hit. Averaged together the platform line loses a few points and nobody looks twice.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the blended line is not wrong, it is just the wrong grain for a diagnosis. Un-blend by the unit that took the decision.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span> The monthly helper <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>One helper, <code>lib.monthly</code>, returns revenue, cost, profit, margin, orders, lines, units and identified customers per month, for the whole frame or for any list of keys. Every long series in the track comes out of it, so the definition of "a month of margin" lives in one place. Two rules ride along. Load with <code>dedupe=True</code>, because a1 found S02 duplicating lines in 2021-H1. And never chart the partial current month as a value: the dataset ends 2026-09-07, so September 2026 has a week of orders, and a week drawn next to full months looks like a collapse.</p>
+        <div class="prompt-box good"><span class="label">★ Load deduplicated, drop the partial month, one monthly frame</span>import lib
+lib.style()
+tx = lib.load_transactions(dedupe=True)
+events = lib.load_known_events()
+complete = tx.month &lt; pd.Period(lib.AS_OF, "M")     # the current month is partial - never chart it as a value
+txc = tx[complete]
+print(f"{len(tx):,} lines after dedupe; charting {txc.month.nunique()} complete months")
+
+plat = lib.monthly(txc)                             # revenue, cost, profit, margin, orders, units, customers
+fig, axes = plt.subplots(2, 1, figsize=(13, 7), sharex=True, gridspec_kw={"height_ratios": [2, 1]})
+axes[0].plot(plat.month_ts, plat.revenue / 1e3, color=lib.NAVY, lw=2, label="revenue (k)")
+axes[0].plot(plat.month_ts, plat.profit / 1e3, color=lib.AMBER, lw=2, label="profit (k)")
+lib.annotate_events(axes[0], events)
+axes[1].plot(plat.month_ts, plat.margin * 100, color=lib.NAVY_MID, lw=2)
+axes[1].set_ylim(25, 50)
+lib.save(fig, "a2_platform_monthly")</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_platform_monthly.png" alt="Two stacked panels of monthly platform revenue and profit from 2020 to 2026 with known events overlaid, and blended margin percent below. Revenue climbs with repeating Q4 peaks; the blended margin line drifts down only a few points from 2024.">
+          <figcaption>🔍 Click to zoom - 250,093 lines after dedupe, 77 complete months. Blended, the platform looks healthy. That is the point of drawing it first.</figcaption>
+        </figure>
+        <p>Read the whole before the parts. Revenue climbs, the Q4 peaks repeat, and the blended margin slides a few points from 2024. Nothing here says crisis, and a chairman who sees only this chart is right to feel calm. The next chart takes the calm away with the same numbers.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Small multiples by server <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Same helper, one extra key. Ten panels, shared axes so the eye compares heights honestly, key servers in amber, a faint dashed line at March 2024 on every panel so the reader can see that eight of them do nothing there. Shared y-limits are the whole trick: let matplotlib autoscale each panel and every server looks like it has a dramatic story.</p>
+        <div class="prompt-box good"><span class="label">★ The 2x5 grid - shared axes, key servers amber</span>srv = lib.monthly(txc, ["server_id"])
+servers = sorted(srv.server_id.unique())
+fig, axes = plt.subplots(2, 5, figsize=(15, 6), sharex=True, sharey=True)
+for ax, s in zip(axes.ravel(), servers):
+    d = srv[srv.server_id == s]
+    ax.plot(d.month_ts, d.margin * 100, color=lib.AMBER if s in lib.KEY_SERVERS else lib.NAVY, lw=1.8)
+    ax.axvline(pd.Timestamp("2024-03-01"), color=lib.FAINT, ls="--", lw=1)
+    ax.set_title(s + (" (key)" if s in lib.KEY_SERVERS else ""), fontsize=11)
+    ax.set_ylim(20, 50)
+fig.suptitle("Margin % per month, one panel per server - the break lives on S07 and S08 only", x=0.01, ha="left")
+lib.save(fig, "a2_server_margin_grid")</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_server_margin_grid.png" alt="A two by five grid of monthly margin percent, one panel per server, shared axes. Eight navy panels hold near 42 percent throughout. The two amber panels, S07 and S08, step down to about 30 percent at the dashed March 2024 line and stay there.">
+          <figcaption>🔍 Click to zoom - S07 went 42.3 percent in 2023 to 30.9 in 2024 and 28.5 in 2025; S08 42.2 to 32.1 to 30.3. Every other server sits within a point of where it was.</figcaption>
+        </figure>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A regional chain reported group margin every month for two years while one region's margin had halved after a warehouse change. The group line moved less than the seasonal noise. The first small-multiples chart, drawn by a new analyst in an afternoon, ended the debate about whether there was a problem and started the one about who had decided it. Small multiples are not a style choice; they are the only chart that can show where a blended number lives.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Overlay what you know <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><code>lib.annotate_events</code> draws every row of <code>known_events</code> as a thin dashed line with a short label - amber for business events, faint for technical ones. It goes on every long series, not just the one where you expect a bend, for a plain reason: the first thing a reader does when a line bends is ask "what happened there?", and an analyst who has to look it up loses the room. The team's memory is data. Printwell keeps nine rows of it, which a1 filed as a gap; until there is a real event log, those nine lines are the best context the company has, and they belong on the chart rather than in a footnote.</p>
+        <p>Two habits make the overlay honest. Filter by scope when a chart is about one server, using <code>scope_filter</code>, so platform-wide events and that server's events show and other servers' events do not. And never let an overlay do the arguing: the line marks a date, the bridge in Part 3 names the mechanism, and only the two together make a claim.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: VOLUME HELD, LOOKBACK ============ -->
+  <section class="section" id="volume">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the indexed view, the lookback windows, seasonality</span>
+      <h2>Volume held, margin fell - and the lookback trap <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">The chairman's first question is always "did we sell less?" On S07 and S08 the answer is no. Orders and revenue after March 2024 sit within a few percent of the six months before; profit fell by nearly a third. Say that in one indexed picture, then show what the same number looks like through a three-month window, because a three-month window is exactly what the weekly dashboard was showing while this happened.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Index to the six months before <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Index every series to the average of September 2023 through February 2024 = 100. Indexing puts orders, revenue and profit on one axis so the reader sees them diverge; the six-month base smooths a single odd month out of the denominator. Shade March 2024 so the eye lands where the story starts.</p>
+        <div class="prompt-box good"><span class="label">★ Orders, revenue and profit on the key servers, indexed</span>key = lib.monthly(txc[txc.is_key])
+base = key[(key.month &gt;= pd.Period("2023-09", "M")) &amp; (key.month &lt;= pd.Period("2024-02", "M"))]
+idx = key[(key.month &gt;= pd.Period("2023-03", "M")) &amp; (key.month &lt;= pd.Period("2025-02", "M"))].copy()
+for c in ["orders", "revenue", "profit"]:
+    idx[c + "_i"] = idx[c] / base[c].mean() * 100
+fig, ax = plt.subplots(figsize=(12, 5))
+ax.plot(idx.month_ts, idx.orders_i, color=lib.NAVY, lw=2, label="orders")
+ax.plot(idx.month_ts, idx.revenue_i, color=lib.NAVY_MID, lw=2, label="revenue")
+ax.plot(idx.month_ts, idx.profit_i, color=lib.AMBER, lw=2.5, label="profit")
+ax.axhline(100, color=lib.FAINT, lw=1)
+ax.axvspan(pd.Timestamp("2024-03-01"), pd.Timestamp("2024-03-31"), color=lib.AMBER_50)
+lib.save(fig, "a2_volume_held_margin_fell")</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_volume_held_margin_fell.png" alt="Three indexed lines for S07 plus S08 from March 2023 to February 2025 with Sep 2023 to Feb 2024 average as 100. Orders and revenue stay near 100 through the shaded March 2024 band; profit drops by roughly a third and stays down.">
+          <figcaption>🔍 Click to zoom - Dec23-Feb24 against Apr24-Jun24: orders -4.2 percent, revenue -4.4 percent, profit -31.8 percent, margin 42.3 to 30.2.</figcaption>
+        </figure>
+        <p>Print the three-month comparison as a table under the chart. A chart persuades; a table of four rows is what gets pasted into the email that follows. Both come from the same <code>key</code> frame, so they cannot disagree.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Three windows on one number <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Take the S07 margin series as of August 2024, five months after the break, and draw it three times: the last three months, the last twelve, the full history. Same numbers, same axis limits. The three-month view is a wobble around 29. The twelve-month view is a step. The full view is a cliff with four flat years in front of it. Anyone running the business off a trailing-quarter dashboard in 2024 saw the first panel and was right, from inside that window, to see nothing.</p>
+        <div class="prompt-box good"><span class="label">★ One series, three windows, same y-axis</span>s07 = srv[srv.server_id == "S07"].set_index("month")
+asof = pd.Period("2024-08", "M")
+fig, axes = plt.subplots(1, 3, figsize=(15, 4.2))
+for ax, n, label in zip(axes, [3, 12, 60], ["last 3 months", "last 12 months", "full history"]):
+    d = s07.loc[asof - n + 1: asof]
+    ax.plot(d.month_ts, d.margin * 100, color=lib.AMBER, lw=2.2, marker="o" if n == 3 else None)
+    ax.set_title(f"S07 margin % - {label}")
+    ax.set_ylim(20, 50)                              # shared limits or the comparison is theatre
+    if n &gt; 3:
+        ax.axvline(pd.Timestamp("2024-03-01"), color=lib.FAINT, ls="--")
+lib.save(fig, "a2_lookback_windows")</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_lookback_windows.png" alt="Three panels of S07 margin percent as of August 2024 on a shared 20 to 50 axis. The three-month panel shows a flat wobble near 29. The twelve-month panel shows a step down at the dashed March 2024 line. The full-history panel shows four years near 42 then a cliff.">
+          <figcaption>🔍 Click to zoom - only the long window shows a step rather than a wobble. Full history first, then window: it is the first methodology law for a reason.</figcaption>
+        </figure>
+        <p>Now do it yourself, on the real monthly numbers the notebook exports. The widget below draws the course dataset, not a model. Change <code>data-series</code> to <code>S08</code>, <code>S03</code> or <code>platform</code> in the page source to repeat the exercise on a second hit, a null server and the blend.</p>
+        <div class="lb" data-series="S07" data-asof="2024-08"></div>
+        <div class="callout tip">
+          <strong>How to read the widget</strong>
+          Start where it opens: 3 mo, margin, as of 2024-08. That is the dashboard view - a flat line near 29 with nothing to explain. Click 12 mo and the step appears. Click all and the four flat years before it appear too, which is what turns a step into a decision. Then switch the metric to orders and revenue and notice that neither steps. Finally drag as-of back to 2024-03 and forward month by month: the earliest a three-month window could have shown the break is the month it happened, and by 2024-06 it has already forgotten.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Seasonality so November is not mistaken for strategy <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Printwell's revenue by month of year, averaged over the five complete years 2021-2025 and indexed to 100: Q4 carries the year and February is the trough. This chart exists so that two mistakes cannot be made later. Nobody credits a Q4 initiative for a Q4 peak that happens every year, and nobody blames a February dip on a January decision. It also explains the volume term of the bridge in Part 3: comparing Sep-Feb with Apr-Sep bakes in a seasonal difference, and the same difference shows up on the servers that had no decision, which is how you know it is season and not the decision.</p>
+        <figure class="zoomable">
+          <img src="../figures/a2_seasonality.png" alt="Bar chart of platform revenue by month of year, 2021 to 2025 average indexed to 100. October, November and December stand well above 100 in amber; February is the lowest bar.">
+          <figcaption>🔍 Click to zoom - Q4 above 120 in amber, February the trough. Compare like-for-like months or difference out the season before reading any change.</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: BRIDGE AND CHANGE-POINT ============ -->
+  <section class="section" id="mechanism">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the per-SKU margin bridge, the change-point scan, raw rows</span>
+      <h2>Name the mechanism: the bridge and the change-point <span class="tag concept">11 min live</span></h2>
+    </div>
+    <p class="lede">Decompose before you narrate. Profit change between two periods is volume plus price plus cost plus mix, and naming the term comes before naming a cause. On S07 and S08 between Sep23-Feb24 and Apr24-Sep24 the terms are volume -18k, price +6k, cost -54k, mix +5k. On every other server the cost term is exactly zero. That is not a market moving; that is someone changing what an order costs to fulfil.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A waterfall of six bars for S07 plus S08 profit: start 193k, volume minus 18k, price plus 6k, cost minus 54k, mix plus 5k, end 132k. The cost bar is by far the largest and is amber. Under the chart, one formula line per term.">
+        <style>
+          .brT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .brV { font: 700 11px Inter, sans-serif; fill: #14202E; }
+          .brA { font: 700 11px Inter, sans-serif; fill: #4A2E00; }
+          .brL { font: 600 11px Inter, sans-serif; fill: #5B6B7E; }
+          .brF { font: 400 11px Inter, sans-serif; fill: #14202E; }
+          .brM { font: 400 11px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <rect x="0" y="0" width="880" height="340" fill="#FAFBFD"/>
+        <text class="brT" x="40" y="28">Bridge anatomy - S07 + S08 profit, Sep23-Feb24 to Apr24-Sep24</text>
+        <line x1="50" y1="240" x2="830" y2="240" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="60" y="76" width="100" height="164" fill="#163E6A"/>
+        <text class="brV" x="110" y="70" text-anchor="middle">193k</text>
+        <line x1="160" y1="76" x2="190" y2="76" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="190" y="76" width="100" height="15" fill="#E39B0E"/>
+        <text class="brA" x="240" y="70" text-anchor="middle">-18k</text>
+        <line x1="290" y1="91" x2="320" y2="91" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="320" y="86" width="100" height="5" fill="#A9C1DE"/>
+        <text class="brV" x="370" y="80" text-anchor="middle">+6k</text>
+        <line x1="420" y1="86" x2="450" y2="86" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="450" y="86" width="100" height="46" fill="#E39B0E"/>
+        <text class="brA" x="500" y="80" text-anchor="middle">-54k</text>
+        <line x1="550" y1="132" x2="580" y2="132" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="580" y="128" width="100" height="4" fill="#A9C1DE"/>
+        <text class="brV" x="630" y="122" text-anchor="middle">+5k</text>
+        <line x1="680" y1="128" x2="710" y2="128" stroke="#C3CEDB" stroke-width="1"/>
+        <rect x="710" y="128" width="100" height="112" fill="#163E6A"/>
+        <text class="brV" x="760" y="122" text-anchor="middle">132k</text>
+        <text class="brL" x="110" y="260" text-anchor="middle">Sep23-Feb24</text>
+        <text class="brL" x="240" y="260" text-anchor="middle">volume</text>
+        <text class="brL" x="370" y="260" text-anchor="middle">price</text>
+        <text class="brL" x="500" y="260" text-anchor="middle">cost</text>
+        <text class="brL" x="630" y="260" text-anchor="middle">mix</text>
+        <text class="brL" x="760" y="260" text-anchor="middle">Apr24-Sep24</text>
+        <text class="brF" x="40" y="284">volume = (units_b - units_a) x average unit profit in a</text>
+        <text class="brF" x="40" y="300">price = sum over SKUs sold in both periods of (unit price_b - unit price_a) x units_b</text>
+        <text class="brF" x="40" y="316">cost = - sum over the same SKUs of (unit cost_b - unit cost_a) x units_b</text>
+        <text class="brM" x="40" y="332">mix = what is left: SKU composition shifts, plus SKUs sold in only one period. Amber = negative terms.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - four terms, one of them the story. The other servers' bridge over the same months has volume +21k, price +13k, cost 0, mix +3k.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Per-SKU rates or the mix term is a lie <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The tempting shortcut is a blended bridge: average price per unit and average cost per unit for each period, times units. It is quick and it is wrong in a specific way. If price and cost effects are computed on blended rates, then volume + price + cost equals the whole profit change by construction, and mix comes out as exactly zero every time. A term that is zero by algebra is not a finding; it is a column you forgot to compute. <code>lib.margin_bridge</code> computes price and cost per SKU, over the SKUs sold in both periods, at period-b units, and lets mix be the remainder: composition shifts and SKUs that appear in only one period. On S07 and S08 mix is +5k, small but real, which is what a mix term is supposed to look like when nothing happened to mix.</p>
+        <div class="prompt-box good"><span class="label">★ Two bridges, key servers against the rest, same months</span>def slice_(d, a, b):
+    return d[(d.month &gt;= pd.Period(a, "M")) &amp; (d.month &lt;= pd.Period(b, "M"))]
+
+bridges = {}
+for name, d in [("S07 + S08", txc[txc.is_key]), ("other servers", txc[~txc.is_key])]:
+    bridges[name] = lib.margin_bridge(slice_(d, "2023-09", "2024-02"), slice_(d, "2024-04", "2024-09"))
+bridge = pd.DataFrame(bridges).round(0)
+bridge.to_csv(lib.REPORTS / "a2_margin_bridge.csv")    # c2 quotes this file, never a retyped number
+bridge</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_margin_bridge.png" alt="Two waterfall charts side by side. S07 plus S08: start 193k, volume minus 18k, price plus 6k, cost minus 54k in a tall amber bar, mix plus 5k, end 132k. Other servers: start 395k, volume plus 21k, price plus 13k, cost exactly zero, mix plus 3k, end 432k.">
+          <figcaption>🔍 Click to zoom - on the key servers the term is cost; on the rest the term is volume and the cost bar has no height at all.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Term</th><th>S07 + S08</th><th>Other servers</th><th>Reading</th></tr></thead>
+          <tbody>
+            <tr><td>start</td><td>193k</td><td>395k</td><td>profit, Sep23-Feb24</td></tr>
+            <tr><td>volume</td><td>-18k</td><td>+21k</td><td>seasonal, similar shape on both groups</td></tr>
+            <tr><td>price</td><td>+6k</td><td>+13k</td><td>prices did nothing unusual</td></tr>
+            <tr><td>cost</td><td>-54k</td><td>0</td><td>the whole story, and only here</td></tr>
+            <tr><td>mix</td><td>+5k</td><td>+3k</td><td>small and real, as a mix term should be</td></tr>
+            <tr><td>end</td><td>132k</td><td>432k</td><td>profit, Apr24-Sep24</td></tr>
+          </tbody>
+        </table>
+        <p>Price did nothing, mix did little, volume was seasonal and moved the same way on both groups. Cost is the term, and it is confined to two servers. <code>known_events</code> has a candidate dated 2024-03-01. The bridge does not prove the event caused the cost; it proves that whatever happened was a cost change and not a demand change, which rules out most of the explanations the room will offer.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Let the data date the break <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The bridge needs you to choose the periods, and choosing them with the event date in hand is a small circularity. So run a detector that has never heard of March 2024: the month-over-month change in margin per server, standardised against the trailing twelve months of its own changes, shifted one month so the month under test does not sit in its own baseline. A step shows as one large negative z followed by nothing, because after the step the changes are small again.</p>
+        <div class="prompt-box good"><span class="label">★ Rolling z-score of the monthly margin change, every server</span>piv = srv.pivot(index="month", columns="server_id", values="margin")
+dz = piv.diff()
+z = (dz - dz.rolling(12, min_periods=6).mean().shift(1)) / dz.rolling(12, min_periods=6).std().shift(1)
+hits = z.stack().reset_index(); hits.columns = ["month", "server_id", "z"]
+top = hits.sort_values("z").head(6)
+top.to_csv(lib.REPORTS / "a2_changepoints.csv", index=False)
+fig, ax = plt.subplots(figsize=(13, 4))
+for s in servers:
+    ax.plot(z.index.to_timestamp(), z[s], color=lib.AMBER if s in lib.KEY_SERVERS else lib.FAINT, lw=1.6 if s in lib.KEY_SERVERS else 1)
+ax.axhline(-3, color=lib.RED, ls=":", lw=1)
+lib.save(fig, "a2_changepoint")</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_changepoint.png" alt="Line chart of rolling z-scores of monthly margin change for ten servers from 2020 to 2026. Eight faint lines wobble between plus and minus two. Two amber lines, S07 and S08, spike to about minus 7 and minus 6 in March 2024 and return to the noise band.">
+          <figcaption>🔍 Click to zoom - S07 at -7.3 and S08 at -5.9 in 2024-03. The next hit is S02 in 2021-03 at -3.1, the duplicate-load half-year a1 found; then nothing below -2.5.</figcaption>
+        </figure>
+        <p>The detector is validated on its nulls as much as its hits. Eight servers took no decision, and eight servers produce no spike beyond noise - that is what makes the two amber spikes evidence rather than decoration. A detector that fires everywhere is a random number generator with a title. The one extra hit it does raise, S02 in 2021-03, is the duplicate-load defect from a1 leaking into margin, which is a second correct answer, not a false alarm.</p>
+        <div class="callout tip">
+          <strong>Shift the baseline</strong>
+          The <code>.shift(1)</code> is not cosmetic. Without it the month being tested is part of its own mean and standard deviation, a big step inflates its own baseline, and the z-score shrinks toward respectability. Detectors that include the observation in the null are the most common reason a real break scores only -2.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Read fifty raw rows <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Before trusting a cost story, read the raw lines. Pull fifty rows from S07 after March 2024 and fifty from before, same SKUs where you can, and look at <code>unit_cost</code> with your own eyes. Ask what it actually is. In many warehouses "unit cost" is a live supplier cost that changes when the supplier does; in many others it is a standard cost re-allocated once a year by finance, and a step in it means an accounting decision, not a fulfilment one. The bridge cannot tell those apart. Fifty rows and one question to whoever owns the column usually can.</p>
+        <p>a1 already filed the answer for Printwell: cost is a unit constant per SKU in <code>dim_product</code>, so the 2024 step is a change to what the platform books per unit, and there is no fulfilment cost per order anywhere in the data. That is why c3 recommends collecting one. Reading rows is how you find out what your aggregate is made of; it takes ten minutes and it has saved more analyses than any model.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 4: PRICE AND EXPORT ============ -->
+  <section class="section" id="price">
+    <div class="section-kicker">
+      <span class="klabel">Part 4 · covers the counterfactual, the running gap, the export</span>
+      <h2>Price the decision, then export <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">A margin drop is an abstraction. A number of profit foregone is a decision-sized fact, and it needs exactly one stated assumption to compute: that the pre-shift margin would have held. Take the twelve months to February 2024 on S07 and S08, get their margin, apply it to every month of revenue since March 2024, and the gap between that counterfactual and actual profit is the running price of the decision.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The running price <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <div class="prompt-box good"><span class="label">★ Pre-shift margin applied to post-shift revenue; the gap accumulates</span>pre12 = key[(key.month &gt;= pd.Period("2023-03", "M")) &amp; (key.month &lt;= pd.Period("2024-02", "M"))]
+old_margin = pre12.profit.sum() / pre12.revenue.sum()
+post = key[key.month &gt;= pd.Period("2024-03", "M")].copy()
+post["counterfactual"] = post.revenue * old_margin
+post["gap"] = post.counterfactual - post.profit
+post["cum_gap"] = post.gap.cumsum()
+fig, ax = plt.subplots(figsize=(12, 4.6))
+ax.fill_between(post.month_ts, post.profit / 1e3, post.counterfactual / 1e3, color=lib.AMBER_50)
+ax.plot(post.month_ts, post.counterfactual / 1e3, color=lib.NAVY_SOFT, lw=2, ls="--", label=f"profit at the pre-shift margin ({old_margin*100:.1f}%)")
+ax.plot(post.month_ts, post.profit / 1e3, color=lib.AMBER, lw=2.2, label="actual profit")
+ax2 = ax.twinx(); ax2.plot(post.month_ts, post.cum_gap / 1e3, color=lib.INK, lw=1.4, ls=":", label="cumulative gap (right axis)")
+lib.save(fig, "a2_price_of_decision")
+price = {"old_margin_pct": round(old_margin * 100, 1), "cum_gap_k": round(post.gap.sum() / 1e3),
+         "months": int(len(post)), "avg_gap_per_month_k": round(post.gap.mean() / 1e3, 1)}
+json.dump(price, open(lib.REPORTS / "a2_price_of_decision.json", "w"), indent=1)</div>
+        <figure class="zoomable">
+          <img src="../figures/a2_price_of_decision.png" alt="Monthly profit on S07 plus S08 from March 2024 to August 2026. A dashed navy line shows profit at the pre-shift margin of 42.4 percent, an amber line shows actual profit below it, the gap is shaded amber, and a dotted line on the right axis climbs to about 251k.">
+          <figcaption>🔍 Click to zoom - 251k of profit over 30 months at the pre-shift margin of 42.4 percent, 8.4k a month, still running.</figcaption>
+        </figure>
+        <p>State the assumption in the caption and the chart title, every time: this is what profit would have been had the margin held, and holding the margin is exactly the thing in question. Whether the cost change also cost customers is a different question with a different method - a5 tests it with cohorts and finds the repeat rate on these servers fell two quarters later - so the 251k is a floor, not an estimate of total damage, and the page says so. Revenue on the key servers went 686k in 2023 to 884k in 2024 to 765k in 2025; profit 290k to 224k between 2023 and 2025. Growth and loss at the same time is why nobody noticed.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          Finance teams price decisions this way every quarter under the name "rate/volume variance", and the counterfactual margin is always the argument. Pick a base period that is too short and one good month sets the bar; pick one that spans an earlier change and you price two decisions as one. Twelve months ending the month before the break is the conventional compromise, and the convention is worth following because it is the one the CFO will recognise.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Export for the widget with json.dumps, never string-built <span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The lookback widget on this page and on c1 draws real monthly numbers, and those numbers come from this notebook. Build a plain dict of lists per series, round the values so the file is small, and serialise with <code>json.dumps</code>. Never assemble JSON by string concatenation: one unescaped quote or a stray <code>NaN</code> produces a file that is invalid JavaScript, the widget silently renders nothing, and the page looks like the export never ran. A serialiser fails loudly at write time, which is where you want it to fail.</p>
+        <div class="prompt-box good"><span class="label">★ One dict, one json.dumps, one file the pages load</span>export = {}
+for s in ["S07", "S08", "S03", "S01"]:
+    d = srv[srv.server_id == s]
+    export[s] = {"months": [str(m) for m in d.month], "revenue": [round(v) for v in d.revenue],
+                 "profit": [round(v) for v in d.profit], "orders": [int(v) for v in d.orders],
+                 "margin": [round(v * 100, 1) for v in d.margin]}
+export["platform"] = {"months": [str(m) for m in plat.month], "revenue": [round(v) for v in plat.revenue],
+                      "profit": [round(v) for v in plat.profit], "orders": [int(v) for v in plat.orders],
+                      "margin": [round(v * 100, 1) for v in plat.margin]}
+(lib.ROOT / "assets" / "diagnosis-data.js").write_text("window.DIAG_SERIES = " + json.dumps(export) + ";\n")</div>
+        <p>The same cell writes <code>reports/a2_server_year_summary.csv</code>, the server-by-year table c2 reads. Every number a chairman page quotes traces back to a file a notebook wrote, so a rerun of the notebook updates the page and a retyped number is impossible.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Rebuild the margin notebook <span class="tag demo">★ 20 min · everyone builds</span></h2>
+    </div>
+    <p class="lede">Open <code>notebooks/a2_follow_the_margin.ipynb</code>, run it top to bottom once, then rebuild each section against the shared reader. The data is seeded, so your bridge lands on the same -54k.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Load deduplicated, drop the partial month.</strong> <code>lib.load_transactions(dedupe=True)</code>, filter <code>month &lt; lib.AS_OF</code>. Print how many complete months you are charting.</p></div>
+      <div class="step"><p><strong>The whole platform.</strong> <code>lib.monthly(txc)</code>, revenue and profit above, margin below, <code>lib.annotate_events</code> on the top panel. Look at it and say out loud what a chairman would conclude.</p></div>
+      <div class="step"><p><strong>Un-blend.</strong> <code>lib.monthly(txc, ["server_id"])</code>, a 2x5 grid with <code>sharey=True</code> and a dashed line at 2024-03 on every panel. Key servers amber.</p></div>
+      <div class="step"><p><strong>Index and window.</strong> Orders, revenue, profit indexed to Sep23-Feb24 = 100. Then the S07 margin as of 2024-08 through 3, 12 and 60 months with shared y-limits.</p></div>
+      <div class="step"><p><strong>Bridge both groups.</strong> <code>lib.margin_bridge</code> on Sep23-Feb24 versus Apr24-Sep24 for key servers and the rest. Save the frame to <code>reports/</code>. Check that mix is small and non-zero.</p></div>
+      <div class="step"><p><strong>Change-point.</strong> Pivot margin by server, diff, rolling z with the baseline shifted one month. Print the six most negative and confirm the nulls stay in the noise band.</p></div>
+      <div class="step"><p><strong>Price and export.</strong> Pre-shift margin on the twelve months to 2024-02, counterfactual profit, cumulative gap, JSON to <code>reports/</code>. Then <code>json.dumps</code> the series to <code>assets/diagnosis-data.js</code> and reload this page: the widget should draw.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The check that keeps you honest</strong>
+      Rerun <code>python3 analysis/nbgen.py notebooks/src/a2_follow_the_margin.py</code>. A failed run leaves no notebook and no figures behind, so a stale bridge can never sit under a fresh title. Then open the widget and pick S03: if it shows a step in 2024, your export or your dedupe is wrong, because S03 took no decision.
+    </div>
+  </section>
+
+  <!-- ============ EXERCISE ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 45 min</span></h2>
+    </div>
+    <ul>
+      <li>Take one margin or conversion series you report on. Draw it whole, then as small multiples by the unit that can take a decision - region, team, product, server. Shared axes. Write down which panel you had never seen on its own.</li>
+      <li>Run a per-SKU (or per-product, per-plan) bridge between two periods of your own. If the mix term comes out exactly zero, you have blended rates somewhere; find where.</li>
+      <li>Run the rolling z-score on your monthly change series across every unit, including the ones where nothing happened. Count the hits below -3 and give each one a date and a cause, or a note that says you could not find one.</li>
+    </ul>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session draws on</h2>
+    </div>
+    <p class="lede">Margin analysis is standard FP&amp;A and time-series craft rather than a certified course. The working core drawn on here:</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">pandas user guide - groupby on PeriodIndex, resample, pivot, diff, rolling with min_periods and shift</span><span class="note">Parts 1-3 · lib.monthly and the change-point cell</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Price-volume-mix analysis as taught in FP&amp;A - rate/volume variance, the counterfactual base period</span><span class="note">Parts 3-4 · lib.margin_bridge, the price of the decision</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Change-point detection via rolling z-scores - the simplest detector that can be validated on its nulls</span><span class="note">Part 3 · one large negative z followed by nothing</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Cole Nussbaumer Knaflic, Storytelling with Data - small multiples, shared axes, one colour for the thing that matters</span><span class="note">Part 1 · the 2x5 grid and the amber key servers</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · A colleague's bridge uses average price per unit and average cost per unit for each period. Their mix term is exactly 0 on every server. What does that tell you?</p>
+      <button class="qopt" type="button">A · Product mix did not change on any server</button>
+      <button class="qopt" type="button">B · The data has no SKU-level detail</button>
+      <button class="qopt" type="button">C · Nothing about mix - with blended rates, volume + price + cost equals the whole change by construction, so mix is zero by algebra</button>
+      <p class="qwhy">A blended-rate bridge cannot produce a mix term; the remainder is identically zero. Per-SKU rates over the shared SKUs, with mix as the remainder, is what makes mix a measurement. On S07 and S08 it comes out +5k: small, non-zero, believable.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Your change-point detector fires at -7.3 on S07 in 2024-03. Before you present it, what do you need to have looked at?</p>
+      <button class="qopt" type="button">A · The eight servers that took no decision - if they also spike, the detector is noise with a title</button>
+      <button class="qopt" type="button">B · Whether the spike is at least -10, the usual threshold</button>
+      <button class="qopt" type="button">C · Only the S08 series, to confirm the pair</button>
+      <p class="qwhy">A detector validated only on its hits is worth nothing: every method finds the event you already know about. The null servers staying inside the noise band is the evidence. Printwell's do, and the one extra hit, S02 in 2021-03, has a known cause.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · The data runs to 2026-09-07. Why does every monthly chart stop at August 2026?</p>
+      <button class="qopt" type="button">A · Because September's figures have not been reconciled by finance</button>
+      <button class="qopt" type="button">B · Because one week of orders drawn next to full months looks like a collapse - a partial month is never charted as a value</button>
+      <button class="qopt" type="button">C · Because pandas Period arithmetic cannot include the current month</button>
+      <p class="qwhy">A partial month is a fraction of a month dressed as a whole one. Filtering on <code>month &lt; AS_OF</code> in the shared reader means every notebook drops it the same way and no chart ends in a fake cliff.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Analyst session 2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Whole, then un-blend</b><span>Draw the platform first so the reader knows it is not on fire. Then small multiples by the unit that took the decision, shared axes.</span></div>
+      <div class="cheat-item"><b>Never chart the partial month</b><span>Filter month &lt; AS_OF. A week of orders next to full months is a fake cliff.</span></div>
+      <div class="cheat-item"><b>Full history first, then window</b><span>Three months is a wobble, twelve is a step, sixty is a cliff. Same numbers, same axis. Only the long one can tell step from noise.</span></div>
+      <div class="cheat-item"><b>Overlay what you know</b><span>lib.annotate_events on every long series. The team's memory is data; the line marks a date, the bridge names the term.</span></div>
+      <div class="cheat-item"><b>Decompose before you narrate</b><span>Profit change = volume + price + cost + mix. Per-SKU rates over shared SKUs; mix is the remainder. Blended rates make mix zero by algebra.</span></div>
+      <div class="cheat-item"><b>The Printwell bridge</b><span>S07 + S08, Sep23-Feb24 to Apr24-Sep24: volume -18k, price +6k, cost -54k, mix +5k. Other servers: cost exactly 0.</span></div>
+      <div class="cheat-item"><b>Validate the detector on its nulls</b><span>Rolling z of monthly change, baseline shifted one month. S07 -7.3, S08 -5.9 in 2024-03; eight null servers stay in the band.</span></div>
+      <div class="cheat-item"><b>Price with a stated assumption</b><span>Pre-shift margin 42.4 percent on post-shift revenue: 251k over 30 months, 8.4k a month. A floor, not the total; a5 tests the retention half.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Analyst session 2 of 5 · learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a1-map-the-data-before-you-read-it.html">← Prev: Map the data before you read it</a> &nbsp;·&nbsp; <a href="../index.html">All sessions</a> &nbsp;·&nbsp; <a href="a3-products-and-baskets.html">Next: Products and baskets →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/diagnosis-data.js?v=1"></script>
+<script src="../assets/lookback-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

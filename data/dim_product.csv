@@ -1,0 +1,1174 @@
+sku_id,owner,merchant_id,category,product_line,list_price,unit_cost
+P-T-S-001,platform,,Apparel,T-shirt,27.83,16.83
+P-T-S-002,platform,,Apparel,T-shirt,28.64,16.73
+P-T-S-003,platform,,Apparel,T-shirt,21.3,11.97
+P-T-S-004,platform,,Apparel,T-shirt,27.71,15.99
+P-T-S-005,platform,,Apparel,T-shirt,21.63,13.06
+P-T-S-006,platform,,Apparel,T-shirt,23.96,13.56
+P-T-S-007,platform,,Apparel,T-shirt,26.58,15.26
+P-T-S-008,platform,,Apparel,T-shirt,24.66,15.33
+P-T-S-009,platform,,Apparel,T-shirt,25.72,16.33
+P-T-S-010,platform,,Apparel,T-shirt,28.35,16.71
+P-T-S-011,platform,,Apparel,T-shirt,27.68,16.93
+P-T-S-012,platform,,Apparel,T-shirt,29.72,16.9
+P-HOO-001,platform,,Apparel,Hoodie,60.39,38.84
+P-HOO-002,platform,,Apparel,Hoodie,53.91,35.29
+P-HOO-003,platform,,Apparel,Hoodie,47.41,28.73
+P-HOO-004,platform,,Apparel,Hoodie,59.69,34.89
+P-HOO-005,platform,,Apparel,Hoodie,50.98,32.11
+P-HOO-006,platform,,Apparel,Hoodie,53.97,34.74
+P-HOO-007,platform,,Apparel,Hoodie,46.9,29.16
+P-HOO-008,platform,,Apparel,Hoodie,48.92,29.7
+P-CAP-001,platform,,Apparel,Cap,18.45,10.19
+P-CAP-002,platform,,Apparel,Cap,20.34,12.12
+P-CAP-003,platform,,Apparel,Cap,21.29,11.8
+P-CAP-004,platform,,Apparel,Cap,18.09,10.81
+P-CAP-005,platform,,Apparel,Cap,20.21,12.33
+P-CAP-006,platform,,Apparel,Cap,16.74,10.4
+P-MUG-001,platform,,Drinkware,Mug,17.47,9.35
+P-MUG-002,platform,,Drinkware,Mug,16.98,8.91
+P-MUG-003,platform,,Drinkware,Mug,15.5,8.43
+P-MUG-004,platform,,Drinkware,Mug,13.59,7.95
+P-MUG-005,platform,,Drinkware,Mug,16.76,9.26
+P-MUG-006,platform,,Drinkware,Mug,16.14,8.49
+P-MUG-007,platform,,Drinkware,Mug,16.56,9.03
+P-MUG-008,platform,,Drinkware,Mug,16.11,9.14
+P-MUG-009,platform,,Drinkware,Mug,12.93,7.19
+P-MUG-010,platform,,Drinkware,Mug,14.04,7.84
+P-TUM-001,platform,,Drinkware,Tumbler,33.36,20.73
+P-TUM-002,platform,,Drinkware,Tumbler,24.45,15.1
+P-TUM-003,platform,,Drinkware,Tumbler,27.09,15.9
+P-TUM-004,platform,,Drinkware,Tumbler,30.04,17.34
+P-TUM-005,platform,,Drinkware,Tumbler,31.24,18.98
+P-TUM-006,platform,,Drinkware,Tumbler,32.92,20.63
+P-BOT-001,platform,,Drinkware,Bottle,18.9,11.79
+P-BOT-002,platform,,Drinkware,Bottle,25.06,14.86
+P-BOT-003,platform,,Drinkware,Bottle,20.12,11.87
+P-BOT-004,platform,,Drinkware,Bottle,20.04,11.5
+P-BOT-005,platform,,Drinkware,Bottle,22.63,13.57
+P-BOT-006,platform,,Drinkware,Bottle,21.35,12.37
+P-NOT-001,platform,,Stationery,Notebook,11.94,7.12
+P-NOT-002,platform,,Stationery,Notebook,10.77,5.59
+P-NOT-003,platform,,Stationery,Notebook,14.56,7.9
+P-NOT-004,platform,,Stationery,Notebook,11.48,5.95
+P-NOT-005,platform,,Stationery,Notebook,13.94,7.54
+P-NOT-006,platform,,Stationery,Notebook,12.36,7.17
+P-NOT-007,platform,,Stationery,Notebook,10.66,5.59
+P-NOT-008,platform,,Stationery,Notebook,12.39,7.26
+P-STI-001,platform,,Stationery,Sticker pack,5.83,2.57
+P-STI-002,platform,,Stationery,Sticker pack,5.52,2.27
+P-STI-003,platform,,Stationery,Sticker pack,6.92,2.95
+P-STI-004,platform,,Stationery,Sticker pack,6.14,2.68
+P-STI-005,platform,,Stationery,Sticker pack,6.5,2.82
+P-STI-006,platform,,Stationery,Sticker pack,5.3,2.43
+P-PEN-001,platform,,Stationery,Pen set,7.8,4.06
+P-PEN-002,platform,,Stationery,Pen set,8.84,4.9
+P-PEN-003,platform,,Stationery,Pen set,8.02,4.1
+P-PEN-004,platform,,Stationery,Pen set,8.26,3.96
+P-CUS-001,platform,,Home,Cushion,32.47,20.82
+P-CUS-002,platform,,Home,Cushion,32.59,21.68
+P-CUS-003,platform,,Home,Cushion,37.0,23.36
+P-CUS-004,platform,,Home,Cushion,34.89,23.06
+P-CUS-005,platform,,Home,Cushion,31.34,19.77
+P-POS-001,platform,,Home,Poster,24.5,12.07
+P-POS-002,platform,,Home,Poster,20.79,10.88
+P-POS-003,platform,,Home,Poster,19.65,9.78
+P-POS-004,platform,,Home,Poster,20.51,11.24
+P-POS-005,platform,,Home,Poster,23.61,10.87
+P-POS-006,platform,,Home,Poster,18.12,8.96
+P-POS-007,platform,,Home,Poster,17.87,8.63
+P-POS-008,platform,,Home,Poster,19.25,9.32
+P-BLA-001,platform,,Home,Blanket,66.17,41.77
+P-BLA-002,platform,,Home,Blanket,51.8,32.16
+P-BLA-003,platform,,Home,Blanket,54.64,37.29
+P-BLA-004,platform,,Home,Blanket,62.17,40.97
+P-TOT-001,platform,,Bags,Tote,22.46,12.21
+P-TOT-002,platform,,Bags,Tote,18.56,9.86
+P-TOT-003,platform,,Bags,Tote,18.36,10.44
+P-TOT-004,platform,,Bags,Tote,18.1,9.64
+P-TOT-005,platform,,Bags,Tote,17.4,10.6
+P-TOT-006,platform,,Bags,Tote,19.46,10.27
+P-BAC-001,platform,,Bags,Backpack,74.81,46.54
+P-BAC-002,platform,,Bags,Backpack,74.79,45.75
+P-BAC-003,platform,,Bags,Backpack,65.57,42.83
+P-BAC-004,platform,,Bags,Backpack,71.85,45.15
+P-POU-001,platform,,Bags,Pouch,10.99,6.24
+P-POU-002,platform,,Bags,Pouch,12.64,6.98
+P-POU-003,platform,,Bags,Pouch,13.47,7.47
+P-POU-004,platform,,Bags,Pouch,9.89,4.93
+P-POU-005,platform,,Bags,Pouch,10.02,5.61
+M001-BOT-01,merchant,M001,Drinkware,Bottle,26.18,12.96
+M001-POS-02,merchant,M001,Home,Poster,30.64,13.3
+M001-T-S-03,merchant,M001,Apparel,T-shirt,29.29,14.45
+M001-POS-04,merchant,M001,Home,Poster,31.57,14.28
+M001-CAP-05,merchant,M001,Apparel,Cap,24.8,12.34
+M001-POS-06,merchant,M001,Home,Poster,29.36,12.36
+M001-CUS-07,merchant,M001,Home,Cushion,37.62,21.02
+M002-CUS-01,merchant,M002,Home,Cushion,42.57,24.38
+M002-TOT-02,merchant,M002,Bags,Tote,26.8,13.34
+M002-TOT-03,merchant,M002,Bags,Tote,23.99,11.88
+M002-HOO-04,merchant,M002,Apparel,Hoodie,71.72,38.89
+M002-POU-05,merchant,M002,Bags,Pouch,16.34,7.53
+M002-MUG-06,merchant,M002,Drinkware,Mug,19.52,9.75
+M002-NOT-07,merchant,M002,Stationery,Notebook,17.65,7.92
+M002-POU-08,merchant,M002,Bags,Pouch,17.01,7.73
+M002-BAC-09,merchant,M002,Bags,Backpack,79.23,43.6
+M002-POU-10,merchant,M002,Bags,Pouch,16.25,7.32
+M002-POU-11,merchant,M002,Bags,Pouch,16.06,6.84
+M002-CUS-12,merchant,M002,Home,Cushion,44.8,24.86
+M002-BAC-13,merchant,M002,Bags,Backpack,78.93,44.2
+M002-BOT-14,merchant,M002,Drinkware,Bottle,34.63,17.64
+M002-TUM-15,merchant,M002,Drinkware,Tumbler,38.15,20.28
+M003-TUM-01,merchant,M003,Drinkware,Tumbler,41.07,22.04
+M003-POU-02,merchant,M003,Bags,Pouch,13.66,6.39
+M003-POS-03,merchant,M003,Home,Poster,25.62,10.85
+M003-BAC-04,merchant,M003,Bags,Backpack,90.99,48.57
+M003-BOT-05,merchant,M003,Drinkware,Bottle,32.76,17.55
+M003-CUS-06,merchant,M003,Home,Cushion,46.35,26.24
+M003-CAP-07,merchant,M003,Apparel,Cap,28.61,14.99
+M003-HOO-08,merchant,M003,Apparel,Hoodie,63.0,33.44
+M003-POU-09,merchant,M003,Bags,Pouch,13.31,5.87
+M003-TUM-10,merchant,M003,Drinkware,Tumbler,41.76,20.77
+M004-HOO-01,merchant,M004,Apparel,Hoodie,64.36,33.69
+M004-STI-02,merchant,M004,Stationery,Sticker pack,9.5,3.79
+M004-NOT-03,merchant,M004,Stationery,Notebook,14.94,7.77
+M004-CUS-04,merchant,M004,Home,Cushion,44.74,24.82
+M004-STI-05,merchant,M004,Stationery,Sticker pack,8.34,3.37
+M005-POU-01,merchant,M005,Bags,Pouch,13.05,6.42
+M005-TUM-02,merchant,M005,Drinkware,Tumbler,37.18,19.43
+M005-HOO-03,merchant,M005,Apparel,Hoodie,62.99,34.43
+M005-PEN-04,merchant,M005,Stationery,Pen set,10.79,4.34
+M005-NOT-05,merchant,M005,Stationery,Notebook,17.04,8.34
+M005-HOO-06,merchant,M005,Apparel,Hoodie,67.15,34.51
+M005-STI-07,merchant,M005,Stationery,Sticker pack,8.45,3.13
+M006-T-S-01,merchant,M006,Apparel,T-shirt,35.81,19.18
+M006-POS-02,merchant,M006,Home,Poster,25.56,10.76
+M006-NOT-03,merchant,M006,Stationery,Notebook,17.4,7.99
+M006-TUM-04,merchant,M006,Drinkware,Tumbler,38.15,19.18
+M006-TOT-05,merchant,M006,Bags,Tote,27.95,14.32
+M006-STI-06,merchant,M006,Stationery,Sticker pack,8.89,3.1
+M007-BLA-01,merchant,M007,Home,Blanket,82.55,44.26
+M007-NOT-02,merchant,M007,Stationery,Notebook,16.87,8.64
+M007-T-S-03,merchant,M007,Apparel,T-shirt,36.14,19.0
+M007-T-S-04,merchant,M007,Apparel,T-shirt,30.27,16.09
+M007-POS-05,merchant,M007,Home,Poster,27.19,10.49
+M007-BLA-06,merchant,M007,Home,Blanket,85.88,46.15
+M008-TUM-01,merchant,M008,Drinkware,Tumbler,35.49,18.01
+M008-POU-02,merchant,M008,Bags,Pouch,16.85,8.09
+M008-TUM-03,merchant,M008,Drinkware,Tumbler,32.35,16.97
+M009-TOT-01,merchant,M009,Bags,Tote,29.91,15.76
+M009-POS-02,merchant,M009,Home,Poster,28.18,11.09
+M009-PEN-03,merchant,M009,Stationery,Pen set,10.95,5.13
+M009-MUG-04,merchant,M009,Drinkware,Mug,18.26,8.63
+M009-BLA-05,merchant,M009,Home,Blanket,85.8,48.01
+M009-BLA-06,merchant,M009,Home,Blanket,74.63,40.13
+M009-MUG-07,merchant,M009,Drinkware,Mug,20.28,10.32
+M009-BAC-08,merchant,M009,Bags,Backpack,80.85,42.43
+M010-MUG-01,merchant,M010,Drinkware,Mug,20.28,10.1
+M010-NOT-02,merchant,M010,Stationery,Notebook,16.97,8.14
+M010-HOO-03,merchant,M010,Apparel,Hoodie,77.18,39.45
+M010-CAP-04,merchant,M010,Apparel,Cap,28.18,14.05
+M010-MUG-05,merchant,M010,Drinkware,Mug,19.0,8.37
+M010-POU-06,merchant,M010,Bags,Pouch,15.42,6.64
+M010-T-S-07,merchant,M010,Apparel,T-shirt,30.62,15.07
+M011-CUS-01,merchant,M011,Home,Cushion,40.61,22.77
+M011-MUG-02,merchant,M011,Drinkware,Mug,18.05,7.8
+M011-PEN-03,merchant,M011,Stationery,Pen set,13.15,5.7
+M011-NOT-04,merchant,M011,Stationery,Notebook,16.51,7.76
+M011-BLA-05,merchant,M011,Home,Blanket,84.95,48.23
+M011-BAC-06,merchant,M011,Bags,Backpack,89.3,49.34
+M011-BOT-07,merchant,M011,Drinkware,Bottle,31.49,16.2
+M012-NOT-01,merchant,M012,Stationery,Notebook,19.02,8.55
+M012-TUM-02,merchant,M012,Drinkware,Tumbler,35.4,17.88
+M012-STI-03,merchant,M012,Stationery,Sticker pack,8.07,2.74
+M012-POU-04,merchant,M012,Bags,Pouch,14.38,6.79
+M012-POU-05,merchant,M012,Bags,Pouch,13.97,6.79
+M012-HOO-06,merchant,M012,Apparel,Hoodie,60.21,34.22
+M012-BOT-07,merchant,M012,Drinkware,Bottle,27.99,15.02
+M012-TOT-08,merchant,M012,Bags,Tote,22.75,10.47
+M012-POS-09,merchant,M012,Home,Poster,24.99,11.4
+M013-CAP-01,merchant,M013,Apparel,Cap,21.72,11.01
+M013-POU-02,merchant,M013,Bags,Pouch,16.87,7.97
+M013-T-S-03,merchant,M013,Apparel,T-shirt,36.33,19.52
+M013-TUM-04,merchant,M013,Drinkware,Tumbler,32.24,16.94
+M014-BOT-01,merchant,M014,Drinkware,Bottle,32.0,17.42
+M014-POS-02,merchant,M014,Home,Poster,30.93,12.76
+M014-MUG-03,merchant,M014,Drinkware,Mug,19.02,9.55
+M014-BLA-04,merchant,M014,Home,Blanket,85.03,46.75
+M015-POS-01,merchant,M015,Home,Poster,24.85,10.81
+M016-TOT-01,merchant,M016,Bags,Tote,27.5,12.38
+M016-CUS-02,merchant,M016,Home,Cushion,41.59,22.81
+M016-POS-03,merchant,M016,Home,Poster,26.39,10.84
+M016-BLA-04,merchant,M016,Home,Blanket,87.27,50.2
+M016-POU-05,merchant,M016,Bags,Pouch,14.3,5.95
+M017-MUG-01,merchant,M017,Drinkware,Mug,20.69,9.84
+M017-TUM-02,merchant,M017,Drinkware,Tumbler,40.81,22.36
+M017-BOT-03,merchant,M017,Drinkware,Bottle,34.13,18.65
+M017-NOT-04,merchant,M017,Stationery,Notebook,16.27,7.59
+M017-CAP-05,merchant,M017,Apparel,Cap,25.51,12.09
+M017-BAC-06,merchant,M017,Bags,Backpack,77.51,44.21
+M017-T-S-07,merchant,M017,Apparel,T-shirt,37.17,19.16
+M017-POU-08,merchant,M017,Bags,Pouch,15.0,6.81
+M018-STI-01,merchant,M018,Stationery,Sticker pack,8.4,3.33
+M018-POS-02,merchant,M018,Home,Poster,28.61,10.74
+M018-T-S-03,merchant,M018,Apparel,T-shirt,32.55,16.94
+M018-HOO-04,merchant,M018,Apparel,Hoodie,63.7,34.25
+M018-PEN-05,merchant,M018,Stationery,Pen set,10.99,5.18
+M018-CUS-06,merchant,M018,Home,Cushion,46.06,25.96
+M019-TUM-01,merchant,M019,Drinkware,Tumbler,37.11,20.62
+M019-NOT-02,merchant,M019,Stationery,Notebook,15.29,7.02
+M019-HOO-03,merchant,M019,Apparel,Hoodie,78.66,42.23
+M019-PEN-04,merchant,M019,Stationery,Pen set,13.81,5.71
+M019-NOT-05,merchant,M019,Stationery,Notebook,19.08,9.93
+M019-HOO-06,merchant,M019,Apparel,Hoodie,73.77,38.25
+M019-BOT-07,merchant,M019,Drinkware,Bottle,31.23,16.26
+M019-TUM-08,merchant,M019,Drinkware,Tumbler,32.96,18.38
+M019-POU-09,merchant,M019,Bags,Pouch,13.14,5.78
+M019-HOO-10,merchant,M019,Apparel,Hoodie,72.11,39.18
+M020-T-S-01,merchant,M020,Apparel,T-shirt,37.43,19.64
+M020-BLA-02,merchant,M020,Home,Blanket,68.83,37.82
+M021-TOT-01,merchant,M021,Bags,Tote,28.96,14.25
+M021-CUS-02,merchant,M021,Home,Cushion,45.57,25.42
+M021-T-S-03,merchant,M021,Apparel,T-shirt,33.9,17.72
+M021-BOT-04,merchant,M021,Drinkware,Bottle,34.97,17.79
+M021-STI-05,merchant,M021,Stationery,Sticker pack,7.97,2.91
+M021-BOT-06,merchant,M021,Drinkware,Bottle,28.81,14.19
+M021-TUM-07,merchant,M021,Drinkware,Tumbler,37.04,18.93
+M022-BOT-01,merchant,M022,Drinkware,Bottle,30.3,15.56
+M022-CUS-02,merchant,M022,Home,Cushion,44.74,23.49
+M022-POS-03,merchant,M022,Home,Poster,26.37,11.5
+M022-HOO-04,merchant,M022,Apparel,Hoodie,73.41,38.93
+M022-POS-05,merchant,M022,Home,Poster,28.0,11.05
+M023-TUM-01,merchant,M023,Drinkware,Tumbler,36.98,18.14
+M023-STI-02,merchant,M023,Stationery,Sticker pack,8.99,3.3
+M023-HOO-03,merchant,M023,Apparel,Hoodie,69.73,36.18
+M023-POU-04,merchant,M023,Bags,Pouch,13.48,6.32
+M024-HOO-01,merchant,M024,Apparel,Hoodie,82.48,43.58
+M024-HOO-02,merchant,M024,Apparel,Hoodie,81.71,44.18
+M024-NOT-03,merchant,M024,Stationery,Notebook,16.9,8.03
+M024-T-S-04,merchant,M024,Apparel,T-shirt,27.76,13.67
+M024-POS-05,merchant,M024,Home,Poster,29.7,12.49
+M025-CUS-01,merchant,M025,Home,Cushion,43.09,22.2
+M025-BAC-02,merchant,M025,Bags,Backpack,90.89,47.76
+M025-BAC-03,merchant,M025,Bags,Backpack,91.47,52.26
+M025-MUG-04,merchant,M025,Drinkware,Mug,17.79,8.78
+M025-CUS-05,merchant,M025,Home,Cushion,40.14,22.94
+M026-MUG-01,merchant,M026,Drinkware,Mug,18.72,8.15
+M026-HOO-02,merchant,M026,Apparel,Hoodie,61.79,34.16
+M026-NOT-03,merchant,M026,Stationery,Notebook,15.71,7.52
+M026-STI-04,merchant,M026,Stationery,Sticker pack,7.02,2.49
+M026-POS-05,merchant,M026,Home,Poster,29.13,12.05
+M026-PEN-06,merchant,M026,Stationery,Pen set,12.12,5.5
+M026-CAP-07,merchant,M026,Apparel,Cap,24.75,13.31
+M026-MUG-08,merchant,M026,Drinkware,Mug,19.47,8.86
+M026-POU-09,merchant,M026,Bags,Pouch,12.96,5.66
+M027-HOO-01,merchant,M027,Apparel,Hoodie,64.71,36.59
+M027-HOO-02,merchant,M027,Apparel,Hoodie,81.48,46.91
+M027-HOO-03,merchant,M027,Apparel,Hoodie,73.88,37.46
+M027-NOT-04,merchant,M027,Stationery,Notebook,16.65,7.72
+M027-BOT-05,merchant,M027,Drinkware,Bottle,28.44,14.55
+M027-CUS-06,merchant,M027,Home,Cushion,44.56,23.52
+M027-TOT-07,merchant,M027,Bags,Tote,30.29,15.16
+M027-NOT-08,merchant,M027,Stationery,Notebook,17.06,7.95
+M027-BLA-09,merchant,M027,Home,Blanket,86.01,47.55
+M027-TOT-10,merchant,M027,Bags,Tote,24.84,11.86
+M028-BAC-01,merchant,M028,Bags,Backpack,96.75,55.48
+M028-T-S-02,merchant,M028,Apparel,T-shirt,30.21,15.19
+M028-POU-03,merchant,M028,Bags,Pouch,15.49,6.7
+M028-POS-04,merchant,M028,Home,Poster,29.36,11.23
+M028-CUS-05,merchant,M028,Home,Cushion,42.11,24.47
+M028-BAC-06,merchant,M028,Bags,Backpack,91.06,51.03
+M028-TUM-07,merchant,M028,Drinkware,Tumbler,39.11,20.05
+M028-POU-08,merchant,M028,Bags,Pouch,16.48,7.09
+M029-BOT-01,merchant,M029,Drinkware,Bottle,31.01,16.07
+M029-POS-02,merchant,M029,Home,Poster,28.08,11.69
+M029-HOO-03,merchant,M029,Apparel,Hoodie,63.85,34.02
+M029-TOT-04,merchant,M029,Bags,Tote,28.46,14.27
+M029-PEN-05,merchant,M029,Stationery,Pen set,11.36,4.54
+M029-TUM-06,merchant,M029,Drinkware,Tumbler,32.54,16.12
+M029-PEN-07,merchant,M029,Stationery,Pen set,11.15,4.62
+M029-T-S-08,merchant,M029,Apparel,T-shirt,38.06,18.43
+M029-POS-09,merchant,M029,Home,Poster,25.47,10.07
+M029-POU-10,merchant,M029,Bags,Pouch,15.76,6.96
+M029-TUM-11,merchant,M029,Drinkware,Tumbler,32.89,18.35
+M029-PEN-12,merchant,M029,Stationery,Pen set,10.87,5.02
+M029-T-S-13,merchant,M029,Apparel,T-shirt,37.4,19.39
+M029-BLA-14,merchant,M029,Home,Blanket,88.58,49.06
+M030-BLA-01,merchant,M030,Home,Blanket,80.49,48.24
+M030-BAC-02,merchant,M030,Bags,Backpack,71.45,38.91
+M030-POU-03,merchant,M030,Bags,Pouch,13.85,5.66
+M030-STI-04,merchant,M030,Stationery,Sticker pack,6.97,2.91
+M030-BOT-05,merchant,M030,Drinkware,Bottle,30.78,14.52
+M030-STI-06,merchant,M030,Stationery,Sticker pack,7.81,2.9
+M030-POU-07,merchant,M030,Bags,Pouch,13.15,5.89
+M030-TUM-08,merchant,M030,Drinkware,Tumbler,35.36,18.08
+M030-PEN-09,merchant,M030,Stationery,Pen set,13.99,6.78
+M030-CUS-10,merchant,M030,Home,Cushion,37.33,21.54
+M030-MUG-11,merchant,M030,Drinkware,Mug,18.37,8.44
+M031-NOT-01,merchant,M031,Stationery,Notebook,18.99,8.38
+M031-MUG-02,merchant,M031,Drinkware,Mug,19.83,9.61
+M031-NOT-03,merchant,M031,Stationery,Notebook,15.38,6.77
+M031-STI-04,merchant,M031,Stationery,Sticker pack,7.5,2.87
+M031-POU-05,merchant,M031,Bags,Pouch,13.27,6.11
+M031-NOT-06,merchant,M031,Stationery,Notebook,18.43,9.4
+M032-HOO-01,merchant,M032,Apparel,Hoodie,61.25,33.63
+M032-TUM-02,merchant,M032,Drinkware,Tumbler,42.41,21.34
+M032-STI-03,merchant,M032,Stationery,Sticker pack,8.05,2.81
+M033-POU-01,merchant,M033,Bags,Pouch,17.57,8.5
+M033-TUM-02,merchant,M033,Drinkware,Tumbler,42.39,20.94
+M033-POU-03,merchant,M033,Bags,Pouch,16.58,7.89
+M033-POU-04,merchant,M033,Bags,Pouch,16.4,7.03
+M033-CUS-05,merchant,M033,Home,Cushion,38.17,21.87
+M033-POU-06,merchant,M033,Bags,Pouch,15.03,6.67
+M034-TUM-01,merchant,M034,Drinkware,Tumbler,40.72,21.91
+M034-CUS-02,merchant,M034,Home,Cushion,39.03,22.21
+M034-STI-03,merchant,M034,Stationery,Sticker pack,6.93,2.68
+M034-TOT-04,merchant,M034,Bags,Tote,26.74,14.06
+M034-MUG-05,merchant,M034,Drinkware,Mug,19.08,9.7
+M034-POU-06,merchant,M034,Bags,Pouch,15.46,7.18
+M034-CUS-07,merchant,M034,Home,Cushion,36.49,18.87
+M034-PEN-08,merchant,M034,Stationery,Pen set,13.1,5.73
+M034-PEN-09,merchant,M034,Stationery,Pen set,13.62,5.51
+M034-PEN-10,merchant,M034,Stationery,Pen set,13.14,6.1
+M034-BOT-11,merchant,M034,Drinkware,Bottle,31.75,16.44
+M034-CUS-12,merchant,M034,Home,Cushion,47.4,24.81
+M034-T-S-13,merchant,M034,Apparel,T-shirt,30.74,14.81
+M034-BAC-14,merchant,M034,Bags,Backpack,84.1,45.02
+M034-TUM-15,merchant,M034,Drinkware,Tumbler,36.04,18.88
+M035-TUM-01,merchant,M035,Drinkware,Tumbler,34.17,17.97
+M035-POS-02,merchant,M035,Home,Poster,29.42,11.63
+M035-NOT-03,merchant,M035,Stationery,Notebook,18.4,8.49
+M035-HOO-04,merchant,M035,Apparel,Hoodie,67.74,35.26
+M035-BOT-05,merchant,M035,Drinkware,Bottle,31.25,15.79
+M035-POS-06,merchant,M035,Home,Poster,29.61,11.06
+M036-CUS-01,merchant,M036,Home,Cushion,41.72,24.38
+M036-CAP-02,merchant,M036,Apparel,Cap,24.78,12.3
+M036-CAP-03,merchant,M036,Apparel,Cap,25.96,13.27
+M036-BLA-04,merchant,M036,Home,Blanket,66.85,39.87
+M036-BAC-05,merchant,M036,Bags,Backpack,97.03,55.53
+M036-POU-06,merchant,M036,Bags,Pouch,13.93,6.35
+M036-BOT-07,merchant,M036,Drinkware,Bottle,28.83,15.68
+M036-POS-08,merchant,M036,Home,Poster,26.63,11.78
+M036-CUS-09,merchant,M036,Home,Cushion,36.7,19.77
+M036-TUM-10,merchant,M036,Drinkware,Tumbler,38.84,20.88
+M036-POS-11,merchant,M036,Home,Poster,27.43,10.77
+M036-PEN-12,merchant,M036,Stationery,Pen set,14.22,6.73
+M036-NOT-13,merchant,M036,Stationery,Notebook,17.61,8.17
+M037-BAC-01,merchant,M037,Bags,Backpack,98.7,54.53
+M037-POU-02,merchant,M037,Bags,Pouch,15.34,7.52
+M038-NOT-01,merchant,M038,Stationery,Notebook,16.58,7.56
+M038-POU-02,merchant,M038,Bags,Pouch,15.63,6.6
+M038-CUS-03,merchant,M038,Home,Cushion,35.42,18.99
+M038-BAC-04,merchant,M038,Bags,Backpack,78.98,45.92
+M038-POS-05,merchant,M038,Home,Poster,24.92,11.16
+M038-CAP-06,merchant,M038,Apparel,Cap,21.8,10.62
+M038-STI-07,merchant,M038,Stationery,Sticker pack,7.18,3.0
+M039-CUS-01,merchant,M039,Home,Cushion,42.68,22.61
+M039-BOT-02,merchant,M039,Drinkware,Bottle,28.91,14.46
+M039-TOT-03,merchant,M039,Bags,Tote,29.09,14.09
+M039-STI-04,merchant,M039,Stationery,Sticker pack,7.68,2.68
+M039-POS-05,merchant,M039,Home,Poster,27.19,10.19
+M040-TOT-01,merchant,M040,Bags,Tote,29.41,13.63
+M040-BAC-02,merchant,M040,Bags,Backpack,71.93,39.96
+M040-PEN-03,merchant,M040,Stationery,Pen set,10.57,4.82
+M040-TUM-04,merchant,M040,Drinkware,Tumbler,43.7,23.2
+M040-CUS-05,merchant,M040,Home,Cushion,46.11,23.97
+M040-BOT-06,merchant,M040,Drinkware,Bottle,27.67,13.66
+M040-T-S-07,merchant,M040,Apparel,T-shirt,35.77,18.9
+M040-BOT-08,merchant,M040,Drinkware,Bottle,31.36,15.4
+M040-CUS-09,merchant,M040,Home,Cushion,44.2,25.63
+M040-POS-10,merchant,M040,Home,Poster,24.19,9.19
+M040-CAP-11,merchant,M040,Apparel,Cap,28.1,13.38
+M040-POU-12,merchant,M040,Bags,Pouch,15.49,7.4
+M040-HOO-13,merchant,M040,Apparel,Hoodie,68.42,38.12
+M041-T-S-01,merchant,M041,Apparel,T-shirt,36.1,19.81
+M041-HOO-02,merchant,M041,Apparel,Hoodie,69.03,37.85
+M041-PEN-03,merchant,M041,Stationery,Pen set,11.98,5.14
+M041-TUM-04,merchant,M041,Drinkware,Tumbler,36.12,19.69
+M041-TOT-05,merchant,M041,Bags,Tote,30.15,14.88
+M041-BAC-06,merchant,M041,Bags,Backpack,80.42,47.6
+M041-POS-07,merchant,M041,Home,Poster,26.54,10.09
+M041-T-S-08,merchant,M041,Apparel,T-shirt,35.49,18.87
+M041-CAP-09,merchant,M041,Apparel,Cap,24.17,12.52
+M041-POU-10,merchant,M041,Bags,Pouch,14.76,7.02
+M041-HOO-11,merchant,M041,Apparel,Hoodie,68.25,36.06
+M041-BAC-12,merchant,M041,Bags,Backpack,82.15,43.68
+M041-CAP-13,merchant,M041,Apparel,Cap,24.65,13.05
+M042-CUS-01,merchant,M042,Home,Cushion,38.07,21.95
+M042-HOO-02,merchant,M042,Apparel,Hoodie,63.49,32.17
+M042-T-S-03,merchant,M042,Apparel,T-shirt,33.81,17.61
+M042-BAC-04,merchant,M042,Bags,Backpack,91.06,53.29
+M042-BOT-05,merchant,M042,Drinkware,Bottle,28.03,13.95
+M042-PEN-06,merchant,M042,Stationery,Pen set,13.47,5.45
+M042-STI-07,merchant,M042,Stationery,Sticker pack,9.12,3.66
+M042-CAP-08,merchant,M042,Apparel,Cap,22.07,10.53
+M043-HOO-01,merchant,M043,Apparel,Hoodie,72.35,37.35
+M043-TUM-02,merchant,M043,Drinkware,Tumbler,34.04,18.8
+M043-PEN-03,merchant,M043,Stationery,Pen set,14.23,6.36
+M043-NOT-04,merchant,M043,Stationery,Notebook,15.72,7.7
+M043-BOT-05,merchant,M043,Drinkware,Bottle,34.66,18.86
+M043-STI-06,merchant,M043,Stationery,Sticker pack,9.03,3.3
+M043-HOO-07,merchant,M043,Apparel,Hoodie,62.81,36.07
+M043-STI-08,merchant,M043,Stationery,Sticker pack,7.6,3.18
+M044-MUG-01,merchant,M044,Drinkware,Mug,23.02,10.04
+M044-NOT-02,merchant,M044,Stationery,Notebook,15.52,6.8
+M044-BOT-03,merchant,M044,Drinkware,Bottle,32.92,16.69
+M044-BOT-04,merchant,M044,Drinkware,Bottle,28.48,14.49
+M044-MUG-05,merchant,M044,Drinkware,Mug,20.91,10.69
+M044-T-S-06,merchant,M044,Apparel,T-shirt,33.82,17.35
+M044-POU-07,merchant,M044,Bags,Pouch,13.7,5.85
+M044-TUM-08,merchant,M044,Drinkware,Tumbler,33.4,17.12
+M044-BLA-09,merchant,M044,Home,Blanket,83.88,45.88
+M045-HOO-01,merchant,M045,Apparel,Hoodie,71.42,37.26
+M045-TUM-02,merchant,M045,Drinkware,Tumbler,34.55,16.66
+M045-PEN-03,merchant,M045,Stationery,Pen set,12.78,5.13
+M045-CAP-04,merchant,M045,Apparel,Cap,27.44,13.4
+M045-BLA-05,merchant,M045,Home,Blanket,70.2,42.38
+M046-POS-01,merchant,M046,Home,Poster,30.37,12.15
+M046-BLA-02,merchant,M046,Home,Blanket,67.96,38.02
+M046-CAP-03,merchant,M046,Apparel,Cap,25.9,13.22
+M046-PEN-04,merchant,M046,Stationery,Pen set,12.33,5.71
+M046-STI-05,merchant,M046,Stationery,Sticker pack,7.75,2.93
+M047-CUS-01,merchant,M047,Home,Cushion,36.03,19.42
+M047-TOT-02,merchant,M047,Bags,Tote,25.97,12.57
+M047-BLA-03,merchant,M047,Home,Blanket,90.35,48.68
+M047-T-S-04,merchant,M047,Apparel,T-shirt,27.64,14.98
+M047-T-S-05,merchant,M047,Apparel,T-shirt,36.04,18.47
+M047-CAP-06,merchant,M047,Apparel,Cap,22.14,10.51
+M047-BOT-07,merchant,M047,Drinkware,Bottle,29.86,15.49
+M047-BOT-08,merchant,M047,Drinkware,Bottle,30.46,15.58
+M047-NOT-09,merchant,M047,Stationery,Notebook,16.09,7.18
+M047-TUM-10,merchant,M047,Drinkware,Tumbler,38.54,18.81
+M047-T-S-11,merchant,M047,Apparel,T-shirt,35.9,19.24
+M047-PEN-12,merchant,M047,Stationery,Pen set,13.55,6.25
+M047-TOT-13,merchant,M047,Bags,Tote,23.22,12.28
+M048-T-S-01,merchant,M048,Apparel,T-shirt,37.31,18.7
+M048-BAC-02,merchant,M048,Bags,Backpack,85.31,46.8
+M048-TUM-03,merchant,M048,Drinkware,Tumbler,32.5,16.9
+M048-PEN-04,merchant,M048,Stationery,Pen set,11.11,4.94
+M048-POS-05,merchant,M048,Home,Poster,27.79,11.06
+M048-BOT-06,merchant,M048,Drinkware,Bottle,33.7,16.87
+M048-POU-07,merchant,M048,Bags,Pouch,15.54,6.85
+M048-POS-08,merchant,M048,Home,Poster,23.53,9.45
+M048-PEN-09,merchant,M048,Stationery,Pen set,13.25,5.82
+M048-T-S-10,merchant,M048,Apparel,T-shirt,34.86,18.49
+M048-BAC-11,merchant,M048,Bags,Backpack,71.85,42.47
+M048-PEN-12,merchant,M048,Stationery,Pen set,12.22,5.74
+M048-BOT-13,merchant,M048,Drinkware,Bottle,27.17,14.43
+M048-PEN-14,merchant,M048,Stationery,Pen set,13.47,6.07
+M048-BLA-15,merchant,M048,Home,Blanket,71.2,42.49
+M049-POS-01,merchant,M049,Home,Poster,27.57,10.75
+M049-POU-02,merchant,M049,Bags,Pouch,13.29,6.25
+M049-NOT-03,merchant,M049,Stationery,Notebook,15.87,7.42
+M050-POU-01,merchant,M050,Bags,Pouch,12.69,5.28
+M050-PEN-02,merchant,M050,Stationery,Pen set,11.56,5.38
+M050-POS-03,merchant,M050,Home,Poster,29.15,11.11
+M050-T-S-04,merchant,M050,Apparel,T-shirt,31.07,15.31
+M050-TUM-05,merchant,M050,Drinkware,Tumbler,43.46,21.22
+M051-POU-01,merchant,M051,Bags,Pouch,12.83,5.62
+M051-BAC-02,merchant,M051,Bags,Backpack,96.58,50.84
+M051-HOO-03,merchant,M051,Apparel,Hoodie,82.03,46.86
+M052-CUS-01,merchant,M052,Home,Cushion,34.74,19.44
+M052-CAP-02,merchant,M052,Apparel,Cap,27.56,14.53
+M052-MUG-03,merchant,M052,Drinkware,Mug,22.59,10.51
+M052-POU-04,merchant,M052,Bags,Pouch,13.37,5.43
+M053-BOT-01,merchant,M053,Drinkware,Bottle,35.18,16.61
+M053-T-S-02,merchant,M053,Apparel,T-shirt,33.8,16.54
+M053-STI-03,merchant,M053,Stationery,Sticker pack,9.56,3.27
+M053-CAP-04,merchant,M053,Apparel,Cap,23.31,10.92
+M053-T-S-05,merchant,M053,Apparel,T-shirt,35.9,18.0
+M053-HOO-06,merchant,M053,Apparel,Hoodie,69.52,38.04
+M053-POS-07,merchant,M053,Home,Poster,30.28,13.3
+M053-STI-08,merchant,M053,Stationery,Sticker pack,8.86,2.97
+M053-POS-09,merchant,M053,Home,Poster,25.88,10.29
+M053-NOT-10,merchant,M053,Stationery,Notebook,14.55,7.08
+M053-HOO-11,merchant,M053,Apparel,Hoodie,61.09,30.98
+M054-POS-01,merchant,M054,Home,Poster,27.47,10.39
+M054-T-S-02,merchant,M054,Apparel,T-shirt,33.78,17.9
+M054-HOO-03,merchant,M054,Apparel,Hoodie,81.21,44.89
+M054-T-S-04,merchant,M054,Apparel,T-shirt,35.21,17.78
+M054-HOO-05,merchant,M054,Apparel,Hoodie,61.29,33.62
+M054-MUG-06,merchant,M054,Drinkware,Mug,19.39,8.78
+M054-POS-07,merchant,M054,Home,Poster,25.0,10.43
+M055-TOT-01,merchant,M055,Bags,Tote,28.49,14.79
+M055-NOT-02,merchant,M055,Stationery,Notebook,16.08,7.06
+M055-PEN-03,merchant,M055,Stationery,Pen set,13.0,5.21
+M055-STI-04,merchant,M055,Stationery,Sticker pack,8.12,2.78
+M055-CAP-05,merchant,M055,Apparel,Cap,23.68,11.59
+M055-CUS-06,merchant,M055,Home,Cushion,47.89,27.46
+M055-STI-07,merchant,M055,Stationery,Sticker pack,9.43,3.58
+M055-BOT-08,merchant,M055,Drinkware,Bottle,30.53,16.13
+M055-STI-09,merchant,M055,Stationery,Sticker pack,9.5,3.12
+M055-STI-10,merchant,M055,Stationery,Sticker pack,9.59,3.38
+M055-POU-11,merchant,M055,Bags,Pouch,14.89,6.24
+M055-BLA-12,merchant,M055,Home,Blanket,88.48,50.45
+M055-T-S-13,merchant,M055,Apparel,T-shirt,34.87,18.47
+M055-NOT-14,merchant,M055,Stationery,Notebook,13.97,6.79
+M056-BOT-01,merchant,M056,Drinkware,Bottle,31.02,16.65
+M056-T-S-02,merchant,M056,Apparel,T-shirt,33.57,17.09
+M056-STI-03,merchant,M056,Stationery,Sticker pack,8.05,2.97
+M056-CAP-04,merchant,M056,Apparel,Cap,24.45,12.47
+M056-CAP-05,merchant,M056,Apparel,Cap,26.1,13.19
+M056-BOT-06,merchant,M056,Drinkware,Bottle,29.52,15.67
+M057-BLA-01,merchant,M057,Home,Blanket,80.79,44.21
+M057-BLA-02,merchant,M057,Home,Blanket,78.13,46.17
+M057-BLA-03,merchant,M057,Home,Blanket,89.24,53.59
+M057-PEN-04,merchant,M057,Stationery,Pen set,13.82,6.21
+M057-BOT-05,merchant,M057,Drinkware,Bottle,26.47,13.99
+M057-BAC-06,merchant,M057,Bags,Backpack,75.54,41.48
+M057-CUS-07,merchant,M057,Home,Cushion,40.42,22.71
+M057-CUS-08,merchant,M057,Home,Cushion,45.61,25.42
+M057-MUG-09,merchant,M057,Drinkware,Mug,22.23,10.56
+M057-MUG-10,merchant,M057,Drinkware,Mug,20.22,9.49
+M058-HOO-01,merchant,M058,Apparel,Hoodie,81.11,42.09
+M058-POS-02,merchant,M058,Home,Poster,27.87,11.33
+M058-PEN-03,merchant,M058,Stationery,Pen set,11.52,4.75
+M058-NOT-04,merchant,M058,Stationery,Notebook,15.24,6.8
+M058-TOT-05,merchant,M058,Bags,Tote,29.11,14.44
+M058-T-S-06,merchant,M058,Apparel,T-shirt,28.9,16.08
+M058-BAC-07,merchant,M058,Bags,Backpack,81.01,44.99
+M058-TOT-08,merchant,M058,Bags,Tote,29.9,15.25
+M058-BOT-09,merchant,M058,Drinkware,Bottle,28.08,14.02
+M058-TUM-10,merchant,M058,Drinkware,Tumbler,41.37,21.9
+M058-T-S-11,merchant,M058,Apparel,T-shirt,38.16,19.28
+M059-NOT-01,merchant,M059,Stationery,Notebook,18.52,9.35
+M059-MUG-02,merchant,M059,Drinkware,Mug,22.02,9.86
+M059-MUG-03,merchant,M059,Drinkware,Mug,20.66,10.2
+M059-TUM-04,merchant,M059,Drinkware,Tumbler,36.97,17.9
+M059-NOT-05,merchant,M059,Stationery,Notebook,18.37,8.76
+M060-POS-01,merchant,M060,Home,Poster,26.71,10.88
+M060-CAP-02,merchant,M060,Apparel,Cap,22.67,10.65
+M060-BLA-03,merchant,M060,Home,Blanket,76.61,44.87
+M061-TUM-01,merchant,M061,Drinkware,Tumbler,32.59,17.87
+M061-POU-02,merchant,M061,Bags,Pouch,15.56,6.73
+M061-CUS-03,merchant,M061,Home,Cushion,41.98,23.64
+M061-MUG-04,merchant,M061,Drinkware,Mug,20.99,9.58
+M061-BOT-05,merchant,M061,Drinkware,Bottle,29.81,14.86
+M061-POU-06,merchant,M061,Bags,Pouch,15.51,7.23
+M061-NOT-07,merchant,M061,Stationery,Notebook,19.13,9.65
+M062-MUG-01,merchant,M062,Drinkware,Mug,19.01,8.58
+M062-BOT-02,merchant,M062,Drinkware,Bottle,28.54,13.71
+M062-BLA-03,merchant,M062,Home,Blanket,73.72,44.2
+M062-NOT-04,merchant,M062,Stationery,Notebook,14.38,7.17
+M062-PEN-05,merchant,M062,Stationery,Pen set,12.4,5.69
+M062-NOT-06,merchant,M062,Stationery,Notebook,17.6,8.38
+M062-MUG-07,merchant,M062,Drinkware,Mug,22.92,10.61
+M062-BAC-08,merchant,M062,Bags,Backpack,78.59,42.39
+M062-STI-09,merchant,M062,Stationery,Sticker pack,7.43,2.94
+M063-BLA-01,merchant,M063,Home,Blanket,67.15,39.73
+M063-NOT-02,merchant,M063,Stationery,Notebook,16.98,7.88
+M063-TOT-03,merchant,M063,Bags,Tote,22.22,11.32
+M063-T-S-04,merchant,M063,Apparel,T-shirt,28.5,14.73
+M063-POU-05,merchant,M063,Bags,Pouch,15.86,6.75
+M063-HOO-06,merchant,M063,Apparel,Hoodie,82.51,41.83
+M064-HOO-01,merchant,M064,Apparel,Hoodie,76.38,43.72
+M065-TUM-01,merchant,M065,Drinkware,Tumbler,34.96,17.63
+M065-STI-02,merchant,M065,Stationery,Sticker pack,8.35,2.74
+M065-CUS-03,merchant,M065,Home,Cushion,35.89,20.64
+M065-BAC-04,merchant,M065,Bags,Backpack,89.6,49.65
+M065-BOT-05,merchant,M065,Drinkware,Bottle,26.03,12.34
+M065-TOT-06,merchant,M065,Bags,Tote,24.92,11.96
+M065-TUM-07,merchant,M065,Drinkware,Tumbler,44.11,22.39
+M065-STI-08,merchant,M065,Stationery,Sticker pack,7.41,2.65
+M065-POU-09,merchant,M065,Bags,Pouch,16.75,7.52
+M066-NOT-01,merchant,M066,Stationery,Notebook,18.66,8.21
+M066-BAC-02,merchant,M066,Bags,Backpack,95.99,56.79
+M066-TOT-03,merchant,M066,Bags,Tote,25.51,12.18
+M066-BAC-04,merchant,M066,Bags,Backpack,82.3,44.27
+M066-POU-05,merchant,M066,Bags,Pouch,16.84,8.03
+M066-PEN-06,merchant,M066,Stationery,Pen set,11.1,4.94
+M066-MUG-07,merchant,M066,Drinkware,Mug,21.93,10.69
+M067-T-S-01,merchant,M067,Apparel,T-shirt,30.07,16.29
+M067-HOO-02,merchant,M067,Apparel,Hoodie,63.72,35.05
+M067-CUS-03,merchant,M067,Home,Cushion,43.79,24.04
+M067-STI-04,merchant,M067,Stationery,Sticker pack,7.58,2.47
+M067-PEN-05,merchant,M067,Stationery,Pen set,12.03,5.52
+M068-TUM-01,merchant,M068,Drinkware,Tumbler,33.99,18.3
+M068-POU-02,merchant,M068,Bags,Pouch,16.07,6.93
+M068-STI-03,merchant,M068,Stationery,Sticker pack,9.1,3.36
+M068-CAP-04,merchant,M068,Apparel,Cap,27.57,14.7
+M068-BOT-05,merchant,M068,Drinkware,Bottle,31.61,16.99
+M068-T-S-06,merchant,M068,Apparel,T-shirt,33.27,18.54
+M068-MUG-07,merchant,M068,Drinkware,Mug,23.32,10.29
+M068-BLA-08,merchant,M068,Home,Blanket,91.71,49.73
+M068-BOT-09,merchant,M068,Drinkware,Bottle,29.24,14.0
+M069-NOT-01,merchant,M069,Stationery,Notebook,18.9,8.37
+M069-TOT-02,merchant,M069,Bags,Tote,29.18,14.15
+M069-CUS-03,merchant,M069,Home,Cushion,47.25,27.37
+M069-BOT-04,merchant,M069,Drinkware,Bottle,25.85,13.51
+M069-TOT-05,merchant,M069,Bags,Tote,23.01,11.31
+M069-CAP-06,merchant,M069,Apparel,Cap,28.41,14.07
+M069-MUG-07,merchant,M069,Drinkware,Mug,23.31,11.39
+M069-NOT-08,merchant,M069,Stationery,Notebook,17.99,8.33
+M069-T-S-09,merchant,M069,Apparel,T-shirt,33.49,16.6
+M069-NOT-10,merchant,M069,Stationery,Notebook,16.97,7.49
+M069-TOT-11,merchant,M069,Bags,Tote,28.0,13.32
+M069-HOO-12,merchant,M069,Apparel,Hoodie,59.85,33.46
+M069-BOT-13,merchant,M069,Drinkware,Bottle,32.86,16.22
+M069-TUM-14,merchant,M069,Drinkware,Tumbler,40.08,21.78
+M069-TUM-15,merchant,M069,Drinkware,Tumbler,35.52,17.25
+M070-T-S-01,merchant,M070,Apparel,T-shirt,31.54,16.24
+M070-PEN-02,merchant,M070,Stationery,Pen set,11.64,5.64
+M070-POS-03,merchant,M070,Home,Poster,26.86,11.3
+M070-TOT-04,merchant,M070,Bags,Tote,22.56,10.43
+M070-PEN-05,merchant,M070,Stationery,Pen set,12.01,4.92
+M070-CAP-06,merchant,M070,Apparel,Cap,24.41,11.36
+M071-BAC-01,merchant,M071,Bags,Backpack,95.91,52.72
+M071-POS-02,merchant,M071,Home,Poster,25.1,10.44
+M071-CUS-03,merchant,M071,Home,Cushion,47.18,27.12
+M071-BLA-04,merchant,M071,Home,Blanket,70.03,40.34
+M071-TOT-05,merchant,M071,Bags,Tote,30.23,15.0
+M071-HOO-06,merchant,M071,Apparel,Hoodie,72.29,40.49
+M071-BOT-07,merchant,M071,Drinkware,Bottle,35.05,17.91
+M071-NOT-08,merchant,M071,Stationery,Notebook,13.85,6.94
+M071-STI-09,merchant,M071,Stationery,Sticker pack,9.57,3.82
+M071-POU-10,merchant,M071,Bags,Pouch,15.7,7.65
+M071-CUS-11,merchant,M071,Home,Cushion,36.2,19.08
+M071-PEN-12,merchant,M071,Stationery,Pen set,14.16,6.65
+M072-CAP-01,merchant,M072,Apparel,Cap,21.23,11.01
+M072-BOT-02,merchant,M072,Drinkware,Bottle,35.1,19.15
+M072-T-S-03,merchant,M072,Apparel,T-shirt,28.44,14.73
+M072-TOT-04,merchant,M072,Bags,Tote,25.72,11.7
+M072-BLA-05,merchant,M072,Home,Blanket,71.39,39.47
+M072-CAP-06,merchant,M072,Apparel,Cap,26.58,12.87
+M072-STI-07,merchant,M072,Stationery,Sticker pack,7.6,2.55
+M072-T-S-08,merchant,M072,Apparel,T-shirt,34.09,17.46
+M072-PEN-09,merchant,M072,Stationery,Pen set,11.4,4.56
+M072-TUM-10,merchant,M072,Drinkware,Tumbler,41.37,22.7
+M073-BLA-01,merchant,M073,Home,Blanket,77.07,42.73
+M073-BOT-02,merchant,M073,Drinkware,Bottle,29.03,14.63
+M073-BAC-03,merchant,M073,Bags,Backpack,76.75,40.58
+M073-POS-04,merchant,M073,Home,Poster,26.21,11.2
+M073-BLA-05,merchant,M073,Home,Blanket,82.59,47.42
+M073-POS-06,merchant,M073,Home,Poster,28.85,11.04
+M073-T-S-07,merchant,M073,Apparel,T-shirt,36.5,19.66
+M073-TOT-08,merchant,M073,Bags,Tote,25.44,12.35
+M073-HOO-09,merchant,M073,Apparel,Hoodie,77.81,43.03
+M073-T-S-10,merchant,M073,Apparel,T-shirt,30.65,16.5
+M073-BOT-11,merchant,M073,Drinkware,Bottle,28.65,14.38
+M073-TUM-12,merchant,M073,Drinkware,Tumbler,39.55,21.31
+M073-POU-13,merchant,M073,Bags,Pouch,16.74,8.13
+M073-MUG-14,merchant,M073,Drinkware,Mug,20.71,9.7
+M073-POS-15,merchant,M073,Home,Poster,30.97,12.65
+M074-PEN-01,merchant,M074,Stationery,Pen set,12.59,5.84
+M074-TUM-02,merchant,M074,Drinkware,Tumbler,37.01,18.76
+M074-MUG-03,merchant,M074,Drinkware,Mug,21.89,9.4
+M074-BAC-04,merchant,M074,Bags,Backpack,82.26,43.37
+M074-MUG-05,merchant,M074,Drinkware,Mug,21.91,10.13
+M075-POU-01,merchant,M075,Bags,Pouch,15.75,6.99
+M075-BAC-02,merchant,M075,Bags,Backpack,86.35,49.01
+M075-TOT-03,merchant,M075,Bags,Tote,28.31,13.85
+M075-MUG-04,merchant,M075,Drinkware,Mug,17.48,8.37
+M075-HOO-05,merchant,M075,Apparel,Hoodie,68.55,37.45
+M075-BAC-06,merchant,M075,Bags,Backpack,88.71,47.79
+M075-CAP-07,merchant,M075,Apparel,Cap,27.59,14.65
+M075-POS-08,merchant,M075,Home,Poster,31.32,11.98
+M075-CAP-09,merchant,M075,Apparel,Cap,25.76,13.47
+M075-STI-10,merchant,M075,Stationery,Sticker pack,8.11,3.24
+M075-TUM-11,merchant,M075,Drinkware,Tumbler,44.56,24.0
+M075-T-S-12,merchant,M075,Apparel,T-shirt,34.01,18.21
+M075-POU-13,merchant,M075,Bags,Pouch,14.62,6.79
+M076-BOT-01,merchant,M076,Drinkware,Bottle,25.92,12.5
+M076-CAP-02,merchant,M076,Apparel,Cap,24.06,11.43
+M076-PEN-03,merchant,M076,Stationery,Pen set,11.61,4.81
+M076-BOT-04,merchant,M076,Drinkware,Bottle,34.42,18.18
+M076-TUM-05,merchant,M076,Drinkware,Tumbler,33.93,17.13
+M076-CAP-06,merchant,M076,Apparel,Cap,28.39,13.84
+M077-CAP-01,merchant,M077,Apparel,Cap,28.2,14.05
+M077-PEN-02,merchant,M077,Stationery,Pen set,11.86,5.69
+M077-POS-03,merchant,M077,Home,Poster,31.62,11.83
+M077-TUM-04,merchant,M077,Drinkware,Tumbler,44.09,24.05
+M077-BOT-05,merchant,M077,Drinkware,Bottle,26.83,14.58
+M078-PEN-01,merchant,M078,Stationery,Pen set,11.36,4.73
+M078-BLA-02,merchant,M078,Home,Blanket,81.51,47.21
+M078-T-S-03,merchant,M078,Apparel,T-shirt,36.54,17.77
+M078-HOO-04,merchant,M078,Apparel,Hoodie,75.38,38.13
+M078-CUS-05,merchant,M078,Home,Cushion,37.13,19.8
+M078-POU-06,merchant,M078,Bags,Pouch,14.38,6.49
+M078-BOT-07,merchant,M078,Drinkware,Bottle,34.95,17.2
+M079-CAP-01,merchant,M079,Apparel,Cap,24.53,12.08
+M079-NOT-02,merchant,M079,Stationery,Notebook,16.52,8.47
+M079-BOT-03,merchant,M079,Drinkware,Bottle,26.96,13.96
+M079-BOT-04,merchant,M079,Drinkware,Bottle,28.76,15.23
+M079-BAC-05,merchant,M079,Bags,Backpack,92.03,48.63
+M080-POU-01,merchant,M080,Bags,Pouch,14.36,6.2
+M080-T-S-02,merchant,M080,Apparel,T-shirt,31.85,17.25
+M080-PEN-03,merchant,M080,Stationery,Pen set,13.4,6.35
+M080-NOT-04,merchant,M080,Stationery,Notebook,17.54,8.17
+M080-CUS-05,merchant,M080,Home,Cushion,47.6,24.83
+M081-BOT-01,merchant,M081,Drinkware,Bottle,29.54,16.14
+M081-T-S-02,merchant,M081,Apparel,T-shirt,28.28,13.75
+M081-PEN-03,merchant,M081,Stationery,Pen set,13.86,6.45
+M081-TOT-04,merchant,M081,Bags,Tote,26.71,12.43
+M081-POS-05,merchant,M081,Home,Poster,27.28,12.24
+M081-HOO-06,merchant,M081,Apparel,Hoodie,61.68,32.92
+M081-CUS-07,merchant,M081,Home,Cushion,37.37,20.06
+M082-MUG-01,merchant,M082,Drinkware,Mug,21.78,10.5
+M082-PEN-02,merchant,M082,Stationery,Pen set,13.72,6.02
+M082-TUM-03,merchant,M082,Drinkware,Tumbler,33.97,18.91
+M082-CUS-04,merchant,M082,Home,Cushion,35.19,18.33
+M083-CUS-01,merchant,M083,Home,Cushion,43.61,25.19
+M083-BLA-02,merchant,M083,Home,Blanket,90.07,53.44
+M083-TOT-03,merchant,M083,Bags,Tote,29.55,14.52
+M083-CAP-04,merchant,M083,Apparel,Cap,23.72,11.76
+M083-BAC-05,merchant,M083,Bags,Backpack,74.64,40.45
+M083-POU-06,merchant,M083,Bags,Pouch,14.3,6.92
+M083-TUM-07,merchant,M083,Drinkware,Tumbler,39.11,21.22
+M083-NOT-08,merchant,M083,Stationery,Notebook,15.99,7.49
+M084-CAP-01,merchant,M084,Apparel,Cap,24.01,12.15
+M084-TOT-02,merchant,M084,Bags,Tote,26.1,12.65
+M084-TUM-03,merchant,M084,Drinkware,Tumbler,36.14,19.7
+M084-HOO-04,merchant,M084,Apparel,Hoodie,68.83,34.77
+M084-TUM-05,merchant,M084,Drinkware,Tumbler,37.61,19.37
+M084-PEN-06,merchant,M084,Stationery,Pen set,13.06,5.82
+M084-BOT-07,merchant,M084,Drinkware,Bottle,32.24,17.55
+M084-NOT-08,merchant,M084,Stationery,Notebook,16.72,7.96
+M084-POS-09,merchant,M084,Home,Poster,31.84,12.5
+M084-BLA-10,merchant,M084,Home,Blanket,79.85,47.33
+M084-POS-11,merchant,M084,Home,Poster,30.51,11.59
+M084-PEN-12,merchant,M084,Stationery,Pen set,13.69,6.41
+M084-TUM-13,merchant,M084,Drinkware,Tumbler,43.29,21.91
+M085-POS-01,merchant,M085,Home,Poster,23.84,10.5
+M085-T-S-02,merchant,M085,Apparel,T-shirt,34.68,16.79
+M085-TOT-03,merchant,M085,Bags,Tote,24.78,12.04
+M085-STI-04,merchant,M085,Stationery,Sticker pack,7.53,2.43
+M085-BLA-05,merchant,M085,Home,Blanket,82.16,49.61
+M085-MUG-06,merchant,M085,Drinkware,Mug,23.2,10.62
+M085-T-S-07,merchant,M085,Apparel,T-shirt,35.84,17.86
+M085-TUM-08,merchant,M085,Drinkware,Tumbler,42.26,20.56
+M086-NOT-01,merchant,M086,Stationery,Notebook,16.14,7.51
+M086-TUM-02,merchant,M086,Drinkware,Tumbler,42.18,20.5
+M086-HOO-03,merchant,M086,Apparel,Hoodie,61.93,35.02
+M086-TUM-04,merchant,M086,Drinkware,Tumbler,34.69,19.16
+M086-POU-05,merchant,M086,Bags,Pouch,17.36,7.21
+M086-PEN-06,merchant,M086,Stationery,Pen set,12.58,5.06
+M087-CUS-01,merchant,M087,Home,Cushion,38.32,21.82
+M087-STI-02,merchant,M087,Stationery,Sticker pack,8.11,3.18
+M087-BLA-03,merchant,M087,Home,Blanket,87.86,52.99
+M087-TOT-04,merchant,M087,Bags,Tote,28.92,14.05
+M087-CAP-05,merchant,M087,Apparel,Cap,26.97,12.76
+M087-STI-06,merchant,M087,Stationery,Sticker pack,7.07,2.4
+M087-POU-07,merchant,M087,Bags,Pouch,16.16,7.69
+M087-PEN-08,merchant,M087,Stationery,Pen set,11.99,4.86
+M087-BAC-09,merchant,M087,Bags,Backpack,88.18,49.21
+M087-T-S-10,merchant,M087,Apparel,T-shirt,37.47,19.32
+M087-CAP-11,merchant,M087,Apparel,Cap,20.75,11.17
+M087-TOT-12,merchant,M087,Bags,Tote,23.23,11.2
+M088-BLA-01,merchant,M088,Home,Blanket,80.5,45.88
+M088-TUM-02,merchant,M088,Drinkware,Tumbler,37.16,19.15
+M088-POU-03,merchant,M088,Bags,Pouch,17.25,8.27
+M088-POU-04,merchant,M088,Bags,Pouch,13.17,5.79
+M088-PEN-05,merchant,M088,Stationery,Pen set,11.83,4.71
+M088-STI-06,merchant,M088,Stationery,Sticker pack,7.27,2.45
+M089-NOT-01,merchant,M089,Stationery,Notebook,18.83,8.66
+M089-CUS-02,merchant,M089,Home,Cushion,36.0,18.64
+M089-MUG-03,merchant,M089,Drinkware,Mug,18.01,8.84
+M089-HOO-04,merchant,M089,Apparel,Hoodie,59.97,33.2
+M089-CAP-05,merchant,M089,Apparel,Cap,28.59,14.66
+M089-STI-06,merchant,M089,Stationery,Sticker pack,8.91,3.25
+M090-STI-01,merchant,M090,Stationery,Sticker pack,9.26,3.61
+M090-NOT-02,merchant,M090,Stationery,Notebook,18.48,9.26
+M090-MUG-03,merchant,M090,Drinkware,Mug,20.05,9.65
+M090-POS-04,merchant,M090,Home,Poster,27.1,10.89
+M090-BAC-05,merchant,M090,Bags,Backpack,93.45,51.49
+M090-POS-06,merchant,M090,Home,Poster,30.22,12.97
+M090-POU-07,merchant,M090,Bags,Pouch,17.36,7.77
+M090-POS-08,merchant,M090,Home,Poster,25.34,10.36
+M090-T-S-09,merchant,M090,Apparel,T-shirt,29.29,15.04
+M090-HOO-10,merchant,M090,Apparel,Hoodie,72.3,41.69
+M091-BOT-01,merchant,M091,Drinkware,Bottle,25.73,12.37
+M091-BOT-02,merchant,M091,Drinkware,Bottle,26.06,12.73
+M091-NOT-03,merchant,M091,Stationery,Notebook,17.36,8.12
+M091-CUS-04,merchant,M091,Home,Cushion,40.04,21.92
+M091-NOT-05,merchant,M091,Stationery,Notebook,14.07,6.99
+M091-BOT-06,merchant,M091,Drinkware,Bottle,31.86,16.45
+M092-POU-01,merchant,M092,Bags,Pouch,16.26,7.11
+M092-TOT-02,merchant,M092,Bags,Tote,22.83,10.94
+M092-HOO-03,merchant,M092,Apparel,Hoodie,73.16,38.5
+M092-TOT-04,merchant,M092,Bags,Tote,28.06,12.75
+M093-CAP-01,merchant,M093,Apparel,Cap,23.15,10.82
+M093-MUG-02,merchant,M093,Drinkware,Mug,23.09,10.84
+M093-NOT-03,merchant,M093,Stationery,Notebook,16.59,8.65
+M093-BAC-04,merchant,M093,Bags,Backpack,74.31,41.72
+M094-CUS-01,merchant,M094,Home,Cushion,38.34,19.74
+M094-MUG-02,merchant,M094,Drinkware,Mug,19.41,9.42
+M094-T-S-03,merchant,M094,Apparel,T-shirt,31.7,16.03
+M095-TUM-01,merchant,M095,Drinkware,Tumbler,34.55,17.99
+M095-MUG-02,merchant,M095,Drinkware,Mug,21.06,10.03
+M095-TUM-03,merchant,M095,Drinkware,Tumbler,35.71,17.22
+M095-TUM-04,merchant,M095,Drinkware,Tumbler,43.84,24.22
+M095-STI-05,merchant,M095,Stationery,Sticker pack,8.13,2.85
+M095-CUS-06,merchant,M095,Home,Cushion,42.56,22.22
+M095-HOO-07,merchant,M095,Apparel,Hoodie,67.98,34.28
+M096-HOO-01,merchant,M096,Apparel,Hoodie,62.78,32.6
+M096-BLA-02,merchant,M096,Home,Blanket,67.53,36.98
+M096-MUG-03,merchant,M096,Drinkware,Mug,20.67,10.02
+M096-CAP-04,merchant,M096,Apparel,Cap,20.99,10.0
+M096-T-S-05,merchant,M096,Apparel,T-shirt,32.89,17.99
+M096-NOT-06,merchant,M096,Stationery,Notebook,14.69,7.52
+M096-BOT-07,merchant,M096,Drinkware,Bottle,28.04,14.19
+M096-STI-08,merchant,M096,Stationery,Sticker pack,7.83,2.91
+M096-MUG-09,merchant,M096,Drinkware,Mug,20.09,10.07
+M096-PEN-10,merchant,M096,Stationery,Pen set,10.49,4.76
+M096-T-S-11,merchant,M096,Apparel,T-shirt,35.36,19.39
+M097-HOO-01,merchant,M097,Apparel,Hoodie,60.73,31.44
+M097-STI-02,merchant,M097,Stationery,Sticker pack,8.23,2.86
+M097-TUM-03,merchant,M097,Drinkware,Tumbler,38.59,18.81
+M097-BLA-04,merchant,M097,Home,Blanket,92.55,53.65
+M097-HOO-05,merchant,M097,Apparel,Hoodie,68.3,38.27
+M097-HOO-06,merchant,M097,Apparel,Hoodie,72.23,39.65
+M097-BLA-07,merchant,M097,Home,Blanket,86.62,50.72
+M097-STI-08,merchant,M097,Stationery,Sticker pack,8.35,3.23
+M097-T-S-09,merchant,M097,Apparel,T-shirt,34.51,19.25
+M098-BLA-01,merchant,M098,Home,Blanket,72.91,42.71
+M098-STI-02,merchant,M098,Stationery,Sticker pack,7.96,3.19
+M098-CAP-03,merchant,M098,Apparel,Cap,25.52,13.57
+M098-TOT-04,merchant,M098,Bags,Tote,27.54,13.72
+M098-TUM-05,merchant,M098,Drinkware,Tumbler,37.51,18.65
+M098-BAC-06,merchant,M098,Bags,Backpack,87.07,51.34
+M098-POU-07,merchant,M098,Bags,Pouch,13.16,5.38
+M098-PEN-08,merchant,M098,Stationery,Pen set,13.4,5.68
+M098-POS-09,merchant,M098,Home,Poster,24.62,10.46
+M098-CAP-10,merchant,M098,Apparel,Cap,27.72,14.44
+M098-BLA-11,merchant,M098,Home,Blanket,82.25,48.82
+M098-PEN-12,merchant,M098,Stationery,Pen set,11.37,4.77
+M098-POU-13,merchant,M098,Bags,Pouch,13.79,6.06
+M099-PEN-01,merchant,M099,Stationery,Pen set,10.9,4.89
+M099-CUS-02,merchant,M099,Home,Cushion,36.9,20.88
+M099-BLA-03,merchant,M099,Home,Blanket,72.25,39.78
+M099-HOO-04,merchant,M099,Apparel,Hoodie,72.67,41.79
+M099-T-S-05,merchant,M099,Apparel,T-shirt,37.42,18.37
+M099-BLA-06,merchant,M099,Home,Blanket,88.18,47.28
+M099-BOT-07,merchant,M099,Drinkware,Bottle,34.83,16.54
+M099-PEN-08,merchant,M099,Stationery,Pen set,11.62,4.73
+M099-PEN-09,merchant,M099,Stationery,Pen set,13.49,5.46
+M100-BLA-01,merchant,M100,Home,Blanket,81.2,48.57
+M100-PEN-02,merchant,M100,Stationery,Pen set,11.93,5.7
+M100-PEN-03,merchant,M100,Stationery,Pen set,12.97,5.44
+M100-POU-04,merchant,M100,Bags,Pouch,16.09,7.69
+M100-CAP-05,merchant,M100,Apparel,Cap,21.81,11.52
+M100-BAC-06,merchant,M100,Bags,Backpack,93.03,51.46
+M100-PEN-07,merchant,M100,Stationery,Pen set,13.63,5.89
+M100-BLA-08,merchant,M100,Home,Blanket,92.19,53.24
+M100-BLA-09,merchant,M100,Home,Blanket,70.61,42.02
+M100-POS-10,merchant,M100,Home,Poster,27.92,12.54
+M101-PEN-01,merchant,M101,Stationery,Pen set,11.22,5.05
+M101-POU-02,merchant,M101,Bags,Pouch,15.6,7.61
+M101-TOT-03,merchant,M101,Bags,Tote,25.89,13.55
+M101-TOT-04,merchant,M101,Bags,Tote,25.3,12.09
+M101-NOT-05,merchant,M101,Stationery,Notebook,16.77,7.53
+M101-TUM-06,merchant,M101,Drinkware,Tumbler,41.95,23.35
+M101-T-S-07,merchant,M101,Apparel,T-shirt,30.89,15.16
+M101-T-S-08,merchant,M101,Apparel,T-shirt,29.46,15.34
+M102-POS-01,merchant,M102,Home,Poster,28.39,11.19
+M102-STI-02,merchant,M102,Stationery,Sticker pack,9.02,3.15
+M102-T-S-03,merchant,M102,Apparel,T-shirt,35.72,19.27
+M102-CAP-04,merchant,M102,Apparel,Cap,21.67,11.29
+M102-BOT-05,merchant,M102,Drinkware,Bottle,28.3,14.83
+M102-BAC-06,merchant,M102,Bags,Backpack,76.57,40.72
+M103-CAP-01,merchant,M103,Apparel,Cap,28.38,14.78
+M103-BAC-02,merchant,M103,Bags,Backpack,94.0,53.02
+M103-NOT-03,merchant,M103,Stationery,Notebook,15.07,7.4
+M103-TUM-04,merchant,M103,Drinkware,Tumbler,40.02,21.1
+M103-STI-05,merchant,M103,Stationery,Sticker pack,8.06,3.17
+M103-POS-06,merchant,M103,Home,Poster,24.98,9.64
+M103-PEN-07,merchant,M103,Stationery,Pen set,13.38,5.99
+M103-CUS-08,merchant,M103,Home,Cushion,34.59,19.41
+M103-BLA-09,merchant,M103,Home,Blanket,78.19,44.73
+M103-MUG-10,merchant,M103,Drinkware,Mug,23.75,11.4
+M103-BLA-11,merchant,M103,Home,Blanket,75.85,42.66
+M103-TOT-12,merchant,M103,Bags,Tote,23.06,10.43
+M103-TUM-13,merchant,M103,Drinkware,Tumbler,42.4,20.55
+M103-POU-14,merchant,M103,Bags,Pouch,12.74,5.8
+M104-MUG-01,merchant,M104,Drinkware,Mug,22.41,9.99
+M104-STI-02,merchant,M104,Stationery,Sticker pack,7.04,2.45
+M104-POS-03,merchant,M104,Home,Poster,27.04,12.22
+M105-CUS-01,merchant,M105,Home,Cushion,37.79,21.12
+M105-CUS-02,merchant,M105,Home,Cushion,44.04,24.04
+M105-CUS-03,merchant,M105,Home,Cushion,36.76,20.2
+M105-BOT-04,merchant,M105,Drinkware,Bottle,28.46,13.59
+M105-BLA-05,merchant,M105,Home,Blanket,89.3,51.58
+M105-PEN-06,merchant,M105,Stationery,Pen set,13.7,6.57
+M105-HOO-07,merchant,M105,Apparel,Hoodie,61.63,35.4
+M105-TUM-08,merchant,M105,Drinkware,Tumbler,43.78,22.04
+M106-TOT-01,merchant,M106,Bags,Tote,27.31,12.65
+M106-PEN-02,merchant,M106,Stationery,Pen set,12.77,5.33
+M106-STI-03,merchant,M106,Stationery,Sticker pack,9.54,3.98
+M106-TUM-04,merchant,M106,Drinkware,Tumbler,37.07,18.19
+M106-BAC-05,merchant,M106,Bags,Backpack,75.24,42.85
+M106-CAP-06,merchant,M106,Apparel,Cap,24.17,11.25
+M106-HOO-07,merchant,M106,Apparel,Hoodie,70.66,35.7
+M106-TOT-08,merchant,M106,Bags,Tote,27.34,12.56
+M106-CAP-09,merchant,M106,Apparel,Cap,24.66,13.26
+M106-MUG-10,merchant,M106,Drinkware,Mug,17.31,7.83
+M106-TOT-11,merchant,M106,Bags,Tote,26.53,12.58
+M106-HOO-12,merchant,M106,Apparel,Hoodie,60.55,32.93
+M107-MUG-01,merchant,M107,Drinkware,Mug,23.38,11.02
+M107-POU-02,merchant,M107,Bags,Pouch,16.23,7.27
+M107-MUG-03,merchant,M107,Drinkware,Mug,22.83,11.65
+M107-BLA-04,merchant,M107,Home,Blanket,68.77,39.97
+M107-STI-05,merchant,M107,Stationery,Sticker pack,7.98,2.64
+M107-BAC-06,merchant,M107,Bags,Backpack,84.2,48.4
+M107-PEN-07,merchant,M107,Stationery,Pen set,12.62,5.71
+M107-BAC-08,merchant,M107,Bags,Backpack,72.54,42.61
+M107-MUG-09,merchant,M107,Drinkware,Mug,19.71,9.08
+M108-CAP-01,merchant,M108,Apparel,Cap,28.74,14.62
+M108-STI-02,merchant,M108,Stationery,Sticker pack,8.47,2.78
+M108-HOO-03,merchant,M108,Apparel,Hoodie,78.21,40.3
+M109-POS-01,merchant,M109,Home,Poster,26.12,11.66
+M109-POS-02,merchant,M109,Home,Poster,25.9,10.48
+M109-HOO-03,merchant,M109,Apparel,Hoodie,77.15,43.78
+M109-POS-04,merchant,M109,Home,Poster,30.37,12.23
+M109-BLA-05,merchant,M109,Home,Blanket,75.46,43.19
+M109-T-S-06,merchant,M109,Apparel,T-shirt,31.49,17.3
+M109-BAC-07,merchant,M109,Bags,Backpack,71.99,42.38
+M109-MUG-08,merchant,M109,Drinkware,Mug,19.05,8.44
+M109-T-S-09,merchant,M109,Apparel,T-shirt,32.18,16.33
+M109-STI-10,merchant,M109,Stationery,Sticker pack,8.36,3.4
+M109-POU-11,merchant,M109,Bags,Pouch,13.75,6.07
+M109-MUG-12,merchant,M109,Drinkware,Mug,20.37,9.77
+M110-BLA-01,merchant,M110,Home,Blanket,79.09,45.44
+M110-STI-02,merchant,M110,Stationery,Sticker pack,9.18,3.72
+M110-CAP-03,merchant,M110,Apparel,Cap,25.71,12.13
+M110-PEN-04,merchant,M110,Stationery,Pen set,12.82,5.11
+M110-BLA-05,merchant,M110,Home,Blanket,75.8,41.33
+M110-BAC-06,merchant,M110,Bags,Backpack,98.04,56.58
+M110-BOT-07,merchant,M110,Drinkware,Bottle,28.09,14.0
+M110-CUS-08,merchant,M110,Home,Cushion,35.76,19.07
+M110-T-S-09,merchant,M110,Apparel,T-shirt,33.94,18.88
+M110-NOT-10,merchant,M110,Stationery,Notebook,17.56,8.43
+M110-TOT-11,merchant,M110,Bags,Tote,24.55,12.74
+M110-CUS-12,merchant,M110,Home,Cushion,40.38,20.92
+M110-POS-13,merchant,M110,Home,Poster,29.08,13.43
+M111-MUG-01,merchant,M111,Drinkware,Mug,20.3,9.77
+M111-MUG-02,merchant,M111,Drinkware,Mug,19.58,9.45
+M111-HOO-03,merchant,M111,Apparel,Hoodie,72.02,36.39
+M111-POS-04,merchant,M111,Home,Poster,31.23,13.23
+M111-STI-05,merchant,M111,Stationery,Sticker pack,7.19,2.86
+M111-MUG-06,merchant,M111,Drinkware,Mug,19.45,8.54
+M111-NOT-07,merchant,M111,Stationery,Notebook,17.46,8.27
+M111-BOT-08,merchant,M111,Drinkware,Bottle,29.23,14.65
+M111-STI-09,merchant,M111,Stationery,Sticker pack,7.24,2.93
+M111-POS-10,merchant,M111,Home,Poster,24.54,9.9
+M111-TUM-11,merchant,M111,Drinkware,Tumbler,32.51,17.75
+M111-NOT-12,merchant,M111,Stationery,Notebook,19.19,9.23
+M111-BAC-13,merchant,M111,Bags,Backpack,85.12,46.03
+M111-BOT-14,merchant,M111,Drinkware,Bottle,29.53,15.99
+M111-T-S-15,merchant,M111,Apparel,T-shirt,31.93,15.42
+M112-MUG-01,merchant,M112,Drinkware,Mug,21.07,10.36
+M112-CAP-02,merchant,M112,Apparel,Cap,23.08,11.54
+M112-STI-03,merchant,M112,Stationery,Sticker pack,9.5,3.57
+M112-CAP-04,merchant,M112,Apparel,Cap,23.55,12.66
+M112-BLA-05,merchant,M112,Home,Blanket,83.03,47.8
+M112-TOT-06,merchant,M112,Bags,Tote,23.95,11.26
+M112-T-S-07,merchant,M112,Apparel,T-shirt,31.71,17.38
+M112-POU-08,merchant,M112,Bags,Pouch,13.19,6.51
+M112-BLA-09,merchant,M112,Home,Blanket,92.31,49.49
+M112-BLA-10,merchant,M112,Home,Blanket,87.17,51.71
+M113-POU-01,merchant,M113,Bags,Pouch,17.59,7.49
+M113-TOT-02,merchant,M113,Bags,Tote,28.53,14.24
+M113-BAC-03,merchant,M113,Bags,Backpack,93.42,51.68
+M113-T-S-04,merchant,M113,Apparel,T-shirt,37.42,20.56
+M114-POU-01,merchant,M114,Bags,Pouch,15.59,7.06
+M114-BOT-02,merchant,M114,Drinkware,Bottle,28.91,14.46
+M114-CAP-03,merchant,M114,Apparel,Cap,22.66,11.61
+M114-TOT-04,merchant,M114,Bags,Tote,27.88,13.03
+M114-TUM-05,merchant,M114,Drinkware,Tumbler,34.84,18.01
+M114-TOT-06,merchant,M114,Bags,Tote,29.55,14.74
+M114-CUS-07,merchant,M114,Home,Cushion,47.8,27.62
+M114-NOT-08,merchant,M114,Stationery,Notebook,17.61,7.94
+M115-POS-01,merchant,M115,Home,Poster,23.42,10.24
+M115-TOT-02,merchant,M115,Bags,Tote,29.77,13.49
+M115-MUG-03,merchant,M115,Drinkware,Mug,20.47,10.18
+M115-POU-04,merchant,M115,Bags,Pouch,15.07,7.31
+M115-CUS-05,merchant,M115,Home,Cushion,42.07,23.43
+M115-BAC-06,merchant,M115,Bags,Backpack,73.52,41.66
+M115-HOO-07,merchant,M115,Apparel,Hoodie,76.26,43.52
+M115-TOT-08,merchant,M115,Bags,Tote,23.22,11.58
+M115-BLA-09,merchant,M115,Home,Blanket,91.08,50.96
+M115-HOO-10,merchant,M115,Apparel,Hoodie,62.02,32.18
+M115-BAC-11,merchant,M115,Bags,Backpack,78.13,43.37
+M116-BOT-01,merchant,M116,Drinkware,Bottle,30.85,16.33
+M116-BAC-02,merchant,M116,Bags,Backpack,76.09,40.25
+M116-PEN-03,merchant,M116,Stationery,Pen set,13.94,6.34
+M116-POU-04,merchant,M116,Bags,Pouch,13.12,5.63
+M116-BLA-05,merchant,M116,Home,Blanket,74.07,44.08
+M116-TUM-06,merchant,M116,Drinkware,Tumbler,38.12,19.73
+M117-POS-01,merchant,M117,Home,Poster,26.41,10.82
+M117-BOT-02,merchant,M117,Drinkware,Bottle,33.5,17.29
+M117-CUS-03,merchant,M117,Home,Cushion,41.9,22.81
+M117-CUS-04,merchant,M117,Home,Cushion,35.23,20.63
+M117-TUM-05,merchant,M117,Drinkware,Tumbler,42.74,23.21
+M118-BLA-01,merchant,M118,Home,Blanket,83.63,47.06
+M118-POU-02,merchant,M118,Bags,Pouch,13.0,6.1
+M118-CAP-03,merchant,M118,Apparel,Cap,25.81,12.88
+M118-NOT-04,merchant,M118,Stationery,Notebook,17.92,8.96
+M118-BOT-05,merchant,M118,Drinkware,Bottle,33.38,16.33
+M118-POS-06,merchant,M118,Home,Poster,29.94,11.5
+M118-POU-07,merchant,M118,Bags,Pouch,16.1,6.58
+M118-HOO-08,merchant,M118,Apparel,Hoodie,73.22,41.06
+M118-PEN-09,merchant,M118,Stationery,Pen set,11.06,5.03
+M118-POU-10,merchant,M118,Bags,Pouch,13.5,6.12
+M118-BOT-11,merchant,M118,Drinkware,Bottle,30.16,14.37
+M119-NOT-01,merchant,M119,Stationery,Notebook,16.79,8.46
+M119-CAP-02,merchant,M119,Apparel,Cap,26.12,12.92
+M119-BLA-03,merchant,M119,Home,Blanket,89.23,49.12
+M119-POU-04,merchant,M119,Bags,Pouch,15.94,6.95
+M119-POS-05,merchant,M119,Home,Poster,27.73,11.74
+M119-BLA-06,merchant,M119,Home,Blanket,82.63,47.16
+M119-POS-07,merchant,M119,Home,Poster,24.14,9.69
+M120-NOT-01,merchant,M120,Stationery,Notebook,14.1,7.31
+M120-POU-02,merchant,M120,Bags,Pouch,15.46,7.36
+M120-TUM-03,merchant,M120,Drinkware,Tumbler,42.05,23.03
+M120-CUS-04,merchant,M120,Home,Cushion,40.45,21.7
+M120-BOT-05,merchant,M120,Drinkware,Bottle,30.21,16.1
+M120-TOT-06,merchant,M120,Bags,Tote,26.86,13.26
+M120-POU-07,merchant,M120,Bags,Pouch,15.4,7.23
+M120-BLA-08,merchant,M120,Home,Blanket,86.39,49.14
+M120-PEN-09,merchant,M120,Stationery,Pen set,12.63,5.05
+M121-CAP-01,merchant,M121,Apparel,Cap,22.7,11.63
+M121-MUG-02,merchant,M121,Drinkware,Mug,18.94,8.42
+M121-POU-03,merchant,M121,Bags,Pouch,15.95,7.13
+M121-T-S-04,merchant,M121,Apparel,T-shirt,29.81,16.24
+M121-CAP-05,merchant,M121,Apparel,Cap,25.45,11.76
+M122-BOT-01,merchant,M122,Drinkware,Bottle,27.63,14.74
+M122-POU-02,merchant,M122,Bags,Pouch,15.72,7.0
+M122-PEN-03,merchant,M122,Stationery,Pen set,13.06,6.22
+M123-MUG-01,merchant,M123,Drinkware,Mug,22.34,10.84
+M123-POU-02,merchant,M123,Bags,Pouch,17.43,8.06
+M123-POS-03,merchant,M123,Home,Poster,31.99,13.02
+M123-CUS-04,merchant,M123,Home,Cushion,37.9,20.45
+M124-BLA-01,merchant,M124,Home,Blanket,69.52,37.35
+M124-NOT-02,merchant,M124,Stationery,Notebook,17.53,8.22
+M124-MUG-03,merchant,M124,Drinkware,Mug,21.51,10.64
+M124-BAC-04,merchant,M124,Bags,Backpack,88.75,49.26
+M124-PEN-05,merchant,M124,Stationery,Pen set,11.1,4.66
+M124-HOO-06,merchant,M124,Apparel,Hoodie,73.63,40.11
+M124-HOO-07,merchant,M124,Apparel,Hoodie,65.66,33.97
+M124-NOT-08,merchant,M124,Stationery,Notebook,18.84,8.44
+M124-CAP-09,merchant,M124,Apparel,Cap,23.62,12.18
+M125-HOO-01,merchant,M125,Apparel,Hoodie,61.74,31.9
+M125-STI-02,merchant,M125,Stationery,Sticker pack,7.61,2.78
+M125-T-S-03,merchant,M125,Apparel,T-shirt,37.99,19.77
+M125-CUS-04,merchant,M125,Home,Cushion,46.88,26.27
+M125-NOT-05,merchant,M125,Stationery,Notebook,15.07,6.97
+M125-TOT-06,merchant,M125,Bags,Tote,22.61,10.18
+M126-CAP-01,merchant,M126,Apparel,Cap,21.54,11.38
+M126-CUS-02,merchant,M126,Home,Cushion,34.78,19.47
+M126-TUM-03,merchant,M126,Drinkware,Tumbler,38.77,19.64
+M126-CUS-04,merchant,M126,Home,Cushion,43.61,25.12
+M126-PEN-05,merchant,M126,Stationery,Pen set,12.88,5.49
+M126-T-S-06,merchant,M126,Apparel,T-shirt,33.61,18.13
+M126-POS-07,merchant,M126,Home,Poster,23.68,9.65
+M126-TOT-08,merchant,M126,Bags,Tote,22.88,10.92
+M126-BOT-09,merchant,M126,Drinkware,Bottle,32.41,17.67
+M126-NOT-10,merchant,M126,Stationery,Notebook,16.8,8.56
+M127-MUG-01,merchant,M127,Drinkware,Mug,18.77,8.31
+M127-T-S-02,merchant,M127,Apparel,T-shirt,36.34,17.91
+M127-T-S-03,merchant,M127,Apparel,T-shirt,33.3,16.62
+M128-TUM-01,merchant,M128,Drinkware,Tumbler,38.31,20.86
+M128-TOT-02,merchant,M128,Bags,Tote,28.07,13.66
+M128-BOT-03,merchant,M128,Drinkware,Bottle,30.54,16.31
+M128-MUG-04,merchant,M128,Drinkware,Mug,19.9,9.89
+M128-POS-05,merchant,M128,Home,Poster,31.49,13.21
+M129-CAP-01,merchant,M129,Apparel,Cap,21.28,10.48
+M129-T-S-02,merchant,M129,Apparel,T-shirt,35.42,19.32
+M129-BLA-03,merchant,M129,Home,Blanket,91.49,50.62
+M129-POS-04,merchant,M129,Home,Poster,30.06,12.07
+M129-POU-05,merchant,M129,Bags,Pouch,14.44,5.93
+M129-MUG-06,merchant,M129,Drinkware,Mug,21.71,9.67
+M129-BLA-07,merchant,M129,Home,Blanket,72.74,42.35
+M129-POU-08,merchant,M129,Bags,Pouch,15.84,7.79
+M130-BAC-01,merchant,M130,Bags,Backpack,85.19,48.13
+M130-TOT-02,merchant,M130,Bags,Tote,26.13,13.44
+M130-T-S-03,merchant,M130,Apparel,T-shirt,36.78,18.28
+M130-NOT-04,merchant,M130,Stationery,Notebook,14.68,6.83
+M130-T-S-05,merchant,M130,Apparel,T-shirt,36.45,19.16
+M130-TOT-06,merchant,M130,Bags,Tote,22.26,10.12
+M130-PEN-07,merchant,M130,Stationery,Pen set,11.81,4.92
+M131-BOT-01,merchant,M131,Drinkware,Bottle,26.05,12.79
+M131-TUM-02,merchant,M131,Drinkware,Tumbler,44.75,21.81
+M131-POU-03,merchant,M131,Bags,Pouch,16.96,7.96
+M131-MUG-04,merchant,M131,Drinkware,Mug,23.51,10.98
+M131-POU-05,merchant,M131,Bags,Pouch,14.64,7.09
+M131-CAP-06,merchant,M131,Apparel,Cap,26.37,13.39
+M131-PEN-07,merchant,M131,Stationery,Pen set,11.99,5.2
+M131-TUM-08,merchant,M131,Drinkware,Tumbler,44.27,23.73
+M132-T-S-01,merchant,M132,Apparel,T-shirt,29.24,15.32
+M132-T-S-02,merchant,M132,Apparel,T-shirt,35.55,19.69
+M132-CAP-03,merchant,M132,Apparel,Cap,25.15,12.81
+M132-TOT-04,merchant,M132,Bags,Tote,25.48,13.21
+M133-NOT-01,merchant,M133,Stationery,Notebook,19.08,9.51
+M133-STI-02,merchant,M133,Stationery,Sticker pack,7.24,2.49
+M134-TUM-01,merchant,M134,Drinkware,Tumbler,37.29,18.36
+M134-NOT-02,merchant,M134,Stationery,Notebook,13.81,6.64
+M134-BLA-03,merchant,M134,Home,Blanket,73.61,44.05
+M134-CUS-04,merchant,M134,Home,Cushion,34.61,18.46
+M134-TOT-05,merchant,M134,Bags,Tote,30.3,14.89
+M134-T-S-06,merchant,M134,Apparel,T-shirt,34.14,16.95
+M134-BOT-07,merchant,M134,Drinkware,Bottle,27.68,14.66
+M134-BOT-08,merchant,M134,Drinkware,Bottle,34.6,18.19
+M134-CUS-09,merchant,M134,Home,Cushion,39.59,20.37
+M134-BOT-10,merchant,M134,Drinkware,Bottle,26.06,13.11
+M134-CAP-11,merchant,M134,Apparel,Cap,20.9,10.98
+M134-BOT-12,merchant,M134,Drinkware,Bottle,31.83,16.21
+M134-CUS-13,merchant,M134,Home,Cushion,39.68,21.61
+M135-BAC-01,merchant,M135,Bags,Backpack,83.53,45.31
+M135-CUS-02,merchant,M135,Home,Cushion,41.58,24.14
+M135-BLA-03,merchant,M135,Home,Blanket,89.73,54.0
+M135-MUG-04,merchant,M135,Drinkware,Mug,22.22,10.84
+M135-POU-05,merchant,M135,Bags,Pouch,15.28,7.21
+M135-NOT-06,merchant,M135,Stationery,Notebook,17.32,8.03
+M135-NOT-07,merchant,M135,Stationery,Notebook,15.82,7.27
+M135-HOO-08,merchant,M135,Apparel,Hoodie,76.69,41.16
+M135-NOT-09,merchant,M135,Stationery,Notebook,14.38,7.36
+M135-BLA-10,merchant,M135,Home,Blanket,83.86,46.68
+M136-BLA-01,merchant,M136,Home,Blanket,83.95,49.45
+M136-STI-02,merchant,M136,Stationery,Sticker pack,8.3,2.96
+M136-NOT-03,merchant,M136,Stationery,Notebook,15.83,7.97
+M136-MUG-04,merchant,M136,Drinkware,Mug,23.34,11.49
+M136-TOT-05,merchant,M136,Bags,Tote,22.15,11.68
+M136-HOO-06,merchant,M136,Apparel,Hoodie,64.28,34.2
+M136-TOT-07,merchant,M136,Bags,Tote,24.3,12.78
+M136-T-S-08,merchant,M136,Apparel,T-shirt,31.96,17.73
+M136-PEN-09,merchant,M136,Stationery,Pen set,13.14,5.51
+M136-CUS-10,merchant,M136,Home,Cushion,37.53,19.65
+M136-STI-11,merchant,M136,Stationery,Sticker pack,7.05,2.65
+M136-POS-12,merchant,M136,Home,Poster,29.91,13.09
+M136-NOT-13,merchant,M136,Stationery,Notebook,17.2,8.89
+M136-BOT-14,merchant,M136,Drinkware,Bottle,34.87,18.67
+M136-CAP-15,merchant,M136,Apparel,Cap,20.74,10.54
+M137-T-S-01,merchant,M137,Apparel,T-shirt,37.42,19.47
+M137-TOT-02,merchant,M137,Bags,Tote,26.25,12.23
+M137-NOT-03,merchant,M137,Stationery,Notebook,15.01,6.94
+M137-POU-04,merchant,M137,Bags,Pouch,16.86,8.32
+M137-POS-05,merchant,M137,Home,Poster,24.53,10.37
+M137-HOO-06,merchant,M137,Apparel,Hoodie,82.38,43.91
+M138-TOT-01,merchant,M138,Bags,Tote,24.02,11.38
+M138-CUS-02,merchant,M138,Home,Cushion,36.64,21.19
+M138-BOT-03,merchant,M138,Drinkware,Bottle,26.24,13.06
+M138-MUG-04,merchant,M138,Drinkware,Mug,20.75,9.75
+M138-CUS-05,merchant,M138,Home,Cushion,36.57,20.11
+M138-TUM-06,merchant,M138,Drinkware,Tumbler,43.87,24.3
+M138-T-S-07,merchant,M138,Apparel,T-shirt,32.17,17.96
+M138-TUM-08,merchant,M138,Drinkware,Tumbler,34.29,16.71
+M139-BLA-01,merchant,M139,Home,Blanket,75.92,44.65
+M139-POS-02,merchant,M139,Home,Poster,28.82,12.52
+M139-HOO-03,merchant,M139,Apparel,Hoodie,65.07,33.38
+M139-MUG-04,merchant,M139,Drinkware,Mug,22.47,11.44
+M139-BLA-05,merchant,M139,Home,Blanket,90.58,51.16
+M139-BLA-06,merchant,M139,Home,Blanket,66.98,36.35
+M139-STI-07,merchant,M139,Stationery,Sticker pack,8.37,2.82
+M139-PEN-08,merchant,M139,Stationery,Pen set,13.58,5.74
+M140-CUS-01,merchant,M140,Home,Cushion,46.52,26.41
+M140-POU-02,merchant,M140,Bags,Pouch,14.16,6.29
+M140-TUM-03,merchant,M140,Drinkware,Tumbler,37.4,20.57
+M140-BLA-04,merchant,M140,Home,Blanket,72.04,40.89
+M140-BAC-05,merchant,M140,Bags,Backpack,87.9,52.07
+M140-HOO-06,merchant,M140,Apparel,Hoodie,82.54,43.57
+M140-HOO-07,merchant,M140,Apparel,Hoodie,60.59,31.41
+M140-NOT-08,merchant,M140,Stationery,Notebook,14.21,6.61
+M140-STI-09,merchant,M140,Stationery,Sticker pack,8.25,3.3
+M140-MUG-10,merchant,M140,Drinkware,Mug,19.22,9.38
+M140-BAC-11,merchant,M140,Bags,Backpack,78.91,42.7
+M140-BOT-12,merchant,M140,Drinkware,Bottle,34.24,18.19

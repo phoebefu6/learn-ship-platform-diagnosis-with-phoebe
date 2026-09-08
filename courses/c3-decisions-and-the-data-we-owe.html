@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Chairman session 3 of 3. What the data cannot see and who owns that gap. Then every finding becomes a decision with an outcome metric, an owner role, a first review date and a one-line pre-mortem - business moves, technical fixes, and the data the company owes itself. A 90-day plan closes it.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Decisions and the data we owe ourselves - learn ship platform diagnosis with phoebe">
+<meta property="og:description" content="Chairman session 3 of 3. Ownership gaps, then decisions with owners, numbers, review dates and a pre-mortem. No code.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/courses/c3-decisions-and-the-data-we-owe.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Decisions and the data we owe ourselves - learn ship platform diagnosis with phoebe">
+<meta name="twitter:description" content="Ownership gaps, then decisions with owners, numbers, review dates and a pre-mortem. No code.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Chairman session 3 · Decisions and the data we owe ourselves - learn ship platform diagnosis with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ship-platform-diagnosis-with-phoebe</a> / Chairman session 3 of 3</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Chairman track · Session 3 of 3</div>
+    <h1>Decisions and <span class="accent">the data we owe ourselves</span></h1>
+    <p class="sub">Two sessions of findings end here, in a table. Every row has a recommendation, the number that will say whether it worked, the role that owns it, the date it is first reviewed, and one line written from 2027 explaining why it failed. Before the table, the harder part: the questions the data could not answer at all - why nothing changed on the platform when the numbers moved, who the guest customers were, what fulfilment actually cost - and the discovery that each of those gaps has a name on it. Not a system. A person who was never asked.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Chairman track</span>
+      <span class="chip audience">Chairman · C-level · board · no code</span>
+      <span class="chip audience">Decision focus</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-15 · What we cannot see</span>
+      <span class="a3" style="flex:8">15-40 · Decisions with owners</span>
+      <span class="a4" style="flex:2">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>The last chairman session</h2>
+    </div>
+    <p class="lede">Session c1 made the case for the whole history and handed you the map. Session c2 walked the break, the lag and the turn. This session is act six: decide and collect. Everything you heard becomes a row in a table with an owner, a number and a review date, because a recommendation without those three is a wish with a chart attached. The analyst track builds the same tables in code from the same notebooks, so when your team presents them, you will already know which row each chart belongs to.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill inkpill">Sources covered</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      The ownership map: every table the diagnosis needed, the domain that should own it, the contract it should honour, and the gap today. Three decision tables - business, tech, data to collect - each row with outcome metric, owner role, first review and pre-mortem. And a 90-day plan that starts with a field in the release gate, not a wiki page.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: WHAT WE CANNOT SEE ============ -->
+  <section class="section" id="gaps">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers availability + identity + the login snapshot + the missing event log</span>
+      <h2>What we cannot see, and who owns that <span class="tag concept">12 min live</span></h2>
+    </div>
+    <p class="lede">Before any analysis ran, the analysts drew one chart: which table covers which month. Five years of order lines, sixty-nine days of logins, a promotion table that starts in 2025 while promo codes have been stamped on orders since 2020, and no record at all of what changed on the platform when. Each of those is usually filed as a technology gap. It is an ownership gap first: a table with no owner starts when a module launches and keeps whatever the default retention setting says.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An ownership map with four columns - table, owning domain, the contract it should expose, and the gap today - and six rows: fact transaction, fact login, dim promotion, dim customer, dim store and merchant, and the event log. The gap column is drawn in amber tint.">
+        <style>
+          .owT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .owH { font: 700 12px Inter, sans-serif; fill: #163E6A; }
+          .owW { font: 700 11px Inter, sans-serif; fill: #FFFFFF; }
+          .owK { font: 400 11px Inter, sans-serif; fill: #14202E; }
+          .owG { font: 600 11px Inter, sans-serif; fill: #4A2E00; }
+          .owF { font: 400 11.5px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <defs>
+          <marker id="owArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C3CEDB"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="340" fill="#FAFBFD"/>
+        <text class="owT" x="40" y="28">Every gap has a name on it: the ownership map</text>
+        <text class="owH" x="40" y="58">Table</text>
+        <text class="owH" x="190" y="58">Owning domain</text>
+        <text class="owH" x="350" y="58">Contract it should expose</text>
+        <text class="owH" x="610" y="58">Gap today</text>
+        <g>
+          <rect x="40" y="70" width="140" height="30" rx="6" fill="#0B2545"/><text class="owW" x="52" y="89">fact_transaction</text>
+          <rect x="190" y="70" width="150" height="30" rx="6" fill="#E9F0F8" stroke="#A9C1DE"/><text class="owK" x="202" y="89">platform commerce</text>
+          <rect x="350" y="70" width="250" height="30" rx="6" fill="#FFFFFF" stroke="#E3E9F1"/><text class="owK" x="362" y="89">order line with true cost, daily</text>
+          <rect x="610" y="70" width="230" height="30" rx="6" fill="#FDF1DA"/><text class="owG" x="622" y="89">cost is a unit constant</text>
+        </g>
+        <g>
+          <rect x="40" y="108" width="140" height="30" rx="6" fill="#163E6A"/><text class="owW" x="52" y="127">fact_login</text>
+          <rect x="190" y="108" width="150" height="30" rx="6" fill="#E9F0F8" stroke="#A9C1DE"/><text class="owK" x="202" y="127">product analytics</text>
+          <rect x="350" y="108" width="250" height="30" rx="6" fill="#FFFFFF" stroke="#E3E9F1"/><text class="owK" x="362" y="127">sessions kept five years</text>
+          <rect x="610" y="108" width="230" height="30" rx="6" fill="#FDF1DA"/><text class="owG" x="622" y="127">60-day retention, from 2026-07</text>
+        </g>
+        <g>
+          <rect x="40" y="146" width="140" height="30" rx="6" fill="#163E6A"/><text class="owW" x="52" y="165">dim_promotion</text>
+          <rect x="190" y="146" width="150" height="30" rx="6" fill="#E9F0F8" stroke="#A9C1DE"/><text class="owK" x="202" y="165">two marketing teams</text>
+          <rect x="350" y="146" width="250" height="30" rx="6" fill="#FFFFFF" stroke="#E3E9F1"/><text class="owK" x="362" y="165">promo_id resolvable for its life</text>
+          <rect x="610" y="146" width="230" height="30" rx="6" fill="#FDF1DA"/><text class="owG" x="622" y="165">2020-2024 ids orphaned</text>
+        </g>
+        <g>
+          <rect x="40" y="184" width="140" height="30" rx="6" fill="#2A5C94"/><text class="owW" x="52" y="203">dim_customer</text>
+          <rect x="190" y="184" width="150" height="30" rx="6" fill="#E9F0F8" stroke="#A9C1DE"/><text class="owK" x="202" y="203">each merchant</text>
+          <rect x="350" y="184" width="250" height="30" rx="6" fill="#FFFFFF" stroke="#E3E9F1"/><text class="owK" x="362" y="203">an id that survives guest checkout</text>
+          <rect x="610" y="184" width="230" height="30" rx="6" fill="#FDF1DA"/><text class="owG" x="622" y="203">6 to 12% of lines have no id</text>
+        </g>
+        <g>
+          <rect x="40" y="222" width="140" height="30" rx="6" fill="#2A5C94"/><text class="owW" x="52" y="241">dim_store/merchant</text>
+          <rect x="190" y="222" width="150" height="30" rx="6" fill="#E9F0F8" stroke="#A9C1DE"/><text class="owK" x="202" y="241">merchant success</text>
+          <rect x="350" y="222" width="250" height="30" rx="6" fill="#FFFFFF" stroke="#E3E9F1"/><text class="owK" x="362" y="241">open/close as events, not fields</text>
+          <rect x="610" y="222" width="230" height="30" rx="6" fill="#FDF1DA"/><text class="owG" x="622" y="241">dead stores never closed</text>
+        </g>
+        <g>
+          <rect x="40" y="260" width="140" height="30" rx="6" fill="#E39B0E"/><text class="owG" x="52" y="279" font-weight="700">event log</text>
+          <rect x="190" y="260" width="150" height="30" rx="6" fill="#E9F0F8" stroke="#A9C1DE"/><text class="owK" x="202" y="279">eng + leadership</text>
+          <rect x="350" y="260" width="250" height="30" rx="6" fill="#FFFFFF" stroke="#E3E9F1"/><text class="owK" x="362" y="279">dated, scoped, owned events</text>
+          <rect x="610" y="260" width="230" height="30" rx="6" fill="#FDF1DA"/><text class="owG" x="622" y="279">nine remembered rows, no log</text>
+        </g>
+        <line x1="182" y1="85" x2="188" y2="85" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#owArr)"/>
+        <line x1="342" y1="85" x2="348" y2="85" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#owArr)"/>
+        <line x1="602" y1="85" x2="608" y2="85" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#owArr)"/>
+        <rect x="40" y="308" width="14" height="14" fill="#E39B0E"/>
+        <text class="owF" x="62" y="319">Read left to right. A gap with no domain in column two is not a tech ticket; it is a hiring or a naming decision.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - table, domain, contract, gap. Name the domain and the gap stops being a technology problem.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span> The availability heatmap <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>One chart to draw before any other: tables down the side, months across the top, a filled cell wherever a table has rows. It takes an hour and it saves months, because it turns "we cannot answer that" from an argument into a picture. Read this one and you know immediately that any question about logins is a two-month question, any question about promotion types is a 2025 question, and any question about what changed on the platform has no table at all.</p>
+        <figure class="zoomable">
+          <img src="../figures/x10_gaps_exec.png" alt="Timeline of what each table covers 2020 to 2026: orders and customers span the full period, promotions only from 2025, logins only 69 days, and the event log is nine remembered rows.">
+          <figcaption>🔍 Click to zoom - full rows can answer five-year questions. The short rows can only answer the months they cover.</figcaption>
+        </figure>
+        <table class="clean">
+          <thead><tr><th>Question</th><th>Needs</th><th>Answerable span</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue, cost, margin by server, merchant, product</td><td>fact_transaction</td><td>2020-01 to 2026-09</td><td>yes, full history</td></tr>
+            <tr><td>Customer cohort retention</td><td>fact_transaction, customer id</td><td>full history minus guests</td><td>yes, with a growing guest blind spot</td></tr>
+            <tr><td>Login-to-purchase funnel, device, session depth</td><td>fact_login</td><td>2026-07 to 2026-09</td><td>two months only - no trend, no season</td></tr>
+            <tr><td>Did a promotion type lift baskets or retention?</td><td>fact_transaction x dim_promotion</td><td>2025-01 to 2026-09</td><td>20 months; earlier promo ids unresolvable</td></tr>
+            <tr><td>What changed on the product or infra when the numbers moved?</td><td>known_events, 9 rows from memory</td><td>sparse</td><td>no - there is no event log</td></tr>
+            <tr><td>Fulfilment cost per order</td><td>nothing exists</td><td>none</td><td>no - cost is a unit constant per SKU</td></tr>
+            <tr><td>Product views, cart adds before 2026-07</td><td>nothing exists</td><td>none</td><td>no</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>The rule behind the table</strong>
+          A question a table cannot answer is filed as a data-collection recommendation, never silently dropped. The bottom three rows of this table are the first three rows of the collection list in Part 2. That is the whole mechanism: an honest "no" today becomes a "yes" in eighteen months only if somebody writes it down now.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Two identity gaps <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two kinds of row have no name on them. The first is the guest checkout: 6.3 percent of order lines in 2020 carried no customer id, 11.9 percent in 2026. Every retention number computed from this data excludes them, and the blind spot grows every year as more customers choose not to sign in. The second is the orphaned promotion: promo codes were stamped on orders from 2020, but the table that says what each code was starts in January 2025, so four years of promotions are ids that point at nothing.</p>
+        <figure class="zoomable">
+          <img src="../figures/a1_identity_gaps.png" alt="Two panels. Left: share of order lines with no customer id rising from 6.3 percent in 2020 to 11.9 percent in 2026. Right: share of transactions whose promo id resolves to the promotion table, near zero before 2025 and near complete after.">
+          <figcaption>🔍 Click to zoom - the guest line climbs, the promo line jumps in 2025. Both are ownership decisions nobody made.</figcaption>
+        </figure>
+        <p>Neither gap needs new technology. A hashed email or phone at guest checkout gives a customer an identity that survives not signing in, and it is a decision each merchant has to take for their own customers. A promotion table that keeps every code for its whole life is a decision the two marketing teams have to take between them. Ask who owns it before asking what it costs.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> A funnel with a date on it <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Sixty-nine days of login data, from July to September 2026, is all the behavioural history the platform has. Read it for what it is: a snapshot. Login to purchase converts at 16.8 percent on the key servers against 26.9 percent on the rest - consistent with everything c2 found, and a useful place to point product effort. What it cannot tell you is whether that gap is new, seasonal or permanent, because there is no earlier summer to compare with. A chart like this carries its date in the title so nobody quotes it as a trend.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_login_funnel.png" alt="Funnel bars for key servers and other servers over the 69 days with login data: login, viewed products, added to cart, purchased. Login to purchase conversion is 16.8 percent on key servers and 26.9 percent on the others. The title carries the date range.">
+          <figcaption>🔍 Click to zoom - a snapshot with its date on it. Ten points of conversion gap is a finding; the trend is a question for 2027.</figcaption>
+        </figure>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A consumer app once reported a conversion collapse to its board from six weeks of analytics data. The collapse was the summer holiday, which the previous year's data would have shown in one glance - except the analytics tool had been switched in spring and the old data was gone. The board learned to ask how long the series was before asking what it said.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> The event log that does not exist <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Every long chart of the platform carries the same nine vertical lines: the fulfilment change, the merchant-success cut, a checkout release, a few pricing changes. Those nine rows were written down from memory during the diagnosis, because nowhere in the company is there a record of what changed on the platform and when. Releases live in a deployment tool that keeps ninety days. Incidents live in chat. Business decisions live in slide decks. None of it joins to a month on a revenue chart.</p>
+        <p>This is the highest-leverage gap in the whole diagnosis, and it is not a technology gap. An event log is a table with five columns - date, what changed, scope (which server, which merchant), owner, link to the decision - and it fails for one reason only: writing to it is nobody's job. Treat it as a data product with an owner and a contract. Engineering owns release and incident events. The leadership team owns decision events. The metric layer joins both to every chart automatically.</p>
+        <ul>
+          <li><strong>A gap is an ownership gap before it is a tech gap.</strong> Ask "whose table is this" before "which tool".</li>
+          <li><strong>Memory is data too.</strong> The nine remembered rows are the first nine rows of the log. Start from them.</li>
+          <li><strong>The log earns its keep on the next diagnosis.</strong> Every future "why did the number move" starts by reading it. Without it, every diagnosis starts from interviews.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: DECISIONS WITH OWNERS ============ -->
+  <section class="section" id="decisions">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers business moves + technical fixes + data to collect, each with owner, number, date, pre-mortem</span>
+      <h2>Decisions with owners <span class="tag concept">20 min live</span></h2>
+    </div>
+    <p class="lede">Three tables. Every row has five columns and a row missing any one of them does not ship. The recommendation says what to do. The outcome metric says how you will know. The owner is a role, not a name, so it survives a reorganisation. The first review is a date in the diary before the work starts. And the pre-mortem is one line written from 2027 beginning "this failed because" - which, more often than not, turns out to be the real recommendation.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A two by two priority grid of impact against effort. Top left, do first: event log field in the release gate, per-server margin wall with full history, guest identity by hashed email or phone. Top right, fund and schedule: reverse or reprice the S07 and S08 fulfilment decision, restore the Vietnam merchant-success team, metric layer with frozen cohorts. Bottom left, quick hygiene: duplicate guard on ingestion, store status as events, promo id kept for its whole life. Bottom right, collect when the pipe exists: delivery time and returns, competitor price references, support tickets joined to customers.">
+        <style>
+          .pqT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .pqQ { font: 700 12px Inter, sans-serif; fill: #163E6A; }
+          .pqA { font: 700 12px Inter, sans-serif; fill: #4A2E00; }
+          .pqP { font: 400 11px Inter, sans-serif; fill: #14202E; }
+          .pqW { font: 400 11px Inter, sans-serif; fill: #FFFFFF; }
+          .pqX { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <defs>
+          <marker id="pqArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C3CEDB"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="300" fill="#FAFBFD"/>
+        <text class="pqT" x="40" y="28">Impact against effort: where the first ninety days go</text>
+        <rect x="90" y="46" width="372" height="104" rx="8" fill="#FDF1DA"/>
+        <rect x="468" y="46" width="372" height="104" rx="8" fill="#E9F0F8"/>
+        <rect x="90" y="156" width="372" height="104" rx="8" fill="#FFFFFF" stroke="#E3E9F1"/>
+        <rect x="468" y="156" width="372" height="104" rx="8" fill="#FFFFFF" stroke="#E3E9F1"/>
+        <text class="pqA" x="102" y="64">Do first</text>
+        <text class="pqQ" x="480" y="64">Fund and schedule</text>
+        <text class="pqQ" x="102" y="174">Quick hygiene</text>
+        <text class="pqQ" x="480" y="174">Collect when the pipe exists</text>
+        <rect x="102" y="74" width="240" height="20" rx="10" fill="#E39B0E"/><text class="pqP" x="114" y="88">Event log field in the release gate</text>
+        <rect x="102" y="98" width="246" height="20" rx="10" fill="#E39B0E"/><text class="pqP" x="114" y="112">Per-server margin wall, full history</text>
+        <rect x="102" y="122" width="252" height="20" rx="10" fill="#E39B0E"/><text class="pqP" x="114" y="136">Guest identity by hashed email or phone</text>
+        <rect x="480" y="74" width="256" height="20" rx="10" fill="#163E6A"/><text class="pqW" x="492" y="88">Reverse or reprice S07/S08 fulfilment</text>
+        <rect x="480" y="98" width="224" height="20" rx="10" fill="#163E6A"/><text class="pqW" x="492" y="112">Restore VN merchant-success team</text>
+        <rect x="480" y="122" width="224" height="20" rx="10" fill="#163E6A"/><text class="pqW" x="492" y="136">Metric layer with frozen cohorts</text>
+        <rect x="102" y="184" width="196" height="20" rx="10" fill="#A9C1DE"/><text class="pqP" x="114" y="198">Duplicate guard on ingestion</text>
+        <rect x="102" y="208" width="160" height="20" rx="10" fill="#A9C1DE"/><text class="pqP" x="114" y="222">Store status as events</text>
+        <rect x="102" y="232" width="224" height="20" rx="10" fill="#A9C1DE"/><text class="pqP" x="114" y="246">Promo id kept for its whole life</text>
+        <rect x="480" y="184" width="216" height="20" rx="10" fill="#E9F0F8" stroke="#A9C1DE"/><text class="pqP" x="492" y="198">Delivery time and returns capture</text>
+        <rect x="480" y="208" width="250" height="20" rx="10" fill="#E9F0F8" stroke="#A9C1DE"/><text class="pqP" x="492" y="222">Competitor price references per line</text>
+        <rect x="480" y="232" width="240" height="20" rx="10" fill="#E9F0F8" stroke="#A9C1DE"/><text class="pqP" x="492" y="246">Support tickets joined to customers</text>
+        <line x1="90" y1="272" x2="838" y2="272" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#pqArr)"/>
+        <text class="pqX" x="90" y="288">low effort</text>
+        <text class="pqX" x="838" y="288" text-anchor="end">high effort</text>
+        <line x1="72" y1="260" x2="72" y2="48" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#pqArr)"/>
+        <text class="pqX" x="66" y="258" text-anchor="start" transform="rotate(-90 66 258)">low impact</text>
+        <text class="pqX" x="66" y="54" text-anchor="end" transform="rotate(-90 66 54)">high impact</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - amber is where the first thirty days go. Navy needs a budget line. The bottom row is hygiene and patience.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Business: nine moves <span class="mini">7 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The order matters. c2 established that the March fulfilment change reached the customer and the June merchant-success cut compounded it, so the first two rows are the two levers in that order. The next seven are the growth findings, each traceable to a chart you have already seen.</p>
+        <table class="clean">
+          <thead><tr><th>Recommendation</th><th>Outcome metric</th><th>Owner role</th><th>First review</th><th>Pre-mortem: it is 2027 and this failed because</th></tr></thead>
+          <tbody>
+            <tr><td>Reverse or re-price the S07/S08 fulfilment decision</td><td>Key-server margin back toward 42 percent from 29.3; monthly gap to pre-shift margin from 8.4k toward zero</td><td>COO, with the fulfilment lead</td><td>60 days</td><td>we renegotiated cost without repricing and the volume term moved instead</td></tr>
+            <tr><td>Restore Vietnam merchant success, with upskilling</td><td>Key-server merchant churn hazard from 2.39 back toward 1.26 percent a month</td><td>Head of merchant success</td><td>90 days</td><td>we rehired but gave the team no leading-indicator list, so it measured funerals again</td></tr>
+            <tr><td>Merchant acquisition by server tier and vertical where retention is earned</td><td>12-month merchant survival of new vintages by tier</td><td>Head of merchant acquisition</td><td>Quarterly</td><td>quota stayed on onboarded count, so the team acquired everywhere</td></tr>
+            <tr><td>Customisation push: tooling and margin share for merchant SKUs</td><td>Merchant-SKU share of revenue; customer repeat rate from 28.1 toward 33.9 percent</td><td>Head of product, with merchant success</td><td>90 days</td><td>the tooling shipped but the margin share never did, so merchants had no reason to switch</td></tr>
+            <tr><td>Bundle and cross-sell programme from measured lift</td><td>Attach rate of mug + t-shirt, poster + cushion, notebook set against today's base</td><td>Head of catalogue</td><td>60 days</td><td>bundles were priced as discounts and cannibalised the second item</td></tr>
+            <tr><td>Upsell ladder inside each line</td><td>Share of orders on the top rung of the price ladder per line</td><td>Head of catalogue</td><td>Quarterly</td><td>the ladder existed in the catalogue but not on the product page</td></tr>
+            <tr><td>Product diversification: bags up, stationery down</td><td>Category revenue share, bags and stationery, year on year</td><td>Head of catalogue</td><td>Quarterly</td><td>stationery stayed because a founder liked it</td></tr>
+            <tr><td>Per-merchant customer preference profiles handed to merchants</td><td>Repeat rate of merchants using the profile against those who do not</td><td>Head of merchant success</td><td>90 days</td><td>profiles were a PDF once a quarter; nobody opened them</td></tr>
+            <tr><td>Promo policy: acquisition promos buy baskets, not customers</td><td>Ever-repeat of promo-acquired customers from 63.4 toward 71.5 percent; first basket held near 91.8</td><td>CMO</td><td>Quarterly</td><td>the promo budget was measured on first-order revenue and nothing else</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>Read the last column first</strong>
+          Every pre-mortem in this table names a measurement or an incentive, not a technology. That is the pattern to expect in your own table. When the failure you can imagine is "nobody measured it", the fix is to move the metric into the owner's review, not to build anything.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Tech: eight fixes, one of them first <span class="mini">6 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>None of these needs a platform migration. Each is a table, a field or a rule, and each is owned by a domain from the ownership map. The first row is the one that pays for all the others.</p>
+        <table class="clean">
+          <thead><tr><th>Recommendation</th><th>Outcome metric</th><th>Owner role</th><th>First review</th><th>Pre-mortem: it is 2027 and this failed because</th></tr></thead>
+          <tbody>
+            <tr><td>Release and incident event log as a data product</td><td>Share of releases and incidents with a log row; target 100 percent within a quarter</td><td>Head of engineering</td><td>30 days</td><td>writing to it was nobody's job; the fix was a required field in the release gate, not a wiki</td></tr>
+            <tr><td>Business decision log, same shape, same join</td><td>Every pricing, fulfilment and staffing decision dated and scoped within a week</td><td>Chief of staff</td><td>30 days</td><td>decisions were logged after the fact from slide decks and the dates were guesses</td></tr>
+            <tr><td>Guest-checkout identity by hashed email or phone</td><td>Share of order lines with no id from 11.9 percent toward the 2020 level of 6.3</td><td>Head of product, per merchant</td><td>60 days</td><td>merchants saw it as friction and turned it off</td></tr>
+            <tr><td>Login history retained beyond 60 days</td><td>Months of login history available; target the full five years going forward</td><td>Head of product analytics</td><td>30 days</td><td>the retention setting reset when the analytics tool was upgraded</td></tr>
+            <tr><td>promo_id resolvable for its whole life</td><td>Share of stamped promo ids that resolve to a promotion row</td><td>Platform and merchant marketing, jointly</td><td>60 days</td><td>two teams each assumed the other owned the table</td></tr>
+            <tr><td>Duplicate guard on order ingestion</td><td>Exact-duplicate lines per month; S02 2021 was 3.4 percent</td><td>Head of data engineering</td><td>30 days</td><td>the guard ran on the warehouse, not the source, and a reload slipped past it</td></tr>
+            <tr><td>Metric layer computing cohorts with frozen history</td><td>Zero restated retention numbers between two board packs</td><td>Head of data</td><td>90 days</td><td>teams kept their own spreadsheets because the layer was slower than a pivot</td></tr>
+            <tr><td>Store and merchant status as events, not overwritten fields</td><td>Active-store count equals stores with an order in 90 days, within a few percent</td><td>Head of merchant success</td><td>60 days</td><td>the dimension was fixed once and drifted again because closure was still manual</td></tr>
+          </tbody>
+        </table>
+        <div class="callout win">
+          <strong>★ Why the event log is the highest-leverage row</strong>
+          Every diagnosis you will ever run starts with one question: what changed when the number moved? Today the answer is nine remembered rows and a round of interviews. With a log, it is a join. The break in c2 took a team weeks to date; with an event log joined to the margin chart, the March 2024 line would have been drawn on the chart the month it happened, and the thirteen-point step would have had a name beside it before anyone asked.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Data to collect: eight things the business does not record <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>These are the questions the availability table marked "no". Each becomes a row with the same five columns, because collecting data nobody owns produces a table nobody trusts. The first row is the one that would have turned the cost story from an allocation into a fact.</p>
+        <table class="clean">
+          <thead><tr><th>Collect</th><th>Outcome metric</th><th>Owner role</th><th>First review</th><th>Pre-mortem: it is 2027 and this failed because</th></tr></thead>
+          <tbody>
+            <tr><td>Fulfilment cost per order: shipping, supplier, returns</td><td>Cost is a live per-order value, not a unit constant per SKU</td><td>COO, with finance</td><td>90 days</td><td>suppliers invoiced monthly in bulk and nobody allocated it back to orders</td></tr>
+            <tr><td>Product views and cart events</td><td>Funnel available for every month, not 69 days</td><td>Head of product analytics</td><td>60 days</td><td>the events fired but were never joined to a customer or a server</td></tr>
+            <tr><td>Marketing spend by channel and server</td><td>Acquisition cost per customer and per merchant, per server - unknowable today</td><td>CMO</td><td>Quarterly</td><td>spend lived in agency reports with a country column that did not match a server</td></tr>
+            <tr><td>Merchant acquisition funnel: pitched, trialled, onboarded</td><td>Conversion at each step by tier and vertical</td><td>Head of merchant acquisition</td><td>Quarterly</td><td>the sales team logged onboarded merchants only, because that was the bonus</td></tr>
+            <tr><td>Merchant health signals: logins, catalogue edits, campaigns</td><td>Weekly list of merchants below the month-three thresholds: 1.3 months to first sale, 399 in 90 days</td><td>Head of merchant success</td><td>30 days</td><td>the list existed and nobody was paid to call it</td></tr>
+            <tr><td>Delivery time and returns</td><td>Delivery days and return rate per server and per line</td><td>COO</td><td>Quarterly</td><td>carriers reported by country and the platform could not split it by server</td></tr>
+            <tr><td>Support tickets joined to customers and merchants</td><td>Ticket rate per hundred orders, per server</td><td>Head of support</td><td>Quarterly</td><td>the ticket tool had no customer id field</td></tr>
+            <tr><td>Competitor price references per line</td><td>Price index per line against the market, refreshed quarterly</td><td>Head of catalogue</td><td>Quarterly</td><td>collected once for a board deck and never again</td></tr>
+          </tbody>
+        </table>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          Marketplaces that grew across several countries routinely discover that cost of delivery is the one number nobody can produce per order. Suppliers invoice in bulk, carriers bill by lane, returns land in a different system. Margin per unit becomes an accounting allocation that stays constant for years while the real cost moves - which is exactly how a 22 percent cost shift can sit in the books as a decision nobody priced.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> The promotion double edge <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Promotions do two things at once and the company only measured one. Customers acquired through a promotion place a first basket of 91.8 against 84.7 for organic customers - the promotion works, on the day. But 63.4 percent of them ever order again against 71.5 percent of organic customers. Acquisition promos buy baskets, not customers. That does not make them wrong; it makes them a basket tool that should be measured as one, with the repeat cost written next to the basket gain.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_promo_double_edge.png" alt="Two pairs of bars comparing promo-acquired and organic customers: first basket 91.8 against 84.7, ever-repeat rate 63.4 against 71.5 percent. The promotion wins the first order and loses the second.">
+          <figcaption>🔍 Click to zoom - bigger on the left, smaller on the right. Both bars belong on the same slide or the policy will be wrong.</figcaption>
+        </figure>
+        <figure class="zoomable">
+          <img src="../figures/a5_promo_types.png" alt="First basket and repeat rate by promotion type for the twenty months since January 2025 when the promotion table exists, with the caveat that earlier promotions cannot be typed because their ids do not resolve.">
+          <figcaption>🔍 Click to zoom - by type, but only from 2025. Four years of promotions are ids that point at nothing.</figcaption>
+        </figure>
+        <p>The promotion-type view is honest about its own limit: it covers twenty months, because the table that names each promotion did not exist before. That is the orphaned-id gap from Part 1 showing up as a shorter chart. Fix the ownership and the chart grows backwards.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Growth accounting as the monthly opener <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>If the monthly review opens with one chart, this is it. Active customers this month equal new plus retained plus resurrected; the churned bar below the line is what left. It cannot be gamed by a growth number, because growth is the top of the stack and churn is the bottom, on the same axis. Had it been on the wall in 2024, the key-server churned bar would have grown two quarters after the cost decision and someone would have asked why.</p>
+        <figure class="zoomable">
+          <img src="../figures/a5_customer_growth_accounting.png" alt="Monthly customer growth accounting for the whole platform 2020 to 2026: new, retained and resurrected customers stacked above zero, churned customers below. The churned bar deepens from late 2024.">
+          <figcaption>🔍 Click to zoom - the identity every monthly review should open with. Read the bar below the line first.</figcaption>
+        </figure>
+        <ul>
+          <li><strong>Per server, then platform.</strong> The blended version is the one that hid the break. Ten small versions, then the total.</li>
+          <li><strong>Merchants get the same chart.</strong> c2 showed the merchant version; both belong on the same wall.</li>
+          <li><strong>Frozen history.</strong> Last month's bars do not change when this month's data lands.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: THE 90-DAY PLAN ============ -->
+  <section class="section" id="plan">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the 30/60/90 strip + the pre-mortem</span>
+      <h2>The 90-day plan and the pre-mortem <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Twenty-five rows is a plan for a year. Ninety days needs nine, and the first three need to be things a single person can finish without a budget cycle. Then, before any of it ships, the top three go through a pre-mortem: sit in 2027, assume it failed, and write the sentence.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A three-column roadmap strip. Thirty days: event log field in the release gate, per-server margin wall with full history, guest identity by hashed email or phone. Sixty days: S07 and S08 fulfilment decision reviewed, Vietnam merchant-success team restored, metric layer with frozen cohorts. Ninety days: first bundle live mug plus t-shirt, merchant leading-indicator list, fulfilment cost per order captured.">
+        <style>
+          .rdT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .rdH { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .rdA { font: 700 13px Inter, sans-serif; fill: #4A2E00; }
+          .rdI { font: 400 11px Inter, sans-serif; fill: #14202E; }
+          .rdF { font: 400 11.5px Inter, sans-serif; fill: #5B6B7E; }
+        </style>
+        <defs>
+          <marker id="rdArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C3CEDB"/></marker>
+        </defs>
+        <rect x="0" y="0" width="880" height="280" fill="#FAFBFD"/>
+        <text class="rdT" x="40" y="28">Nine things in ninety days</text>
+        <rect x="40" y="50" width="254" height="34" rx="8" fill="#E39B0E"/><text class="rdA" x="167" y="72" text-anchor="middle">30 days · no budget needed</text>
+        <rect x="313" y="50" width="254" height="34" rx="8" fill="#163E6A"/><text class="rdH" x="440" y="72" text-anchor="middle">60 days · the two levers</text>
+        <rect x="586" y="50" width="254" height="34" rx="8" fill="#0B2545"/><text class="rdH" x="713" y="72" text-anchor="middle">90 days · growth and cost</text>
+        <rect x="40" y="92" width="254" height="126" rx="8" fill="#FDF1DA"/>
+        <rect x="313" y="92" width="254" height="126" rx="8" fill="#E9F0F8"/>
+        <rect x="586" y="92" width="254" height="126" rx="8" fill="#E9F0F8"/>
+        <text class="rdI" x="56" y="120">1. Event log field in the release gate</text>
+        <text class="rdI" x="56" y="152">2. Per-server margin wall, full history</text>
+        <text class="rdI" x="56" y="184">3. Guest identity by hashed email/phone</text>
+        <text class="rdI" x="329" y="120">4. S07/S08 fulfilment decision reviewed</text>
+        <text class="rdI" x="329" y="152">5. VN merchant-success team restored</text>
+        <text class="rdI" x="329" y="184">6. Metric layer with frozen cohorts</text>
+        <text class="rdI" x="602" y="120">7. First bundle live: mug + t-shirt</text>
+        <text class="rdI" x="602" y="152">8. Merchant leading-indicator list</text>
+        <text class="rdI" x="602" y="184">9. Fulfilment cost per order captured</text>
+        <line x1="296" y1="155" x2="310" y2="155" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#rdArr)"/>
+        <line x1="569" y1="155" x2="583" y2="155" stroke="#C3CEDB" stroke-width="1.5" marker-end="url(#rdArr)"/>
+        <rect x="40" y="246" width="14" height="14" fill="#E39B0E"/>
+        <text class="rdF" x="62" y="257">Each item carries an owner, a number and a review date before it goes on this strip.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the first column costs nothing but a decision. The second is where the money moves. The third is the turn.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> The pre-mortem on the top three <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>It is 2027. The event log exists. Nobody writes to it. Why? Because writing to it was nobody's job: it was a page in a wiki, engineers were asked nicely, and the third week of a busy quarter was the last time anyone opened it. The fix that survives the pre-mortem is a required field in the release gate - a deployment does not go out without a log row, and a decision is not minuted without one. The log fills itself because the thing people already have to do now produces it.</p>
+        <table class="clean">
+          <thead><tr><th>Top-three item</th><th>It is 2027 and it failed because</th><th>So the recommendation becomes</th></tr></thead>
+          <tbody>
+            <tr><td>Event log</td><td>writing was nobody's job</td><td>a required field in the release gate and the decision minute, not a wiki page</td></tr>
+            <tr><td>Per-server margin wall</td><td>it showed twelve months and the step scrolled off</td><td>full history by default; the window is a zoom control, never the default view</td></tr>
+            <tr><td>Guest identity</td><td>merchants saw friction and switched it off</td><td>hash at checkout, invisible to the customer, with the merchant's own repeat rate as the reason</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>The pattern</strong>
+          Every pre-mortem answer above is about incentive or default, not technology. That is what the exercise is for: it finds the recommendation hiding inside the recommendation. Run it on your own top three before the table leaves the room.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Build the owner table for your business <span class="tag demo">★ 8 min · everyone builds</span></h2>
+    </div>
+    <p class="lede">Take the three recommendations you would most like to make in your own company this quarter. Give each of them the five columns, in this order, and notice which column is hardest to fill - that is where the recommendation is weakest.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Write the recommendation as a verb.</strong> Reverse, restore, retain, hash, log. Not "review" or "consider" - those are ways of deciding later.</p></div>
+      <div class="step"><p><strong>Name the outcome metric with today's value.</strong> "Repeat rate from 17.2 toward 28.8 percent", not "improve retention". If you do not know today's value, the first task is to measure it.</p></div>
+      <div class="step"><p><strong>Name the owner as a role.</strong> Head of merchant success, not a person's name. Roles survive reorganisations; names leave and take the recommendation with them.</p></div>
+      <div class="step"><p><strong>Put the first review in the diary now.</strong> Thirty, sixty or ninety days, with the people who can act in the room. A review booked after the work starts gets moved.</p></div>
+      <div class="step"><p><strong>Write the pre-mortem.</strong> "It is 2027 and this failed because ..." One sentence. If the sentence names an incentive or a default, rewrite the recommendation to fix that instead.</p></div>
+      <div class="step"><p><strong>Strike the row you cannot complete.</strong> A row with no metric is a wish; a row with no owner is a meeting. Keep the finding in the appendix and come back when you can fill all five.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The table in one line</strong>
+      "Do X, measured by Y from today's value, owned by role Z, reviewed on date D, and it will fail because W - so we are also doing V."
+    </div>
+  </section>
+
+  <!-- ============ EXERCISE ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30 min</span></h2>
+    </div>
+    <ul>
+      <li>Draw the availability heatmap for your own business by hand: the five tables you rely on most, and the months each one actually covers. Mark the one that starts most recently and ask who owns it.</li>
+      <li>Take the last set of recommendations you approved. For each, write down the owner role, the outcome metric and the review date. Count how many have all three.</li>
+      <li>Pick your single most important initiative for next year and write its pre-mortem: it is 2027 and it failed because. Show the sentence to the person who owns it.</li>
+    </ul>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session draws on</h2>
+    </div>
+    <p class="lede">Turning findings into decisions borrows from decision science, data-product ownership, sales and growth operations, and one very useful exercise from product management. This page teaches the working core of:</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Cassie Kozyrkov - Decision Intelligence: the decision column, the default action, the outcome metric</span><span class="note">Part 2 · every row's second column</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Zhamak Dehghani - data as a product with a domain owner and a contract</span><span class="note">Part 1 · the ownership map and the event log as a product</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Ayesha Khanna - owner and number on every recommendation, or it is pilot purgatory</span><span class="note">Part 2 · owner role and first review on every row</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Shreyas Doshi - the pre-mortem: it is 2027 and it failed, why</span><span class="note">Part 3 · the fifth column and the top-three exercise</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Mark Roberge - leading indicators over lagging ones; measure readiness, not the funeral</span><span class="note">Part 2 · merchant health signals in the collection table</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Availability heatmap and question-availability table</span><span class="note">Part 1 · read here; built in analyst session a1</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · A team proposes "launch a bundle programme" as a recommendation. What is missing before it can go in the table?</p>
+      <button class="qopt" type="button">A · Nothing - the lift analysis already justifies it</button>
+      <button class="qopt" type="button">B · A budget estimate</button>
+      <button class="qopt" type="button">C · An outcome metric with today's value, an owner role and a first review date - without them it is a wish with a chart attached</button>
+      <p class="qwhy">The finding is real and the decision is real. But a recommendation with no number cannot be judged, with no owner cannot be chased, and with no date will be chased never. Attach rate of mug + t-shirt against today's base, owned by the head of catalogue, reviewed in sixty days - now it is a row.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · The promotion table starts in 2025 while promo codes have been stamped on orders since 2020. What kind of gap is this, first?</p>
+      <button class="qopt" type="button">A · An ownership gap - nobody owned the table as a product, so it started when a module launched; naming the owner comes before any tooling</button>
+      <button class="qopt" type="button">B · A storage gap - the old rows were deleted to save space</button>
+      <button class="qopt" type="button">C · A vendor gap - the promotion tool was bought too late</button>
+      <p class="qwhy">Two marketing teams each assumed the other owned the promotion table, so it had no contract and no retention rule. Every gap in the ownership map has the same shape: the table did whatever its default did because no domain was accountable for it. Name the domain first; the technology is the easy part.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · The pre-mortem on the event log reads "it is 2027 and nobody writes to it". What does that sentence change?</p>
+      <button class="qopt" type="button">A · Nothing - it confirms the log is needed</button>
+      <button class="qopt" type="button">B · The recommendation itself: writing must become part of something people already have to do, so the log is a required field in the release gate, not a wiki page</button>
+      <button class="qopt" type="button">C · The owner - it should move to the data team</button>
+      <p class="qwhy">The pre-mortem finds the recommendation hiding inside the recommendation. A log that depends on goodwill fails in the first busy quarter; a log that fills itself because a deployment cannot ship without a row survives. The answer to "why did it fail" is almost always an incentive or a default, and that is what gets rewritten.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Chairman session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Availability before analysis</b><span>Tables down the side, months across the top. A question a table cannot answer becomes a collection row, never a silent drop.</span></div>
+      <div class="cheat-item"><b>Ownership map</b><span>Table, owning domain, contract, gap. A gap with no domain is a naming decision, not a tech ticket.</span></div>
+      <div class="cheat-item"><b>Five columns or no row</b><span>Recommendation as a verb, outcome metric with today's value, owner role, first review date, one-line pre-mortem.</span></div>
+      <div class="cheat-item"><b>The two levers, in order</b><span>Reverse or re-price the S07/S08 fulfilment decision first; restore Vietnam merchant success second. c2 proved the order.</span></div>
+      <div class="cheat-item"><b>The event log first</b><span>Every future diagnosis starts by asking what changed. Make it a required field in the release gate and the decision minute.</span></div>
+      <div class="cheat-item"><b>Identity gaps</b><span>Guest lines 6.3 to 11.9 percent; promo ids orphaned before 2025. Hash at checkout; keep every promo for its whole life.</span></div>
+      <div class="cheat-item"><b>Snapshots carry their date</b><span>69 days of logins: 16.8 vs 26.9 percent conversion is a finding; the trend is a 2027 question. Say so in the title.</span></div>
+      <div class="cheat-item"><b>The pre-mortem</b><span>"It is 2027 and this failed because ..." The answer names an incentive or a default. Rewrite the recommendation to fix that.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Chairman session 3 of 3 · learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="c2-what-went-right-what-went-wrong.html">← c2 What went right, what went wrong</a> &nbsp;·&nbsp; <a href="a1-map-the-data-before-you-read-it.html">Analyst track: Map the data →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

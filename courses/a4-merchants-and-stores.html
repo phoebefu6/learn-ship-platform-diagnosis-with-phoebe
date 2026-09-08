@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Analyst session 4 of 5. Merchant acquisition, growth accounting, Kaplan-Meier survival with censoring, the store dormancy gap, revenue concentration and the leading indicators that showed merchant churn in month three - in pandas and lifelines on five years of platform data.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Merchants and stores - learn ship platform diagnosis with phoebe">
+<meta property="og:description" content="Analyst session 4 of 5. Acquisition, growth accounting, Kaplan-Meier survival, store dormancy, concentration and leading indicators - in pandas and lifelines, on five years of platform data.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/courses/a4-merchants-and-stores.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Merchants and stores - learn ship platform diagnosis with phoebe">
+<meta name="twitter:description" content="Acquisition, growth accounting, Kaplan-Meier survival, store dormancy, concentration and leading indicators - in pandas and lifelines, on five years of platform data.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Analyst session 4 · Merchants and stores - learn ship platform diagnosis with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ship-platform-diagnosis-with-phoebe</a> / Analyst session 4 of 5</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Analyst track · Session 4 of 5</div>
+    <h1>Merchants and <span class="accent">stores</span></h1>
+    <p class="sub">The platform's customers are merchants: 140 of them, 59 already gone, running 342 stores. Today measures who was acquired when and where, who survived, which stores actually sell, how much of each server rides on five merchants, and how each onboarding vintage matured. Two traps run through every chart: survivorship, because a revenue line drawn from the merchants still here flatters, and censoring, because the ones still here have not told you how long they will stay. Kaplan-Meier handles the second; the first is handled by putting every merchant in the denominator, alive or not.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Analyst track</span>
+      <span class="chip audience">Data analysts · pandas + lifelines</span>
+      <span class="chip audience">Notebook: a4_merchants_and_stores.ipynb</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:5">3-18 · Acquisition and survival</span>
+      <span class="a3" style="flex:7">18-40 · Activity, concentration, leading signals</span>
+      <span class="a4" style="flex:2">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where this session sits</h2>
+    </div>
+    <p class="lede">a2 followed the margin and named the mechanism behind the 2024 break; a3 walked the product hierarchy and the baskets. Today climbs one level up the hierarchy: <code>platform &gt; server &gt; merchant &gt; store</code>. A merchant is the unit the platform sells to, so merchant acquisition and merchant churn are the platform's own growth accounting. a5 will then go down to the customers those merchants brought and find that the retention drop shows up in customers of surviving and churned merchants alike - which is why today's survival numbers matter: they are one of the two decisions a5 has to tell apart. Everything runs through <code>analysis/lib.py</code> with <code>dedupe=True</code>, in <code>notebooks/a4_merchants_and_stores.ipynb</code>.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill inkpill">Sources covered</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      An acquisition chart that shows the key servers were the 2021-2023 growth engine and then stopped acquiring. A growth-accounting chart where, from mid-2024, S07 and S08 churn more merchants than they add. A Kaplan-Meier curve that keeps the survivors honest and a hazard that nearly doubled, 1.26 to 2.39 percent per month, after the June 2024 merchant-success cut. A dormancy band that says the store count nobody should trust. And two leading indicators that were visible in a merchant's first quarter, years before the churn.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: ACQUISITION, ACTIVITY, SURVIVAL ============ -->
+  <section class="section" id="survival">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers acquisition, growth accounting and survival</span>
+      <h2>Acquisition, activity, survival <span class="tag concept">15 min live</span></h2>
+    </div>
+    <p class="lede">Three questions, in the order a merchant lives them: were they acquired, are they transacting, have they left. Each has a trap. Acquisition counts look like health when they are only presence. Activity counts need a definition, and it has to be the same one every month. Survival is where most teams go wrong: they either chart the merchants who are still here, which flatters, or they drop the ones still here from a lifetime average, which understates. The merchants who have not left yet are not missing data. They are censored, and the estimator has to know it.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A censoring diagram. Six merchants drawn as horizontal bars along a 2020 to 2026 timeline. Three bars end in an X before today, meaning churn was observed. Three bars reach the dashed today line, meaning the merchant is still active and its lifetime is censored, not known.">
+        <style>
+          .csT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .csK { font: 700 11.5px Inter, sans-serif; fill: #14202E; }
+          .csN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+          .csA { font: 600 11px Inter, sans-serif; fill: #4A2E00; }
+          .csE { font: 600 10.5px Inter, sans-serif; fill: #163E6A; }
+        </style>
+        <rect x="0" y="0" width="880" height="300" fill="#FAFBFD"/>
+        <text class="csT" x="40" y="28">Censoring - the merchants still here have not told you how long they will stay</text>
+        <line x1="60" y1="250" x2="760" y2="250" stroke="#C3CEDB" stroke-width="1.5"/>
+        <line x1="60" y1="246" x2="60" y2="254" stroke="#C3CEDB"/>
+        <line x1="160" y1="246" x2="160" y2="254" stroke="#C3CEDB"/>
+        <line x1="260" y1="246" x2="260" y2="254" stroke="#C3CEDB"/>
+        <line x1="360" y1="246" x2="360" y2="254" stroke="#C3CEDB"/>
+        <line x1="460" y1="246" x2="460" y2="254" stroke="#C3CEDB"/>
+        <line x1="560" y1="246" x2="560" y2="254" stroke="#C3CEDB"/>
+        <line x1="660" y1="246" x2="660" y2="254" stroke="#C3CEDB"/>
+        <text class="csN" x="60" y="268" text-anchor="middle">2020</text>
+        <text class="csN" x="160" y="268" text-anchor="middle">2021</text>
+        <text class="csN" x="260" y="268" text-anchor="middle">2022</text>
+        <text class="csN" x="360" y="268" text-anchor="middle">2023</text>
+        <text class="csN" x="460" y="268" text-anchor="middle">2024</text>
+        <text class="csN" x="560" y="268" text-anchor="middle">2025</text>
+        <text class="csN" x="660" y="268" text-anchor="middle">2026</text>
+        <line x1="730" y1="44" x2="730" y2="256" stroke="#E39B0E" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text class="csA" x="730" y="40" text-anchor="middle">today 2026-09</text>
+        <text class="csK" x="92" y="72" text-anchor="end">M1</text>
+        <rect x="110" y="60" width="225" height="16" rx="3" fill="#2A5C94"/>
+        <line x1="331" y1="62" x2="343" y2="74" stroke="#E39B0E" stroke-width="2.5"/>
+        <line x1="343" y1="62" x2="331" y2="74" stroke="#E39B0E" stroke-width="2.5"/>
+        <text class="csK" x="92" y="102" text-anchor="end">M2</text>
+        <rect x="185" y="90" width="545" height="16" rx="3" fill="#163E6A"/>
+        <text class="csK" x="92" y="132" text-anchor="end">M3</text>
+        <rect x="235" y="120" width="415" height="16" rx="3" fill="#2A5C94"/>
+        <line x1="646" y1="122" x2="658" y2="134" stroke="#E39B0E" stroke-width="2.5"/>
+        <line x1="658" y1="122" x2="646" y2="134" stroke="#E39B0E" stroke-width="2.5"/>
+        <text class="csK" x="92" y="162" text-anchor="end">M4</text>
+        <rect x="290" y="150" width="440" height="16" rx="3" fill="#163E6A"/>
+        <text class="csK" x="92" y="192" text-anchor="end">M5</text>
+        <rect x="375" y="180" width="185" height="16" rx="3" fill="#2A5C94"/>
+        <line x1="556" y1="182" x2="568" y2="194" stroke="#E39B0E" stroke-width="2.5"/>
+        <line x1="568" y1="182" x2="556" y2="194" stroke="#E39B0E" stroke-width="2.5"/>
+        <text class="csK" x="92" y="222" text-anchor="end">M6</text>
+        <rect x="475" y="210" width="255" height="16" rx="3" fill="#163E6A"/>
+        <text class="csE" x="745" y="120">Dropping these</text>
+        <text class="csE" x="745" y="134">understates</text>
+        <text class="csE" x="745" y="148">survival.</text>
+        <text class="csE" x="745" y="176">Keeping them</text>
+        <text class="csE" x="745" y="190">as alive</text>
+        <text class="csE" x="745" y="204">overstates it.</text>
+        <text class="csN" x="40" y="290">X = churn observed. A bar that reaches today is censored: still active, lifetime unknown. KM uses both.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three lifetimes are known, three are not yet. A lifetime average that drops or ignores the second kind is wrong in a known direction.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span> Merchants onboarded per year <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The merchant dimension carries <code>onboard_month</code>, <code>server_id</code> and, for 59 of 140, a <code>churn_month</code>. Group the onboardings by year and by server group and the platform's growth story is one bar chart long.</p>
+        <div class="prompt-box good"><span class="label">★ Onboardings by year, key servers against the rest</span>m = dims["merchant"].copy()
+m["onboard"] = pd.PeriodIndex(m.onboard_month, freq="M")
+m["year"] = m.onboard.dt.year
+m["is_key"] = m.server_id.isin(lib.KEY_SERVERS)          # S07, S08
+grp = np.where(m.is_key, "S07 + S08", "other servers")
+acq = m.assign(grp=grp).groupby(["year", "grp"]).size().unstack(fill_value=0)</div>
+        <figure class="zoomable">
+          <img src="../figures/a4_merchant_acquisition.png" alt="Grouped bar chart of merchants onboarded per year 2020 to 2026. S07 and S08 onboarded 16, 18 and 11 merchants in 2021, 2022 and 2023 and none in any other year. Other servers onboarded between 22 and 8 per year through 2025, and 2 in 2026.">
+          <figcaption>🔍 Click to zoom - the amber bars exist for three years only. The key servers were the growth engine, then acquisition on them stopped outright.</figcaption>
+        </figure>
+        <p>S07 and S08 launched in 2021 and took 16, 18 and 11 merchants in their first three years. Since 2024: zero. The other servers slowed too, from 22 in 2020 to 8 in 2025. The a1 coverage heatmap showed sparse onboarding months for 2024-2026 and called it presence, not health. This is the chart that makes the judgement: it is not a broken table, it is a stalled funnel. What the data cannot say is how many merchants were pitched or trialled before onboarding - there is no acquisition funnel table at all, and that goes on the c3 collection list.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Active merchants and growth accounting <span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A merchant is active in a month if any of its stores transacted that month. That is a definition you write down once and never vary, because an active count with a moving definition is two charts pretending to be one. The growth-accounting identity for merchants reads the same as for customers: actives this quarter = new + retained, and churned sits below the axis.</p>
+        <figure class="zoomable">
+          <img src="../figures/a4_active_merchants.png" alt="Line chart of active merchants per month, 2020 to 2026, for other servers and for S07 plus S08. The key-server line climbs through 2023, then declines after the dashed June 2024 marker while the other-server line stays roughly level.">
+          <figcaption>🔍 Click to zoom - active merchants per month, transacted that month. The amber line turns down after the dashed June 2024 line.</figcaption>
+        </figure>
+        <div class="prompt-box good"><span class="label">★ New and churned merchants per quarter - one rule for "churned"</span>act = txc.groupby(["month", "merchant_id"]).size().reset_index()[["month", "merchant_id"]]
+first = act.groupby("merchant_id").month.min()
+last  = act.groupby("merchant_id").month.max()
+rows = []
+for grp_name, flag in [("S07 + S08", True), ("other servers", False)]:
+    ids = m[m.is_key == flag].merchant_id
+    for qq in pd.period_range("2020Q1", "2026Q2", freq="Q"):
+        f = first.reindex(ids).dropna(); l = last.reindex(ids).dropna()
+        new = (f.dt.asfreq("Q") == qq).sum()
+        churned = (l.dt.asfreq("Q") == qq - 1).sum()   # last order in the PRIOR quarter = churned THIS quarter
+        rows.append((qq, grp_name, new, -churned))
+ga = pd.DataFrame(rows, columns=["quarter", "grp", "new", "churned"])</div>
+        <p>The churn rule matters more than it looks. A merchant whose last order fell in 2024Q2 is counted as churned in 2024Q3, the first quarter with no order. Count it in the quarter of the last order instead and every churn moves one quarter earlier, which puts the merchant exodus before the June cut instead of after it. The rule is a sentence in the chart subtitle, and the growth-accounting range stops at 2026Q2 because the quarter still running cannot yet tell a churned merchant from a quiet one.</p>
+        <figure class="zoomable">
+          <img src="../figures/a4_merchant_growth_accounting.png" alt="Two panels of quarterly bars, 2020 to 2026. New merchants above the axis, churned merchants below, with a dotted cumulative net line. On S07 plus S08 the new bars stop after 2023 and the churned bars grow from mid-2024, so the net line turns down. On other servers new and churned roughly balance.">
+          <figcaption>🔍 Click to zoom - from mid-2024 the key servers churn more merchants than they add, and nothing new arrives to replace them.</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Kaplan-Meier, because the survivors are still here <span class="mini">7 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>81 of 140 merchants have no churn month. Their lifetimes are not known; they are at least as long as the time since onboarding. The Kaplan-Meier estimator uses exactly that information: at each month, it asks what share of the merchants still at risk left, and multiplies the survival down. A merchant still here contributes to the denominator up to today and then stops, without pretending to have left or to be immortal. In lifelines the duration is months from onboarding to churn month or to today, and <code>event</code> is 1 only when the churn was observed.</p>
+        <div class="prompt-box good"><span class="label">★ Survival by server group, and the monthly hazard before and after June 2024</span>from lifelines import KaplanMeierFitter
+as_of_m = pd.Period(lib.AS_OF, "M")
+m["end"] = np.where(m.churn_month != "", m.churn_month, str(as_of_m))
+m["dur"] = (pd.PeriodIndex(m.end, freq="M") - m.onboard).map(lambda x: x.n).clip(lower=1)
+m["event"] = (m.churn_month != "").astype(int)          # 0 = still here, censored at today
+kmf = KaplanMeierFitter()
+for flag, lab in [(False, "other servers"), (True, "S07 + S08")]:
+    d = m[m.is_key == flag]
+    kmf.fit(d.dur, d.event, label=f"{lab} (n={len(d)})").plot_survival_function(ax=ax, ci_alpha=.12)
+
+# hazard: every merchant-month at risk on the key servers, split at 2024-06
+mm = [(str(r.onboard + k), 1 if (r.event and k == r.dur - 1) else 0)
+      for r in m[m.is_key].itertuples() for k in range(r.dur)]
+hz = pd.DataFrame(mm, columns=["month", "churn"]); hz["month"] = pd.PeriodIndex(hz.month, freq="M")
+hz["period"] = np.where(hz.month &gt;= pd.Period("2024-06", "M"), "Jun 2024 onward", "before Jun 2024")
+haz = hz.groupby("period").churn.agg(["sum", "count"])
+haz["monthly hazard %"] = haz["sum"] / haz["count"] * 100</div>
+        <figure class="zoomable">
+          <img src="../figures/a4_survival_hazard.png" alt="Left: Kaplan-Meier survival curves since onboarding for other servers and for S07 plus S08, with confidence bands; the key-server curve falls faster. Right: monthly churn hazard for key-server merchants, 1.26 percent per month before June 2024 and 2.39 percent per month from June 2024 onward.">
+          <figcaption>🔍 Click to zoom - the hazard is the honest number: of the merchants at risk in a given month, how many left. It nearly doubled the month the success team was cut.</figcaption>
+        </figure>
+        <p>The right panel is 956 merchant-months at risk before June 2024 with 12 exits, against 670 merchant-months after with 16. The hazard is not a survival rate and not a churn count; it is the chance a merchant at risk leaves in a given month, and it lets a period with fewer merchants be compared with a period that had more. 1.26 to 2.39 percent per month is the merchant-side echo of the decision a2 priced on the margin side. The store dormancy in Part 2 is the earlier, quieter version of the same signal.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A subscription-software company reported average customer lifetime as the mean tenure of customers who had cancelled. The number fell every quarter and the board concluded churn was accelerating. It was not: the company was growing, so recent cancellers were disproportionately young accounts, and the long-tenured customers who had never cancelled were simply not in the average. A Kaplan-Meier curve on the same data was flat. The estimator was invented in 1958 for exactly this problem - patients still alive at the end of a trial - and it applies unchanged to merchants still trading.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Why a revenue chart of surviving merchants flatters <span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Take the merchants active today and plot their revenue back to 2020. The line rises beautifully, because every merchant in it is, by construction, one that made it. The 59 that left are not on the chart, and neither is the revenue they took with them. This is survivorship bias, and it is the default shape of any "our customers" chart built from a current customer list. Three habits prevent it:</p>
+        <ul>
+          <li>Build merchant-level series from the transaction fact, never from a filtered dimension. A merchant who churned in 2023 still has 2021 and 2022 revenue, and it belongs on the 2021 and 2022 chart.</li>
+          <li>Put the whole vintage in the denominator. The vintage curves in Part 2 divide by every merchant onboarded that year, alive or not, so a churn shows as a decline in the curve instead of a disappearance from it.</li>
+          <li>When someone shows a per-merchant average rising, ask how many merchants are in the average this year against last year. A shrinking denominator of survivors makes any per-unit metric climb.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: STORES THAT EXIST VS STORES THAT SELL ============ -->
+  <section class="section" id="stores">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers dormancy, concentration and vintages</span>
+      <h2>Stores that exist versus stores that sell <span class="tag concept">12 min live</span></h2>
+    </div>
+    <p class="lede">A dimension table records that a store was created. It does not record that anyone stopped using it, because closing a record is a chore nobody owns. About 65 percent of Printwell's dead stores are still open on the books. So the "number of stores" any dashboard shows is a count of rows nobody deleted, and the gap between that and the stores that transacted recently is the earliest merchant-churn signal in the data.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two lines over 2020 to 2026. The pale line of stores that exist rises and stays high because dimension rows are never closed. The navy line of stores active in the last 90 days follows it until 2024 and then falls away. The shaded band between them is dormancy, opening after a dashed June 2024 marker.">
+        <style>
+          .dvT { font: 700 14px Inter, sans-serif; fill: #14202E; }
+          .dvN { font: 400 10.5px Inter, sans-serif; fill: #5B6B7E; }
+          .dvL { font: 600 11px Inter, sans-serif; fill: #14202E; }
+          .dvA { font: 600 11px Inter, sans-serif; fill: #4A2E00; }
+        </style>
+        <rect x="0" y="0" width="880" height="300" fill="#FAFBFD"/>
+        <text class="dvT" x="40" y="28">Stores that exist versus stores that sell - the lines part in 2024 and never rejoin</text>
+        <polygon points="70,240 175,200 280,150 385,120 490,105 595,100 700,98 770,97 770,158 700,150 595,135 490,120 385,130 280,158 175,205" fill="#FDF1DA"/>
+        <line x1="60" y1="250" x2="800" y2="250" stroke="#C3CEDB" stroke-width="1.5"/>
+        <line x1="60" y1="60" x2="60" y2="250" stroke="#E3E9F1" stroke-width="1.5"/>
+        <polyline points="70,240 175,200 280,150 385,120 490,105 595,100 700,98 770,97" fill="none" stroke="#C3CEDB" stroke-width="3"/>
+        <polyline points="70,240 175,205 280,158 385,130 490,120 595,135 700,150 770,158" fill="none" stroke="#163E6A" stroke-width="3"/>
+        <line x1="534" y1="58" x2="534" y2="250" stroke="#E39B0E" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <text class="dvA" x="534" y="50" text-anchor="middle">merchant-success cut, Jun 2024</text>
+        <text class="dvL" x="775" y="84" text-anchor="end">stores that exist - dim_store rows, never closed</text>
+        <text class="dvL" x="775" y="182" text-anchor="end">stores active - an order in the last 90 days</text>
+        <text class="dvA" x="690" y="128" text-anchor="middle">dormancy</text>
+        <text class="dvN" x="70" y="268" text-anchor="middle">2020</text>
+        <text class="dvN" x="175" y="268" text-anchor="middle">2021</text>
+        <text class="dvN" x="280" y="268" text-anchor="middle">2022</text>
+        <text class="dvN" x="385" y="268" text-anchor="middle">2023</text>
+        <text class="dvN" x="490" y="268" text-anchor="middle">2024</text>
+        <text class="dvN" x="595" y="268" text-anchor="middle">2025</text>
+        <text class="dvN" x="700" y="268" text-anchor="middle">2026</text>
+        <text class="dvN" x="40" y="290">Existence is a row nobody deleted; activity is an order with a date. Count the second, report the gap.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the pale line is what the store dashboard shows. The navy line is what is happening. The band is the difference, and it is a leading indicator.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Define active <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Active store: at least one order in the trailing 90 days. Ninety days because the median customer takes 118 days between first and second order (a5), so a store with no order in a quarter is quiet, not merely between customers. The definition is applied month by month against the stores whose dimension row says they exist that month, and the dormant share is one minus active over existing.</p>
+        <div class="prompt-box good"><span class="label">★ Existing versus active stores, month by month</span>st["open"]  = pd.PeriodIndex(st.open_month, freq="M")
+st["close"] = pd.PeriodIndex(st.close_month.replace("", str(as_of_m)), freq="M")   # blank = still open on the books
+last_order = txc.groupby(["store_id", "month"]).size().reset_index()[["store_id", "month"]]
+rows = []
+for per in pd.period_range("2020-06", as_of_m - 1, freq="M"):
+    existing = st[(st.open &lt;= per) &amp; (st.close &gt;= per)]
+    recent = set(last_order[(last_order.month &lt;= per) &amp; (last_order.month &gt;= per - 2)].store_id)  # trailing 3 months
+    for flag in [True, False]:
+        e = existing[existing.is_key == flag]
+        rows.append((per, "S07 + S08" if flag else "other servers", len(e), e.store_id.isin(recent).sum()))
+dorm = pd.DataFrame(rows, columns=["month", "grp", "existing", "active"])
+dorm["dormant %"] = (1 - dorm.active / dorm.existing) * 100</div>
+        <figure class="zoomable">
+          <img src="../figures/a4_store_dormancy.png" alt="Two panels, S07 plus S08 and other servers, 2020 to 2026. In each, a pale line of existing stores and a coloured line of stores active in the last 90 days, with the gap shaded. On the key servers the shaded dormancy band widens through 2025 and 2026; on other servers it stays thin.">
+          <figcaption>🔍 Click to zoom - the shaded band is dormancy plus dead stores still on the books. On the key servers it widens; elsewhere it does not.</figcaption>
+        </figure>
+        <p>Dormant share on the key servers: 8.7 percent in December 2023, 4.1 in December 2024, 8.8 in December 2025 and 10.2 by August 2026, against 6.6, 4.9, 3.7 and 6.2 on the other servers. The December 2024 dip on both groups is seasonal - a quarter with a December in it has few quiet stores. The trend after it is not. A store that stops selling is a merchant that is disengaging, months before the merchant's last order becomes a churn in the growth accounting.</p>
+        <div class="callout tip">
+          <strong>Report existing, active and the gap</strong>
+          Three numbers, every month, never just one. "342 stores" is true and useless. "342 on the books, N active, dormancy X percent and rising on S07 and S08" is a sentence a merchant-success lead can act on this week. The cost of not closing records is not tidiness; it is that the only trustworthy store count has to be recomputed from orders every time.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Concentration: who carries each server <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Revenue per server hides how many merchants it rests on. The Herfindahl index (sum of squared revenue shares, scaled to 10,000) and the plainer top-5 merchant share say the same thing in two registers: high concentration is fragility, because one merchant leaving becomes a server-level event.</p>
+        <div class="prompt-box good"><span class="label">★ HHI and top-5 share of merchant revenue, per server per year</span>mr = txc.groupby(["server_id", "year", "merchant_id"]).revenue.sum().reset_index()
+def hhi(g):
+    s = g.revenue / g.revenue.sum()
+    return pd.Series({"hhi": (s ** 2).sum() * 10000,
+                      "top5 share %": s.sort_values(ascending=False).head(5).sum() * 100,
+                      "merchants": len(s)})
+conc = mr.groupby(["server_id", "year"]).apply(hhi).reset_index()
+conc.round(1).to_csv(lib.REPORTS / "a4_concentration.csv", index=False)
+piv = conc[conc.year == 2025].set_index("server_id")</div>
+        <figure class="zoomable">
+          <img src="../figures/a4_concentration.png" alt="Bar chart of top-5 merchant share of server revenue in 2025, one bar per server, key servers in amber. Small servers sit near 100 percent with under ten merchants each; S03, the largest, is lowest at 73 percent across 19 merchants.">
+          <figcaption>🔍 Click to zoom - the smaller the server, the more one merchant matters. S03 is the only server whose top five carry under three-quarters of revenue.</figcaption>
+        </figure>
+        <p>In 2025, S03 spreads its revenue across 19 merchants and its top five carry 73.1 percent; S01 has 7 merchants and its top five carry 98.2 percent. A server with five merchants is a portfolio of five bets. The full table by year is in <code>reports/a4_concentration.csv</code>; watch the HHI trend, because concentration that rises while merchant count is flat means the smaller merchants are fading, which is the dormancy story told in a different unit.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> Vintage curves <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A vintage is every merchant onboarded in the same year. Revenue per merchant of the vintage, by months since onboarding, with all of the vintage in the denominator - alive or not - is the merchant version of a cohort curve. Churn shows as decline, not disappearance. The 2021 and 2022 vintages carried the platform; 2023 onward matured lower. Read alongside the acquisition chart, this says the key servers not only stopped acquiring, the last merchants they did acquire earned less per head than the ones before.</p>
+        <figure class="zoomable">
+          <img src="../figures/a4_vintage_curves.png" alt="Line chart of monthly revenue per merchant of each onboarding vintage, 2020 to 2024, over 36 months since onboarding. The 2021 and 2022 vintages climb highest; the 2023 and 2024 vintages sit lower at every month of age.">
+          <figcaption>🔍 Click to zoom - each line divides by every merchant of the vintage, so a merchant who left pulls the line down instead of vanishing from it.</figcaption>
+        </figure>
+        <p>Segment and vertical tell you where a merchant-month earns most: an Enterprise merchant-month averages 7,376 against 2,027 for Mid and 462 for SMB, and sports clubs (3,661) out-earn schools (1,241) three to one. This is the cut that turns "acquire more merchants" into "acquire merchants in the segments and verticals where a merchant-month is worth most", which is the c3 acquisition recommendation.</p>
+        <figure class="zoomable">
+          <img src="../figures/a4_segment_vertical.png" alt="Two bar charts of average revenue per merchant-month. Left by segment: SMB 462, Mid 2,027, Enterprise 7,376. Right by vertical, sorted: school lowest at 1,241, sports club highest at 3,661.">
+          <figcaption>🔍 Click to zoom - a merchant-month is not a merchant-month. Segment is a 16x range; vertical is a 3x range.</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: LEADING INDICATORS ============ -->
+  <section class="section" id="leading">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers leading indicators and merchant health signals</span>
+      <h2>The churn was visible in month three <span class="tag concept">8 min live</span></h2>
+    </div>
+    <p class="lede">Everything so far measures the funeral: the churn month, the hazard, the dormancy that precedes it by a few months. A merchant-success team cannot act on a funeral. It can act on a list of merchants who look, today, like the ones who later left. So the question is whether a merchant's first quarter predicts its fate - and on this data, it does.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span> Leading indicators <span class="mini">8 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two readiness signals from the first quarter after onboarding: months from onboarding to first sale, and revenue in the first 90 days. Measured only on merchants onboarded by 2023, so every one of them has had at least two and a half years to churn or not - a 2025 merchant who has not churned yet is not evidence of anything.</p>
+        <div class="prompt-box good"><span class="label">★ First-quarter signals against eventual outcome, merchants onboarded by 2023</span>mo = txc.groupby("merchant_id").agg(first_sale=("month", "min")).join(
+        m.set_index("merchant_id")[["onboard", "event", "year", "is_key"]])
+mo["months_to_first_sale"] = (mo.first_sale - mo.onboard).map(lambda x: x.n)
+r90 = txc.merge(m[["merchant_id", "onboard"]], on="merchant_id")
+r90 = r90[(r90.month - r90.onboard).map(lambda x: x.n) &lt;= 2].groupby("merchant_id").revenue.sum().rename("first_90d_revenue")
+mo = mo.join(r90).fillna({"first_90d_revenue": 0})
+mature = mo[mo.year &lt;= 2023].copy()                       # everyone has had time to churn
+mature["outcome"] = np.where(mature.event == 1, "churned", "still active")
+lead = mature.groupby("outcome").agg(merchants=("event", "size"),
+                                     months_to_first_sale=("months_to_first_sale", "mean"),
+                                     first_90d_revenue=("first_90d_revenue", "median"))
+lead.to_csv(lib.REPORTS / "a4_leading_indicators.csv")   # a5 reads this into canon.json</div>
+        <figure class="zoomable">
+          <img src="../figures/a4_leading_indicators.png" alt="Two bar charts comparing merchants onboarded by 2023 who later churned against those still active. Left: average months from onboarding to first sale, 3.8 for churned versus 1.3 for still active. Right: median revenue in the first 90 days, 0 for churned versus 399 for still active.">
+          <figcaption>🔍 Click to zoom - the merchants who left took three times longer to make a first sale, and half of them sold nothing at all in their first quarter.</figcaption>
+        </figure>
+        <p>54 merchants churned, 63 are still active. The ones who churned took 3.8 months on average to their first sale against 1.3 for the survivors, and their median first-90-day revenue was 0 - more than half of the eventual churners sold nothing in their first quarter. The survivors' median was 399. One merchant onboarded by 2023 never recorded a sale at all, and it churned. A merchant who has not sold by day 90 is not a new merchant; it is a churn in progress, and a success manager can call it this week rather than write it off in 2027.</p>
+        <div class="callout tip">
+          <strong>A list, not a eulogy</strong>
+          This is the readiness-indicator method from Mark Roberge's work on scaling sales organisations: find the early behaviours that separate the accounts that stayed from the ones that left, then manage to those behaviours while there is still time. Two cautions travel with it. First, a leading indicator is tested on your own data, never assumed from someone else's - time to first sale predicts here because this platform's merchants either start or do not; a marketplace with a long setup phase might find the opposite. Second, the signal is a screen, not a verdict: it tells the success team whom to call, and the call is where the retention is earned.
+        </div>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          A payments provider found that merchants who processed a live transaction within 14 days of signing retained at nearly twice the rate of those who did not, regardless of merchant size. The onboarding team stopped measuring "accounts created" and started measuring "accounts with a first live transaction inside two weeks", and rebuilt the onboarding flow around getting that first transaction to happen. The leading indicator became the operating metric, which is where a leading indicator earns its keep.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span> What to collect on merchants <span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Today's analysis worked with two dimension tables and the order fact. It could have worked with more. Two families of merchant data are missing, and each is a c3 recommendation with an owner and a date.</p>
+        <table class="clean">
+          <thead><tr><th>Missing</th><th>What it would answer</th><th>Owner</th><th>First use</th></tr></thead>
+          <tbody>
+            <tr><td>Acquisition funnel: merchants pitched, trialled, onboarded, by server and month</td><td>Whether 2024's zero onboardings on S07 and S08 is a demand problem or a sales-effort problem</td><td>Merchant sales</td><td>Funnel conversion per server per quarter</td></tr>
+            <tr><td>Merchant health events: platform logins, catalogue edits, campaign launches, support tickets</td><td>Earlier and richer readiness indicators than time to first sale; a disengagement signal weeks before dormancy</td><td>Merchant success</td><td>Weekly at-risk list</td></tr>
+            <tr><td>Store status as events (opened, paused, closed), not an overwritable field</td><td>A trustworthy store count without recomputing activity from orders</td><td>Platform data</td><td>Store dashboard</td></tr>
+            <tr><td>Merchant-success coverage: which merchants had a named manager, when</td><td>Whether the June 2024 cut removed coverage from the merchants who then churned</td><td>Merchant success</td><td>Hazard by coverage status</td></tr>
+          </tbody>
+        </table>
+        <p>The last row is the one that would settle the two-decision question a5 opens: the hazard doubled after the team was cut, and a coverage table would say whether the merchants who left were the ones who lost their manager.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Rebuild the merchant notebook <span class="tag demo">★ 20 min · everyone builds</span></h2>
+    </div>
+    <p class="lede">Open <code>notebooks/a4_merchants_and_stores.ipynb</code>, run it once, then rebuild each section against the shared reader. Load with <code>dedupe=True</code>; the a1 duplicate rule is already in <code>lib</code>. The data is seeded, so your hazard reads 1.26 and 2.39 like the page.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Merchant frame.</strong> Load dims, build <code>onboard</code>, <code>year</code>, <code>is_key</code>. Print merchants, churned, stores and the tier counts. Cut transactions to complete months only.</p></div>
+      <div class="step"><p><strong>Acquisition.</strong> Onboardings by year and server group as a grouped bar. Write the finding in the title, not the axis label.</p></div>
+      <div class="step"><p><strong>Growth accounting.</strong> First and last order month per merchant. New this quarter, churned this quarter as last order in the prior quarter. Stop at the last complete quarter.</p></div>
+      <div class="step"><p><strong>Survival.</strong> Duration to churn or to today, event flag, <code>KaplanMeierFitter</code> per server group. Then the merchant-month table and the hazard split at 2024-06. Save the hazard to <code>reports/</code>.</p></div>
+      <div class="step"><p><strong>Dormancy.</strong> Existing stores per month from the dimension, active stores from orders in the trailing three months. Two lines, one band, per server group. Print the dormant share at four December-ish checkpoints.</p></div>
+      <div class="step"><p><strong>Concentration and vintages.</strong> HHI and top-5 share per server per year to <code>reports/</code>. Vintage curves with the full vintage in the denominator.</p></div>
+      <div class="step"><p><strong>Leading indicators.</strong> Months to first sale and first-90-day revenue by outcome, merchants onboarded by 2023 only. Save the table: a5 folds it into <code>canon.json</code>.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The check that keeps you honest</strong>
+      Rerun <code>python3 analysis/nbgen.py notebooks/src/a4_merchants_and_stores.py</code>. A failed run leaves no notebook behind, so a stale passing notebook can never masquerade as a fresh one. And check the censoring the cheap way: count merchants with <code>event == 0</code> and confirm it equals 140 minus 59. If it does not, some survivor has been silently given a churn date.
+    </div>
+  </section>
+
+  <!-- ============ EXERCISE ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 45 min</span></h2>
+    </div>
+    <ul>
+      <li>Take one customer or account list you report on and compute its size two ways: rows in the dimension, and units with a transaction in the last 90 days. Report the gap to whoever owns the dashboard, with the date.</li>
+      <li>Fit a Kaplan-Meier curve to your accounts with lifelines, censoring the ones still active at today. Compare the median survival it gives with the mean tenure of accounts that have already left. Write one sentence on why they differ.</li>
+      <li>Pick two first-quarter behaviours of your own accounts (time to first order, first-90-day value, first login, anything measurable early) and split mature accounts by eventual outcome. If neither behaviour separates the groups, that is a finding too - write it down before someone assumes it does.</li>
+    </ul>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session draws on</h2>
+    </div>
+    <p class="lede">Merchant analytics is standard survival and portfolio craft rather than a certified syllabus. The working core drawn on here:</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">lifelines documentation - KaplanMeierFitter, durations, event observed, censoring</span><span class="note">Part 1 · survival by server group</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Kaplan and Meier (1958), Nonparametric estimation from incomplete observations - right-censoring</span><span class="note">Part 1 · why survivors stay in the denominator</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Herfindahl-Hirschman index - sum of squared shares as a concentration measure</span><span class="note">Part 2 · HHI and top-5 share per server</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Growth accounting - actives = new + retained + resurrected, churned below the axis</span><span class="note">Part 1 · the merchant version, per quarter</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Mark Roberge, The Sales Acceleration Formula and The Science of Scaling - readiness and leading indicators of retention</span><span class="note">Part 3 · the method, tested on this data</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Cox proportional hazards - covariates on the hazard</span><span class="note">Named only; the before/after split is the teaching here</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · You compute average merchant lifetime as the mean months from onboarding to churn, over the 59 merchants who churned. What is wrong with the number?</p>
+      <button class="qopt" type="button">A · Nothing - the merchants who have not churned have no lifetime yet, so they cannot be included</button>
+      <button class="qopt" type="button">B · It should be a median, not a mean</button>
+      <button class="qopt" type="button">C · It ignores 81 censored merchants whose lifetimes are at least as long as their time on the platform, so it understates survival - Kaplan-Meier uses them</button>
+      <p class="qwhy">A merchant still trading is not missing; it is censored, and its lifetime is known to be at least its tenure so far. Dropping the censored merchants keeps only the ones who left, and in a growing base those skew young. The Kaplan-Meier estimator keeps every merchant at risk in the denominator up to the month it leaves or today, whichever comes first.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">2 · The store dashboard says S07 has more stores than ever. The order data says fewer stores on S07 transacted last quarter than a year ago. Which is right?</p>
+      <button class="qopt" type="button">A · The dashboard - the dimension table is the system of record for stores</button>
+      <button class="qopt" type="button">B · Both are true and the gap between them is the finding: rows are never closed, so existing stores climb while active stores fall, and dormancy is the earliest churn signal</button>
+      <button class="qopt" type="button">C · The order data - the store dimension should be deleted and rebuilt from orders</button>
+      <p class="qwhy">Existence is a row nobody deleted; activity is an order with a date. Report existing, active and the gap every month. The dimension is not wrong about existence, it is silent about activity, and about 65 percent of dead stores are still open on the books.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Merchants who later churned took 3.8 months to first sale against 1.3 for survivors. What kind of metric is time to first sale, and what does the success team do with it?</p>
+      <button class="qopt" type="button">A · A leading indicator - it is visible in month three, so the team gets a list of merchants to call now, and the indicator is re-tested on this platform's own data before anyone acts on it</button>
+      <button class="qopt" type="button">B · A lagging indicator - it can only be computed once the merchant has churned</button>
+      <button class="qopt" type="button">C · A vanity metric - first sale says nothing about lifetime value</button>
+      <p class="qwhy">Churn month and hazard describe what already happened; months to first sale is known within a quarter of onboarding and, on this data, separates the merchants who stayed from the ones who left. That makes it a leading indicator - provided it was measured here, on merchants mature enough to have churned, not borrowed from another business's playbook.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Analyst session 4 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Merchants are the customers</b><span>140 merchants, 59 churned, 342 stores. Merchant acquisition and churn are the platform's own growth accounting.</span></div>
+      <div class="cheat-item"><b>Presence is not health</b><span>S07 and S08 onboarded 16, 18, 11 merchants in 2021-2023 and zero since. Stalled funnel, not a broken table.</span></div>
+      <div class="cheat-item"><b>One churn rule</b><span>Last order in the prior quarter = churned this quarter. Stop at the last complete quarter. Put the rule in the subtitle.</span></div>
+      <div class="cheat-item"><b>Censored is not missing</b><span>81 merchants are still here. Kaplan-Meier keeps them at risk until today; dropping them understates survival.</span></div>
+      <div class="cheat-item"><b>Hazard, not headcount</b><span>Exits over merchant-months at risk. Key servers: 1.26 percent per month before June 2024, 2.39 after.</span></div>
+      <div class="cheat-item"><b>Existing versus active</b><span>Active = an order in the trailing 90 days. Rows are never closed; report existing, active and the gap every month.</span></div>
+      <div class="cheat-item"><b>Concentration is fragility</b><span>HHI and top-5 share per server per year. S03: 73 percent across 19 merchants. S01: 98 percent across 7.</span></div>
+      <div class="cheat-item"><b>Measure readiness, not funerals</b><span>Churners: 3.8 months to first sale, median 0 in the first 90 days. Survivors: 1.3 and 399. Test it on your own data, then hand the team a list.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Analyst session 4 of 5 · learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="a3-products-and-baskets.html">← Prev: Products and baskets</a> &nbsp;·&nbsp; <a href="a5-customers-promotions-and-the-gaps.html">Next: Customers, promotions and the gaps →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

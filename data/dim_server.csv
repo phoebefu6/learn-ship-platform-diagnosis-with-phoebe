@@ -1,0 +1,11 @@
+server_id,region,launch_month,tier
+S01,SG,2020-01,core
+S02,SG,2020-01,core
+S03,MY,2020-01,core
+S04,MY,2020-01,core
+S05,ID,2020-09,growth
+S06,TH,2020-09,growth
+S07,VN,2021-03,key
+S08,VN,2021-03,key
+S09,PH,2022-06,growth
+S10,AU,2024-01,new

@@ -1,0 +1,141 @@
+merchant_id,server_id,segment,onboard_month,custom_share,vertical,churn_month
+M001,S03,SMB,2020-09,0.268,creator,2024-08
+M002,S01,SMB,2020-11,0.773,cafe,2021-10
+M003,S03,Mid,2020-06,0.537,nonprofit,
+M004,S02,SMB,2020-03,0.377,nonprofit,
+M005,S01,Mid,2020-08,0.169,corporate gifting,
+M006,S06,Mid,2020-11,0.111,sports club,
+M007,S04,SMB,2020-06,0.072,school,2021-02
+M008,S03,Mid,2020-03,0.033,cafe,
+M009,S05,SMB,2020-12,0.158,creator,
+M010,S06,SMB,2020-09,0.553,creator,
+M011,S01,SMB,2020-10,0.505,sports club,2021-07
+M012,S05,SMB,2020-09,0.201,creator,
+M013,S02,SMB,2020-12,0.513,sports club,2021-06
+M014,S06,Enterprise,2020-11,0.291,creator,
+M015,S03,Mid,2020-04,0.021,creator,
+M016,S03,SMB,2020-07,0.537,school,
+M017,S04,Enterprise,2020-03,0.333,sports club,
+M018,S04,Mid,2020-04,0.438,creator,
+M019,S04,SMB,2020-07,0.349,nonprofit,2022-07
+M020,S01,Enterprise,2020-11,0.22,nonprofit,
+M021,S02,SMB,2020-09,0.357,corporate gifting,2022-04
+M022,S04,Mid,2020-08,0.724,creator,
+M023,S02,SMB,2021-06,0.176,cafe,
+M024,S04,SMB,2021-08,0.307,school,2023-09
+M025,S05,SMB,2021-02,0.159,nonprofit,2025-02
+M026,S07,Enterprise,2021-10,0.515,corporate gifting,
+M027,S07,SMB,2021-08,0.292,school,2026-06
+M028,S08,Mid,2021-03,0.332,nonprofit,2024-02
+M029,S07,SMB,2021-04,0.542,cafe,
+M030,S03,Enterprise,2021-08,0.495,corporate gifting,
+M031,S08,Mid,2021-12,0.296,cafe,2024-05
+M032,S08,SMB,2021-05,0.255,corporate gifting,2024-10
+M033,S08,Mid,2021-07,0.154,corporate gifting,2021-12
+M034,S01,Mid,2021-02,0.783,creator,
+M035,S03,SMB,2021-05,0.413,nonprofit,2025-10
+M036,S04,SMB,2021-12,0.412,corporate gifting,
+M037,S06,SMB,2021-11,0.266,corporate gifting,
+M038,S07,SMB,2021-07,0.611,creator,2021-11
+M039,S06,SMB,2021-06,0.256,cafe,2023-12
+M040,S04,Mid,2021-06,0.563,corporate gifting,2023-12
+M041,S07,Enterprise,2021-08,0.501,sports club,
+M042,S07,SMB,2021-11,0.448,school,2024-11
+M043,S03,Mid,2021-09,0.587,creator,
+M044,S07,SMB,2021-06,0.794,cafe,2023-03
+M045,S05,SMB,2021-12,0.426,sports club,
+M046,S08,SMB,2021-09,0.244,school,2022-06
+M047,S02,SMB,2021-11,0.766,creator,2023-03
+M048,S03,SMB,2021-10,0.749,creator,2022-10
+M049,S08,Mid,2021-11,0.311,corporate gifting,2024-06
+M050,S05,Mid,2021-08,0.248,nonprofit,2022-09
+M051,S07,SMB,2021-04,0.19,creator,
+M052,S05,SMB,2021-11,0.286,corporate gifting,2025-05
+M053,S01,Mid,2021-05,0.259,cafe,
+M054,S08,Mid,2021-05,0.312,cafe,
+M055,S06,Mid,2021-08,0.721,cafe,
+M056,S07,Enterprise,2021-08,0.357,creator,
+M057,S07,Enterprise,2022-07,0.792,creator,2025-02
+M058,S08,Mid,2022-10,0.683,creator,
+M059,S04,Mid,2022-02,0.49,school,
+M060,S09,Mid,2022-10,0.094,creator,
+M061,S07,SMB,2022-06,0.278,cafe,
+M062,S08,Enterprise,2022-05,0.437,nonprofit,
+M063,S08,SMB,2022-09,0.336,creator,2024-11
+M064,S04,SMB,2022-08,0.131,nonprofit,2023-11
+M065,S08,SMB,2022-07,0.661,corporate gifting,
+M066,S08,SMB,2022-07,0.662,creator,2025-01
+M067,S09,SMB,2022-06,0.344,nonprofit,2026-09
+M068,S08,Mid,2022-04,0.36,creator,2024-06
+M069,S08,SMB,2022-04,0.765,creator,2023-04
+M070,S05,SMB,2022-12,0.131,creator,
+M071,S07,Mid,2022-10,0.243,creator,2026-09
+M072,S02,Mid,2022-01,0.593,school,2023-07
+M073,S08,SMB,2022-06,0.801,creator,2025-03
+M074,S06,Enterprise,2022-11,0.144,creator,
+M075,S03,SMB,2022-01,0.783,creator,
+M076,S07,SMB,2022-12,0.05,creator,2023-07
+M077,S08,SMB,2022-12,0.208,school,
+M078,S08,Mid,2022-11,0.487,creator,
+M079,S06,SMB,2022-05,0.07,sports club,2022-09
+M080,S07,SMB,2022-01,0.366,nonprofit,2024-10
+M081,S01,Enterprise,2022-12,0.501,corporate gifting,
+M082,S08,SMB,2022-01,0.196,sports club,
+M083,S01,SMB,2022-01,0.691,school,2022-06
+M084,S08,Mid,2022-08,0.761,corporate gifting,2022-12
+M085,S01,SMB,2022-01,0.255,cafe,
+M086,S03,Enterprise,2022-10,0.486,cafe,
+M087,S09,SMB,2022-10,0.529,creator,
+M088,S09,Mid,2022-08,0.117,creator,
+M089,S09,Mid,2022-12,0.319,corporate gifting,2025-03
+M090,S07,Mid,2022-05,0.218,school,2025-11
+M091,S03,Mid,2022-04,0.212,creator,
+M092,S04,SMB,2022-02,0.316,corporate gifting,
+M093,S09,SMB,2022-07,0.08,sports club,2024-06
+M094,S09,Enterprise,2022-10,0.326,school,2025-03
+M095,S07,Mid,2023-06,0.282,creator,2025-07
+M096,S09,SMB,2023-02,0.476,cafe,2025-02
+M097,S08,Enterprise,2023-01,0.848,sports club,
+M098,S03,SMB,2023-03,0.35,sports club,2026-04
+M099,S05,SMB,2023-07,0.132,cafe,
+M100,S07,SMB,2023-07,0.387,creator,2026-05
+M101,S09,Enterprise,2023-02,0.637,creator,
+M102,S02,Enterprise,2023-06,0.375,corporate gifting,
+M103,S03,Mid,2023-11,0.662,school,2026-08
+M104,S08,Mid,2023-12,0.21,school,
+M105,S07,Enterprise,2023-10,0.233,creator,2026-03
+M106,S07,SMB,2023-01,0.666,cafe,2025-11
+M107,S07,Enterprise,2023-01,0.083,creator,2025-01
+M108,S06,Mid,2023-06,0.231,school,
+M109,S08,SMB,2023-05,0.498,corporate gifting,2026-02
+M110,S05,SMB,2023-05,0.446,cafe,
+M111,S08,SMB,2023-04,0.848,cafe,
+M112,S02,SMB,2023-01,0.28,creator,
+M113,S07,Enterprise,2023-07,0.05,nonprofit,
+M114,S05,Mid,2023-09,0.471,school,
+M115,S09,SMB,2023-11,0.535,creator,
+M116,S09,Enterprise,2023-11,0.391,cafe,
+M117,S07,SMB,2023-08,0.395,school,2024-05
+M118,S03,Mid,2023-06,0.583,cafe,
+M119,S10,Mid,2024-03,0.423,creator,
+M120,S05,Mid,2024-02,0.248,cafe,
+M121,S03,Mid,2024-06,0.101,corporate gifting,
+M122,S06,Mid,2024-11,0.268,cafe,2025-02
+M123,S10,SMB,2024-04,0.418,cafe,
+M124,S10,Mid,2024-04,0.402,corporate gifting,
+M125,S10,Mid,2024-04,0.523,creator,2026-06
+M126,S01,SMB,2024-02,0.38,creator,2024-12
+M127,S02,Mid,2024-01,0.194,cafe,
+M128,S03,Mid,2024-11,0.191,creator,2025-02
+M129,S03,SMB,2024-08,0.334,school,
+M130,S10,SMB,2024-10,0.268,nonprofit,
+M131,S10,SMB,2025-06,0.584,corporate gifting,
+M132,S10,Mid,2025-03,0.499,creator,
+M133,S05,Mid,2025-04,0.207,school,
+M134,S06,Mid,2025-10,0.726,corporate gifting,
+M135,S02,SMB,2025-11,0.449,corporate gifting,
+M136,S02,Mid,2025-11,0.81,creator,
+M137,S02,SMB,2025-08,0.097,corporate gifting,
+M138,S03,Mid,2025-11,0.478,corporate gifting,
+M139,S02,Mid,2026-02,0.487,school,
+M140,S04,Enterprise,2026-08,0.572,corporate gifting,

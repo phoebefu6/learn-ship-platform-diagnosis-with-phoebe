@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="A two-track course on diagnosing a platform business from five years of data: a chairman track (the lookback trap, the findings, the decisions with owners) and an analyst track that builds every chart in pandas on a seeded dataset with planted truths - margin bridge, frozen-history cohorts, survival, baskets, data gaps.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="learn ship platform diagnosis with phoebe - five years of platform data, end to end">
+<meta property="og:description" content="Chairman track: the lookback trap, the findings, the decisions with owners. Analyst track: every chart built in pandas - margin bridge, frozen cohorts, survival, baskets, gaps.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="learn ship platform diagnosis with phoebe - five years of platform data, end to end">
+<meta name="twitter:description" content="Chairman track: the lookback trap, the findings, the decisions with owners. Analyst track: every chart built in pandas.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ship-platform-diagnosis-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>learn ship platform diagnosis with phoebe - five years of platform data, end to end</title>
+<link rel="stylesheet" href="assets/style.css?v=1">
+<style>
+  .stats-row { display: flex; gap: 2.4rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: .72rem; opacity: .85; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .course-card {
+    border: 1px solid var(--hairline);
+    border-top: 4px solid var(--diff, var(--indigo));
+    border-radius: var(--radius);
+    padding: 1.2rem 1.3rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
+    position: relative;
+  }
+  .course-card:hover { border-color: var(--indigo-soft); border-top-color: var(--diff, var(--indigo)); box-shadow: 0 8px 28px rgba(22,62,106,.14); transform: translateY(-3px); }
+  .course-card .cicon { font-size: 1.7rem; line-height: 1; }
+  .course-card .cnum { font-size: .72rem; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: .1em; }
+  .course-card h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+  .course-card p { font-size: .85rem; color: var(--muted); flex: 1; }
+  .course-card .meta { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .diff-legend { display: flex; gap: 1rem; margin-top: 1.6rem; font-size: .74rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .diff-legend i { display: inline-block; width: .85rem; height: .35rem; border-radius: 999px; margin-right: .35rem; vertical-align: middle; }
+  .prereq-line { margin-top: 1.4rem; font-size: .85rem; color: var(--muted); border-left: 3px solid var(--amber); padding: .5rem .9rem; background: var(--indigo-50); border-radius: 0 var(--radius) var(--radius) 0; }
+  .prereq-line a { color: var(--indigo); font-weight: 700; }
+  .paths { margin-top: 2.6rem; }
+  .paths h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .3rem; }
+  .paths .plede { color: var(--muted); font-size: .92rem; margin-bottom: .8rem; }
+  .path { display: flex; gap: .55rem; align-items: center; padding: .75rem 0; border-bottom: .5px solid var(--hairline); flex-wrap: wrap; }
+  .path:last-child { border-bottom: none; }
+  .path b { min-width: 15.5rem; font-size: .9rem; }
+  .path .pstep { background: var(--indigo-50); color: var(--indigo); border-radius: 999px; padding: .16rem .68rem; font-weight: 700; font-size: .8rem; text-decoration: none; transition: all .12s ease; }
+  .path .pstep:hover { background: var(--indigo); color: #fff; }
+  .path .parr { color: var(--faint); font-weight: 700; }
+  .mm-section { margin-top: 1.6rem; }
+  .mm-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .2rem; }
+  .mm-section .mm-lede { color: var(--muted); font-size: .92rem; margin-bottom: .4rem; }
+  .mm-wrap { border: 1px solid var(--hairline); border-radius: var(--radius); background: linear-gradient(180deg,#fff,#E9F0F8); padding: .6rem; overflow-x: auto; }
+  .mm-svg { width: 100%; height: auto; display: block; max-width: 60rem; margin: 0 auto; min-width: 34rem; }
+  .mm-link { cursor: pointer; text-decoration: none; }
+  .mm-node rect { transition: opacity .15s ease, filter .15s ease; }
+  .mm-node text { pointer-events: none; }
+  .mm-link:hover .mm-node rect { filter: brightness(1.06); }
+  .mm-edge { transition: opacity .15s ease; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Ship Platform Diagnosis with Phoebe · Let's Ship It End to End</div>
+    <h1>Two tracks from "last quarter looked fine" to a five-year diagnosis the board can act on</h1>
+    <p class="sub">A B2B print-on-demand platform reviewed a rolling quarter for five years and never saw a thirteen-point margin break on two of its ten servers, because revenue kept growing. The chairman track (no code) drives the lookback window on real monthly numbers, walks what went wrong and what went right, and turns findings into decisions with an owner, a number and a review date. The analyst track builds every chart in pandas on a seeded dataset with planted truths: the data map and availability heatmap, the per-SKU margin bridge and change-point, products and baskets, merchant survival and store dormancy, frozen-history cohort retention, the promotion double edge, and the gaps the company must close. Everything runs from one shared reader, and every number on a page is produced by an executed notebook.</p>
+    <div class="stats-row">
+      <div class="stat"><b data-count="8">8</b><span>sessions</span></div>
+      <div class="stat"><b data-count="2">2</b><span>tracks</span></div>
+      <div class="stat"><b data-count="5">5</b><span>executed notebooks</span></div>
+      <div class="stat"><b data-count="48">48</b><span>charts from the data</span></div>
+      <div class="stat"><b data-count="81">81</b><span>months of data</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>The chairman track 🏛️ <span style="font-size:.85rem;font-weight:600;color:var(--muted)">· for the chairman, C-level and board · 3 x 45 min · no code to write</span></h2>
+      <p class="plede">Decision mode: why a three-month window hides a strategic break, what five years of the platform's own numbers say went right and wrong and what each finding cost, and the decisions that follow - each with an owner, a metric, a review date and a pre-mortem.</p>
+    </div>
+    <div class="course-grid">
+      <a class="course-card" href="courses/c1-five-years-in-one-picture.html" style="--diff:#34D399">
+        <span class="cicon">🔭</span>
+        <span class="cnum">Chairman 1 · easy</span>
+        <h3>Five years in one picture</h3>
+        <p>Why a three-month window cannot tell a step from a wobble, the platform anatomy and the grain question, and the nine-angle map with a decision on every row. Drive the lookback window on real numbers.</p>
+        <span class="meta"><span class="pill amber">▶ Chairman starts here</span><span class="pill light">Live widget</span></span>
+      </a>
+      <a class="course-card" href="courses/c2-what-went-right-what-went-wrong.html" style="--diff:#FBBF24">
+        <span class="cicon">🩺</span>
+        <span class="cnum">Chairman 2 · medium</span>
+        <h3>What went right, what went wrong</h3>
+        <p>The break (cost, not price or volume), its running price, the two-quarter lag into customers and merchants, then the turn: customisation retains, bundles unsold, the catalogue moved.</p>
+        <span class="meta"><span class="pill light">Findings gallery</span></span>
+      </a>
+      <a class="course-card" href="courses/c3-decisions-and-the-data-we-owe.html" style="--diff:#FBBF24">
+        <span class="cicon">🧭</span>
+        <span class="cnum">Chairman 3 · medium</span>
+        <h3>Decisions and the data we owe ourselves</h3>
+        <p>Ownership map of every gap, then three tables - business, tech, data to collect - each row with an outcome metric, an owner, a review date and a pre-mortem line. The 90-day plan.</p>
+        <span class="meta"><span class="pill light">Owner + number + date</span></span>
+      </a>
+    </div>
+
+    <div class="paths">
+      <h2>The analyst track 🛠️ <span style="font-size:.85rem;font-weight:600;color:var(--muted)">· for data analysts · 5 x 45 min · pandas + matplotlib + lifelines, notebook per session</span></h2>
+      <p class="plede">Build mode: map the data before reading it (a1), follow the margin to the mechanism and price the decision (a2), walk the product hierarchy and the baskets (a3), measure merchants and stores with survival analysis and activity rules (a4), and compute customer retention with frozen history, test the two-event confound, and export the canon numbers the chairman deck quotes (a5).</p>
+    </div>
+    <div class="course-grid">
+      <a class="course-card" href="courses/a1-map-the-data-before-you-read-it.html" style="--diff:#34D399">
+        <span class="cicon">🗺️</span>
+        <span class="cnum">Analyst 1 · easy</span>
+        <h3>Map the data before you read it</h3>
+        <p>Grain and join map, the coverage heatmap, key integrity by year, the duplicate scan that names a bad migration, and the question-availability table.</p>
+        <span class="meta"><span class="pill amber">▶ Analysts start here</span><span class="pill light">Notebook a1</span></span>
+      </a>
+      <a class="course-card" href="courses/a2-follow-the-margin.html" style="--diff:#FBBF24">
+        <span class="cicon">📉</span>
+        <span class="cnum">Analyst 2 · medium</span>
+        <h3>Follow the margin</h3>
+        <p>Whole platform then one panel per server, indexed volume vs margin, the per-SKU bridge, rolling z change-point, seasonality, and the running price of the 2024 decision.</p>
+        <span class="meta"><span class="pill light">Notebook a2 · widget</span></span>
+      </a>
+      <a class="course-card" href="courses/a3-products-and-baskets.html" style="--diff:#FBBF24">
+        <span class="cicon">🧺</span>
+        <span class="cnum">Analyst 3 · medium</span>
+        <h3>Products and baskets</h3>
+        <p>Category share, line slope, SKU Pareto, platform vs merchant margin, pairwise lift in pandas, attach rates, basket size, preference per merchant, the price ladder.</p>
+        <span class="meta"><span class="pill light">Notebook a3</span></span>
+      </a>
+      <a class="course-card" href="courses/a4-merchants-and-stores.html" style="--diff:#FB923C">
+        <span class="cicon">🏬</span>
+        <span class="cnum">Analyst 4 · hard</span>
+        <h3>Merchants and stores</h3>
+        <p>Acquisition by year, growth accounting, Kaplan-Meier survival and the hazard jump, existing vs active stores, concentration, vintage curves, and the indicators that saw churn in month three.</p>
+        <span class="meta"><span class="pill light">Notebook a4 · lifelines</span></span>
+      </a>
+      <a class="course-card" href="courses/a5-customers-promotions-and-the-gaps.html" style="--diff:#F87171">
+        <span class="cicon">🧊</span>
+        <span class="cnum">Analyst 5 · hardest</span>
+        <h3>Customers, promotions and the gaps</h3>
+        <p>Frozen-history cohort triangles, the repeat-rate lag, the two-event confound, customisation retains, the promotion double edge, a 69-day funnel, growth accounting, and canon.json.</p>
+        <span class="meta"><span class="pill light">Notebook a5 · canon</span></span>
+      </a>
+    </div>
+
+    <div class="diff-legend">
+      <span><i style="background:#34D399"></i>Easy - start here</span>
+      <span><i style="background:#FBBF24"></i>Medium</span>
+      <span><i style="background:#FB923C"></i>Hard</span>
+      <span><i style="background:#F87171"></i>Hardest - everything converges</span>
+    </div>
+    <p class="prereq-line">The dataset is synthetic and seeded: <code>data/generate_data.py</code> reproduces every CSV byte for byte, and its docstring lists the planted truths the notebooks recover. Retention numbers follow the forward-looking, frozen-history practice taught in depth in <a href="https://phoebefu6.github.io/learn-customer-retention-with-phoebe/">learn customer retention with phoebe</a>.</p>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>Your passport 🎫</h2>
+      <p class="plede">Clear all three quiz questions in a session and it gets stamped. Stamps live in this browser only.</p>
+    </div>
+    <div class="pp-strip"></div>
+  </section>
+
+  <section class="section">
+    <div class="paths">
+      <h2>Choose your path</h2>
+      <p class="plede">Everyone can start at c1 - the lookback widget is the fastest way to feel the problem. Analysts continue into a1.</p>
+      <div class="path"><b>Chairman, C-level, board</b>
+        <a class="pstep" href="courses/c1-five-years-in-one-picture.html">c1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/c2-what-went-right-what-went-wrong.html">c2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/c3-decisions-and-the-data-we-owe.html">c3</a>
+      </div>
+      <div class="path"><b>Data analyst</b>
+        <a class="pstep" href="courses/a1-map-the-data-before-you-read-it.html">a1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/a2-follow-the-margin.html">a2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/a3-products-and-baskets.html">a3</a><span class="parr">→</span>
+        <a class="pstep" href="courses/a4-merchants-and-stores.html">a4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/a5-customers-promotions-and-the-gaps.html">a5</a>
+      </div>
+      <div class="path"><b>Head of data (both)</b>
+        <a class="pstep" href="courses/c1-five-years-in-one-picture.html">c1-c3</a><span class="parr">→</span>
+        <a class="pstep" href="courses/a1-map-the-data-before-you-read-it.html">a1-a5</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mm-section">
+    <h2>The knowledge map 🧠</h2>
+    <p class="mm-lede">Both tracks at a glance - hover a session to spotlight its concepts, click any node to jump in.</p>
+    <div class="mm-wrap"><div id="mindmap"></div></div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>learn-ship-platform-diagnosis-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span>Siblings: <a href="https://phoebefu6.github.io/learn-customer-retention-with-phoebe/">customer retention</a> · <a href="https://phoebefu6.github.io/learn-ecommerce-metrics-with-phoebe/">e-commerce metrics</a> · <a href="https://phoebefu6.github.io/learn-metric-decomposition-with-phoebe/">metric decomposition</a></span>
+  </footer>
+
+</main>
+
+<script>
+window.MINDMAP_DATA = {"title": "Platform\nDiagnosis", "centerColor": "#0B2545", "sessions": [{"label": "Five years in\none picture", "href": "courses/c1-five-years-in-one-picture.html", "color": "#34D399", "concepts": [{"label": "The lookback trap", "href": "courses/c1-five-years-in-one-picture.html"}, {"label": "Per what? (grain)", "href": "courses/c1-five-years-in-one-picture.html"}, {"label": "Nine angles, one decision each", "href": "courses/c1-five-years-in-one-picture.html"}]}, {"label": "What went right,\nwhat went wrong", "href": "courses/c2-what-went-right-what-went-wrong.html", "color": "#FBBF24", "concepts": [{"label": "The bridge names cost", "href": "courses/c2-what-went-right-what-went-wrong.html"}, {"label": "The two-quarter lag", "href": "courses/c2-what-went-right-what-went-wrong.html"}, {"label": "The turn to growth", "href": "courses/c2-what-went-right-what-went-wrong.html"}]}, {"label": "Decisions and\nthe data we owe", "href": "courses/c3-decisions-and-the-data-we-owe.html", "color": "#FBBF24", "concepts": [{"label": "Ownership map of gaps", "href": "courses/c3-decisions-and-the-data-we-owe.html"}, {"label": "Owner, number, review date", "href": "courses/c3-decisions-and-the-data-we-owe.html"}, {"label": "Event log as a product", "href": "courses/c3-decisions-and-the-data-we-owe.html"}]}, {"label": "Map the data\nbefore you read it", "href": "courses/a1-map-the-data-before-you-read-it.html", "color": "#34D399", "concepts": [{"label": "Grain and join map", "href": "courses/a1-map-the-data-before-you-read-it.html"}, {"label": "Coverage heatmap", "href": "courses/a1-map-the-data-before-you-read-it.html"}, {"label": "Integrity + duplicate scan", "href": "courses/a1-map-the-data-before-you-read-it.html"}]}, {"label": "Follow the\nmargin", "href": "courses/a2-follow-the-margin.html", "color": "#FBBF24", "concepts": [{"label": "Small multiples by server", "href": "courses/a2-follow-the-margin.html"}, {"label": "Per-SKU margin bridge", "href": "courses/a2-follow-the-margin.html"}, {"label": "Change-point + price of it", "href": "courses/a2-follow-the-margin.html"}]}, {"label": "Products and\nbaskets", "href": "courses/a3-products-and-baskets.html", "color": "#FBBF24", "concepts": [{"label": "Share, Pareto, owner axis", "href": "courses/a3-products-and-baskets.html"}, {"label": "Support, confidence, lift", "href": "courses/a3-products-and-baskets.html"}, {"label": "Preference per merchant", "href": "courses/a3-products-and-baskets.html"}]}, {"label": "Merchants and\nstores", "href": "courses/a4-merchants-and-stores.html", "color": "#FB923C", "concepts": [{"label": "Kaplan-Meier survival", "href": "courses/a4-merchants-and-stores.html"}, {"label": "Existing vs active stores", "href": "courses/a4-merchants-and-stores.html"}, {"label": "Leading indicators", "href": "courses/a4-merchants-and-stores.html"}]}, {"label": "Customers, promos\nand the gaps", "href": "courses/a5-customers-promotions-and-the-gaps.html", "color": "#F87171", "concepts": [{"label": "Frozen-history cohorts", "href": "courses/a5-customers-promotions-and-the-gaps.html"}, {"label": "Two-event confound", "href": "courses/a5-customers-promotions-and-the-gaps.html"}, {"label": "Canon numbers export", "href": "courses/a5-customers-promotions-and-the-gaps.html"}]}]};
+</script>
+<script src="assets/mindmap.js?v=1"></script>
+<script src="assets/app.js?v=1"></script>
+</body>
+</html>
